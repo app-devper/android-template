@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">fingerprint</string>
+
+    <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again.</string>
+    <string name="touch_sensor">Touch sensor.</string>
+    <string name="fingerprint_recognized">Fingerprint recognized.</string>
+
+    <string name="cancel">Cancel</string>
+</resources>

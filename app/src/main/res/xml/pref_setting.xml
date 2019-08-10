@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/setting_general">
+        <Preference
+            android:key="@string/setting_general"
+            android:selectable="true"
+            android:title="@string/setting_language"
+            android:summary="@string/setting_eng"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_notification">
+        <SwitchPreference
+            android:key="@string/setting_notification"
+            android:selectable="true"
+            android:title="@string/setting_push"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_about">
+        <Preference
+            android:selectable="true"
+            android:title="@string/setting_contact"/>
+        <Preference
+                android:selectable="true"
+                android:title="@string/setting_help"/>
+        <Preference
+                android:selectable="true"
+                android:title="@string/setting_terms"/>
+        <Preference
+            android:selectable="true"
+            android:title="@string/setting_app_version_title"
+            android:summary="@string/setting_app_version_name"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

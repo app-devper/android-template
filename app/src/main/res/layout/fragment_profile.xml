@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="@dimen/toolbar_profile_width"
+            android:layout_height="wrap_content">
+
+            <com.devper.template.widget.RoundedImageView
+                android:id="@+id/img_profile"
+                android:layout_width="@dimen/toolbar_profile_width"
+                android:layout_height="@dimen/toolbar_profile_width"
+                android:layout_marginBottom="@dimen/activity_padding"
+                android:layout_marginTop="@dimen/activity_padding"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_ic_logo"/>
+
+            <ImageView
+                android:id="@+id/img_plus"
+                android:layout_width="@dimen/ic_plus_width"
+                android:layout_height="@dimen/ic_plus_width"
+                android:layout_alignBottom="@id/img_profile"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_add"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/profile_title"/>
+
+        <TextView
+            android:id="@+id/profile_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_40dp"
+            android:gravity="center_horizontal"
+            android:paddingLeft="@dimen/dimen_20dp"
+            android:paddingRight="@dimen/dimen_20dp"
+            android:text="@string/profile_desc"
+            android:textSize="@dimen/profile_desc"/>
+
+    </LinearLayout>
+</layout>

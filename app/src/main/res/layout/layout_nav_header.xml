@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.devper.template.BuildConfig"/>
+
+        <variable
+            name="user"
+            type="com.devper.template.common.model.User"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/login_layout_bg"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.devper.template.widget.RoundedImageView
+            android:id="@+id/img_profile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/main_ic_logo"
+            app:imageUrl="@{user.imageUrl}"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextStyle.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{user.username}"/>
+
+        <TextView
+            android:id="@+id/tv_email"
+            style="@style/TextStyle.Title.Sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.email}"/>
+
+    </LinearLayout>
+
+</layout>

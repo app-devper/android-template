@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name" translatable="false">Template</string>
+
+    <string name="facebook_app_id" translatable="false">478207525978138</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb478207525978138</string>
+
+    <string name="login_button_login">Login</string>
+    <string name="login_dummy">Login Dummy</string>
+
+    <string name="login_username_hint">USERNAME</string>
+    <string name="login_password_hint">PASSWORD</string>
+
+    <!--Drawer-->
+    <string name="main_open_drawer">Drawer Open</string>
+    <string name="main_close_drawer">Drawer Close</string>
+
+    <!--Drawer Menus-->
+    <string name="main_menu_about">About</string>
+    <string name="main_menu_home">Home</string>
+    <string name="main_menu_product">Product</string>
+    <string name="main_menu_scan">Scan</string>
+    <string name="main_menu_logout">Logout</string>
+    <string name="main_menu_setting">Setting</string>
+    <string name="main_menu_member">Member</string>
+    <string name="main_menu_feed">My Feed</string>
+    <string name="main_menu_map">Map</string>
+    <string name="main_shopping_cart">Shopping Cart</string>
+    <string name="main_menu_profile">Profile</string>
+    <string name="main_menu_movie">Now Playing</string>
+
+    <string name="product_price">PRICE: %s</string>
+
+    <string name="profile_desc">Rowan Sebastian Atkinson CBE is an English actor,  comedian and screenwriter</string>
+    <string name="profile_title">Mr Bean</string>
+
+
+
+    <!--Setting-->
+    <string name="setting_title">Settings</string>
+    <string name="setting_general">General Setting</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_eng">English</string>
+    <string name="setting_notification">Notification</string>
+    <string name="setting_push">Push on app</string>
+    <string name="setting_about">About</string>
+    <string name="setting_contact">Contact</string>
+    <string name="setting_help">Help</string>
+    <string name="setting_terms">Terms and Conditions</string>
+    <string name="setting_app_version_title">App version</string>
+    <string name="setting_app_version_name">1.0</string>
+
+    <!--Movie-->
+    <string name="movie_generic_error">Oops! Something went wrong,\nPlease try again later…</string>
+    <string name="movie_book_the_movie">Book the Movie</string>
+    <string name="movie_genres_header">Genres</string>
+    <string name="movie_overview_header">Overview</string>
+    <string name="movie_duration_header">Duration</string>
+    <string name="movie_language_header">Language</string>
+
+    <plurals name="duration">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+
+</resources>

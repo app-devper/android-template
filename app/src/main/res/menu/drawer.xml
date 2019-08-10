@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/primary">
+        <item
+            android:id="@id/home_dest"
+            android:icon="@drawable/main_ic_home"
+            android:title="@string/main_menu_home" />
+        <item
+            android:id="@id/movie_dest"
+            android:icon="@drawable/main_ic_movie"
+            android:title="@string/main_menu_movie" />
+
+        <item
+            android:id="@id/profile_dest"
+            android:icon="@drawable/main_ic_profile"
+            android:title="@string/main_menu_profile" />
+        <item
+            android:id="@id/member_dest"
+            android:icon="@drawable/main_ic_member"
+            android:title="@string/main_menu_member"/>
+
+        <item
+            android:id="@id/setting_dest"
+            android:icon="@drawable/main_ic_settings"
+            android:title="@string/main_menu_setting"/>
+
+    </group>
+
+    <item
+        android:menuCategory="secondary"
+        android:id="@id/login_dest"
+        android:orderInCategory="0"
+        android:icon="@drawable/main_ic_logout"
+        android:title="@string/main_menu_logout"/>
+</menu>
