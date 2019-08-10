@@ -82,11 +82,6 @@ class FingerprintController(
         }
     }
 
-    /**
-     * Displays an error to the user if there was a problem with authentication.
-     *
-     * @param[text] The error message to show.
-     */
     private fun showError(text: CharSequence?) {
         icon.setImageResource(R.drawable.ic_error_white)
         errorText.text = text
@@ -137,14 +132,11 @@ class FingerprintController(
     }
 
     companion object {
-        /**
-         * The amount of time that we should delay before showing the error message to the user.
-         */
+
+        // The amount of time that we should delay before showing the error message to the user.
         private const val ERROR_TIMEOUT_MILLIS = 1600L
 
-        /**
-         * The amount of time that we should delay before showing the success message to the user.
-         */
+        // The amount of time that we should delay before showing the success message to the user.
         private const val SUCCESS_DELAY_MILLIS = 1300L
     }
 

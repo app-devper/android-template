@@ -164,7 +164,7 @@ class ImagePickerActivity : AppCompatActivity() {
         val path = File(externalCacheDir, "camera")
         if (!path.exists()) path.mkdirs()
         val image = File(path, fileName)
-        return getUriForFile(this@ImagePickerActivity, "$packageName.provider", image)
+        return getUriForFile(this, "$packageName.provider", image)
     }
 
     companion object {

@@ -28,7 +28,7 @@ class TemplateApplication : MultiDexApplication(), Application.ActivityLifecycle
 
         startKoin {
             androidLogger()
-            androidContext(this@TemplateApplication)
+            androidContext(applicationContext)
             modules(appModules)
         }
 
@@ -63,7 +63,7 @@ class TemplateApplication : MultiDexApplication(), Application.ActivityLifecycle
 
     override fun onActivityDestroyed(activity: Activity) {
         localMessagingHelper.setApplicationForeground(false)
-        //localMessagingHelper.setCurrentClass(null)
+        // localMessagingHelper.setCurrentClass(null)
     }
 
     @SuppressLint("HardwareIds")

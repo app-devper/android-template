@@ -57,7 +57,7 @@ class LocationService : Service() {
                     intentClass = currentClass as Class<*>
                 }
                 val pendingIntent = PendingIntent.getActivity(
-                    this@LocationService, 0, Intent(this@LocationService, intentClass), PendingIntent.FLAG_UPDATE_CURRENT
+                    applicationContext, 0, Intent(applicationContext, intentClass), PendingIntent.FLAG_UPDATE_CURRENT
                 )
                 setContentIntent(pendingIntent)
                 setContentText("On Tracking GPS")
