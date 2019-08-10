@@ -34,7 +34,7 @@ class ApiResponse<T> {
             var message: String? = null
             if (response.errorBody() != null) {
                 try {
-                    message = response.errorBody()!!.string()
+                    message = response.errorBody()?.string()
                 } catch (ignored: Exception) {
                     Log.e("Parse", "error while parsing response")
                 }

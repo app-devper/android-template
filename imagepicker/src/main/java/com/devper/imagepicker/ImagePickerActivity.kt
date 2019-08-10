@@ -65,7 +65,7 @@ class ImagePickerActivity : AppCompatActivity() {
                 if (report.areAllPermissionsGranted()) {
                     fileName = System.currentTimeMillis().toString() + ".jpg"
                     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName!!))
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName))
                     if (takePictureIntent.resolveActivity(packageManager) != null) {
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                     }
@@ -97,13 +97,13 @@ class ImagePickerActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> if (resultCode == Activity.RESULT_OK) {
-                cropImage(getCacheImagePath(fileName!!))
+                cropImage(getCacheImagePath(fileName))
             } else {
                 setResultCancelled()
             }
             REQUEST_GALLERY_IMAGE -> if (resultCode == Activity.RESULT_OK) {
-                val imageUri = data!!.data
-                cropImage(imageUri)
+                val imageUri = data?.data
+                cropImage(imageUri!!)
             } else {
                 setResultCancelled()
             }
@@ -114,14 +114,14 @@ class ImagePickerActivity : AppCompatActivity() {
             }
             UCrop.RESULT_ERROR -> {
                 val cropError = UCrop.getError(data!!)
-                Log.e(TAG, "Crop error: " + cropError!!)
+                Log.e(TAG, "Crop error: $cropError")
                 setResultCancelled()
             }
             else -> setResultCancelled()
         }
     }
 
-    private fun cropImage(sourceUri: Uri?) {
+    private fun cropImage(sourceUri: Uri) {
         val destinationUri = Uri.fromFile(File(cacheDir, queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
@@ -135,7 +135,7 @@ class ImagePickerActivity : AppCompatActivity() {
 
         if (setBitmapMaxWidthHeight) options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight)
 
-        UCrop.of(sourceUri!!, destinationUri).withOptions(options).start(this)
+        UCrop.of(sourceUri, destinationUri).withOptions(options).start(this)
     }
 
     private fun handleUCropResult(data: Intent?) {
@@ -170,7 +170,7 @@ class ImagePickerActivity : AppCompatActivity() {
     companion object {
         private val TAG = ImagePickerActivity::class.java.simpleName
 
-        private var fileName: String? = null
+        private lateinit var fileName: String
 
         fun showImagePickerOptions(context: Context, listener: PickerOptionListener) {
             val builder = AlertDialog.Builder(context)
@@ -187,8 +187,8 @@ class ImagePickerActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        private fun queryName(resolver: ContentResolver, uri: Uri?): String {
-            val returnCursor = resolver.query(uri!!, null, null, null, null)
+        private fun queryName(resolver: ContentResolver, uri: Uri): String {
+            val returnCursor = resolver.query(uri, null, null, null, null)
             val nameIndex = returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             returnCursor.moveToFirst()
             val name = returnCursor.getString(nameIndex)

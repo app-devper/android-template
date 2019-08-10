@@ -9,7 +9,7 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
 
     private val executor = Executors.newSingleThreadExecutor()
     private var biometricPrompt: BiometricPrompt
-    private var promptInfo: BiometricPrompt.PromptInfo? = null
+    private var promptInfo: BiometricPrompt.PromptInfo
 
     init {
         biometricPrompt = BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
@@ -35,6 +35,12 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
                 callback.onError()
             }
         })
+        promptInfo = BiometricPrompt.PromptInfo.Builder().run {
+            setTitle(activity.getString(R.string.fingerprint_recognized))
+            setSubtitle(activity.getString(R.string.touch_sensor))
+            setNegativeButtonText(activity.getString(R.string.cancel))
+            build()
+        }
     }
 
     fun setPromptInfo(title: String, subTitle: String, description: String, negative: String) {
@@ -52,16 +58,7 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
     }
 
     fun authenticate() {
-        if (promptInfo == null) {
-            promptInfo = BiometricPrompt.PromptInfo.Builder().run {
-                setTitle(activity.getString(R.string.fingerprint_recognized))
-                setSubtitle(activity.getString(R.string.touch_sensor))
-                setNegativeButtonText(activity.getString(R.string.cancel))
-                build()
-            }
-        }
-
-        biometricPrompt.authenticate(promptInfo!!)
+        biometricPrompt.authenticate(promptInfo)
     }
 
     fun cancel() {

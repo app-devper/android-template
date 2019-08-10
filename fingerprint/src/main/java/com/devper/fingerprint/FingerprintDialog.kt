@@ -57,9 +57,10 @@ class FingerprintDialog : DialogFragment(), Callback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        controller.setTitle(arguments!!.getString(ARG_TITLE)!!)
-        controller.setSubtitle(arguments!!.getString(ARG_SUBTITLE)!!)
+        arguments?.let{
+            controller.setTitle(it.getString(ARG_TITLE)!!)
+            controller.setSubtitle(it.getString(ARG_SUBTITLE)!!)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

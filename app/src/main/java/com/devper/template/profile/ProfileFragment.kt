@@ -40,7 +40,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, MainViewModel>() {
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
-                    val uri = data!!.getParcelableExtra<Uri>("path")
+                    val uri = data?.getParcelableExtra<Uri>("path")
                     loadProfile(uri.toString())
                 } catch (e: Exception) {
                     e.printStackTrace()

@@ -3,11 +3,11 @@ package com.devper.template.movie
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import com.devper.template.common.ui.BaseFragment
 import com.devper.template.R
+import com.devper.template.common.ui.BaseFragment
 import com.devper.template.databinding.FragmentMovieBinding
 import com.devper.template.handlerResponse
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
 
@@ -34,9 +34,11 @@ class MovieFragment : BaseFragment<FragmentMovieBinding, MovieViewModel>() {
             configResult.observe(viewLifecycleOwner, Observer {
                 val config = handlerResponse(it)
                 config?.let { item ->
-                    adapter.images = item.images
-                    viewModel.getMovies()
-                    baseUrl = item.images!!.baseUrlFull
+                    item.images?.let { images ->
+                        adapter.images = images
+                        viewModel.getMovies()
+                        baseUrl = images.baseUrlFull
+                    }
                 }
             })
 

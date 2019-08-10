@@ -11,12 +11,12 @@ object UserUtil {
 
     fun populateLineUser(result: LineLoginResult): SmartLineUser {
         return SmartLineUser().apply {
-            userId = result.lineProfile!!.userId
-            displayName = result.lineProfile!!.displayName
-            if (result.lineProfile!!.pictureUrl != null) {
-                profileLink = result.lineProfile!!.pictureUrl!!.toString()
+            userId = result.lineProfile?.userId
+            displayName = result.lineProfile?.displayName
+            if (result.lineProfile?.pictureUrl != null) {
+                profileLink = result.lineProfile?.pictureUrl?.toString()
             }
-            accessToken = result.lineCredential!!.accessToken.accessToken
+            accessToken = result.lineCredential?.accessToken?.accessToken
         }
     }
 
@@ -37,10 +37,10 @@ object UserUtil {
             email = account.email
             idToken = account.idToken
             if (account.photoUrl != null) {
-                profileLink = account.photoUrl!!.toString()
+                profileLink = account.photoUrl?.toString()
             }
             if (account.account != null) {
-                username = account.account!!.name
+                username = account.account?.name
             }
         }
     }

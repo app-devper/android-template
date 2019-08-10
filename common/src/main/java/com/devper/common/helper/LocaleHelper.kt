@@ -37,7 +37,7 @@ object LocaleHelper {
 
     private fun getPersistedData(context: Context, defaultLanguage: String): String {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return preferences.getString(SELECTED_LANGUAGE, defaultLanguage)!!
+        return preferences.getString(SELECTED_LANGUAGE, defaultLanguage) ?: defaultLanguage
     }
 
     private fun persist(context: Context, language: String?) {

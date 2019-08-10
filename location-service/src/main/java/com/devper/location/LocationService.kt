@@ -16,9 +16,9 @@ class LocationService : Service() {
 
     private val mBinder = LocalBinder()
     private var mChangingConfiguration = false
-    private var mNotificationManager: NotificationManager? = null
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var mLocationCallback: LocationCallback? = null
+    private lateinit var mNotificationManager: NotificationManager
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private var mLocationCallback: LocationCallback
     private var mServiceHandler: Handler? = null
     private var mLocation: Location? = null
     private var mLocationRequest: LocationRequest? = null
@@ -40,9 +40,9 @@ class LocationService : Service() {
         get() {
             val packageName = packageName
             val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
-            val className = launchIntent!!.component!!.className
+            val className = launchIntent?.component?.className
             return try {
-                Class.forName(className)
+                Class.forName(className!!)
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
@@ -74,16 +74,18 @@ class LocationService : Service() {
             }
         }
 
-    override fun onCreate() {
-        Log.i(TAG, "Service onCreate")
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
+    init {
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 super.onLocationResult(locationResult)
                 onNewLocation(locationResult!!.lastLocation)
             }
         }
+    }
+
+    override fun onCreate() {
+        Log.i(TAG, "Service onCreate")
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         createLocationRequest()
         getLastLocation()
@@ -98,7 +100,7 @@ class LocationService : Service() {
             // Create the channel for the notification
             val mChannel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_LOW)
             // Set the Notification Channel for the Notification Manager.
-            mNotificationManager!!.createNotificationChannel(mChannel)
+            mNotificationManager.createNotificationChannel(mChannel)
         }
     }
 
@@ -144,7 +146,7 @@ class LocationService : Service() {
     }
 
     override fun onDestroy() {
-        mServiceHandler!!.removeCallbacksAndMessages(null)
+        mServiceHandler?.removeCallbacksAndMessages(null)
     }
 
     fun requestLocationUpdates(locationRequest: LocationRequest?) {
@@ -155,7 +157,7 @@ class LocationService : Service() {
         LocationHelper.setRequestingLocationUpdates(this, true)
         startService(Intent(applicationContext, LocationService::class.java))
         try {
-            mFusedLocationClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback!!, Looper.myLooper())
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
         } catch (unlikely: SecurityException) {
             LocationHelper.setRequestingLocationUpdates(this, false)
             Log.e(TAG, "Lost location permission. Could not request updates. $unlikely")
@@ -165,7 +167,7 @@ class LocationService : Service() {
     private fun removeLocationUpdates() {
         Log.i(TAG, "Removing location updates")
         try {
-            mFusedLocationClient!!.removeLocationUpdates(mLocationCallback!!)
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback)
             LocationHelper.setRequestingLocationUpdates(this, false)
             stopSelf()
         } catch (unlikely: SecurityException) {
@@ -176,7 +178,7 @@ class LocationService : Service() {
 
     private fun getLastLocation() {
         try {
-            mFusedLocationClient!!.lastLocation.addOnCompleteListener { task ->
+            mFusedLocationClient.lastLocation?.addOnCompleteListener { task ->
                 if (task.isSuccessful && task.result != null) {
                     mLocation = task.result
                 } else {

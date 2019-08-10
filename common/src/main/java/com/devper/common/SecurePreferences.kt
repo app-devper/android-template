@@ -32,7 +32,7 @@ class SecurePreferences private constructor(
 
     class Builder(private val context: Context) {
         private var password: String? = null
-        private var sharedPrefFilename: String? = null
+        private lateinit var sharedPrefFilename: String
 
         fun password(password: String): Builder {
             this.password = password
@@ -50,7 +50,7 @@ class SecurePreferences private constructor(
             }
             val keyChain = SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256)
             val entity = Entity.create(if (TextUtils.isEmpty(password)) context.packageName else password)
-            return SecurePreferences(context, keyChain, entity, sharedPrefFilename!!)
+            return SecurePreferences(context, keyChain, entity, sharedPrefFilename)
         }
     }
 
@@ -72,7 +72,7 @@ class SecurePreferences private constructor(
         }
 
         try {
-            cipherText = crypto.encrypt(plainText!!.toByteArray(), entity)
+            cipherText = crypto.encrypt(plainText?.toByteArray(), entity)
         } catch (e: KeyChainException) {
             log(Log.ERROR, "encrypt: $e")
         } catch (e: CryptoInitializationException) {

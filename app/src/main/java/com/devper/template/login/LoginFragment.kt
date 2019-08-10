@@ -36,12 +36,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), Smar
     override fun setupView() {
         appCompat().supportActionBar?.hide()
         binding.viewModel = viewModel
-        config = SmartLoginConfig(activity!!, this)
-        biometric = BiometricController(activity!!, this)
-        config.facebookAppId = getString(R.string.facebook_app_id)
-        config.lineChannelId = "1598367163"
         db.user().clearUser()
-        biometric.authenticate()
+        activity?.let{
+            config = SmartLoginConfig(it, this)
+            biometric = BiometricController(it, this)
+            config.facebookAppId = getString(R.string.facebook_app_id)
+            config.lineChannelId = "1598367163"
+            biometric.authenticate()
+        }
     }
 
     override fun setObserve() {
@@ -106,7 +108,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), Smar
 
     override fun onLoginFailure(e: SmartLoginException) {
         hideLoading()
-        appCompat().showMessage(e.message!!)
+        appCompat().showMessage(e.message)
     }
 
     override fun onAuthenticated() {

@@ -20,14 +20,14 @@ data class Images(
 ) {
     val baseUrlFull: String
         get() {
-            if (baseUrl != null && baseUrl!!.isNotEmpty()) {
-                if (posterSizes != null) {
-                    if (posterSizes!!.size > 4) {
+            if (baseUrl != null) {
+                posterSizes?.let {
+                    return if (it.size > 4) {
                         // usually equal to 'w500'
-                        return baseUrl + posterSizes!![4]
+                        baseUrl + it[4]
                     } else {
                         // back-off to hard-coded value
-                        return baseUrl + "w500"
+                        baseUrl + "w500"
                     }
                 }
             }

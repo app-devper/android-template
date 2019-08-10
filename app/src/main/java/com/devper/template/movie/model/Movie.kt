@@ -51,7 +51,7 @@ data class Movie(
         }
 
     fun getFullImageUrl(baseUrl: String): String {
-        val imagePath: String? = if (posterPath != null && posterPath!!.isNotEmpty()) {
+        val imagePath: String? = if (posterPath != null) {
             posterPath
         } else {
             backdropPath

@@ -11,7 +11,7 @@ class CustomTextInputLayout : TextInputLayout {
     private val backgroundDefaultColorFilter: ColorFilter?
         get() {
             var defaultColorFilter: ColorFilter? = null
-            if (editText != null && editText!!.background != null)
+            if (editText != null && editText?.background != null)
                 defaultColorFilter = DrawableCompat.getColorFilter(editText!!.background)
             return defaultColorFilter
         }
@@ -37,7 +37,7 @@ class CustomTextInputLayout : TextInputLayout {
     }
 
     private fun updateBackgroundColorFilter(colorFilter: ColorFilter?) {
-        if (editText != null && editText!!.background != null)
+        if (editText != null && editText?.background != null)
             editText!!.background.colorFilter = colorFilter
     }
 }

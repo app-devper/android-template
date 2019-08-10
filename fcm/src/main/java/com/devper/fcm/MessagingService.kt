@@ -22,20 +22,23 @@ class MessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
 
-        Log.d(TAG, "From: " + remoteMessage!!.from)
+        Log.d(TAG, "From: " + remoteMessage?.from)
 
-        // Check if message contains a data payload.
-        if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.data)
+        remoteMessage?.let {
+            // Check if message contains a data payload.
+            if (it.data.isNotEmpty()) {
+                Log.d(TAG, "Message data payload: " + remoteMessage.data)
+            }
+
+            // Check if message contains a notification payload.
+            if (it.notification != null) {
+                Log.d(TAG, "Message Notification Body: " + remoteMessage.notification?.body!!)
+            }
+
+            handleBadge(it)
+            buildLocalNotification(it)
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.notification != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.notification!!.body!!)
-        }
-
-        handleBadge(remoteMessage)
-        buildLocalNotification(remoteMessage)
     }
 
     private fun handleBadge(remoteMessage: RemoteMessage) {

@@ -11,13 +11,17 @@ import com.devper.template.movie.model.Images
 import com.devper.template.movie.model.Movie
 
 class MovieAdapter(private val retry: () -> Unit, private val onClick: (id: Int, title: String) -> Unit) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(POST_COMPARATOR) {
-    var images: Images? = null
+
+    lateinit var images: Images
     private var networkState: NetworkState? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItemViewType(position)) {
-            R.layout.item_movie -> (holder as MovieViewHolder).bind(getItem(position), getFullImageUrl(getItem(position)!!))
-            R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).bindTo(networkState)
+        val movie = getItem(position)
+        movie?.let {
+            when (getItemViewType(position)) {
+                R.layout.item_movie -> (holder as MovieViewHolder).bind(it, getFullImageUrl(it))
+                R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).bindTo(networkState)
+            }
         }
     }
 
@@ -44,7 +48,7 @@ class MovieAdapter(private val retry: () -> Unit, private val onClick: (id: Int,
     }
 
     private fun getFullImageUrl(movie: Movie): String {
-        return movie.getFullImageUrl(images!!.baseUrlFull)
+        return movie.getFullImageUrl(images.baseUrlFull)
     }
 
     fun setNetworkState(newNetworkState: NetworkState?) {

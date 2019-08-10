@@ -22,7 +22,7 @@ class TrackLocationService(private val mActivity: Activity, lifecycle: Lifecycle
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(location: LocationResult?) {
             super.onLocationResult(location)
-            mLocation = location!!.lastLocation
+            mLocation = location?.lastLocation
             callBack.onLocationResult(mLocation)
         }
     }

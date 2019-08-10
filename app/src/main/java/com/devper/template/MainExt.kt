@@ -36,7 +36,7 @@ fun <T> AppCompatActivity.handlerResponse(response: Resource<T>?): T? {
             response.data
         }
         Status.ERROR -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
         Status.LOADING -> {
@@ -44,15 +44,15 @@ fun <T> AppCompatActivity.handlerResponse(response: Resource<T>?): T? {
             response.data
         }
         Status.TIMEOUT -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
         Status.CONVERTION_ERROR -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
         Status.OTHER_ERROR -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
     }
@@ -67,22 +67,22 @@ fun <T> AppCompatActivity.handlerResponseOnly(response: Resource<T>?): T? {
             response.data
         }
         Status.ERROR -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
         Status.LOADING -> {
             response.data
         }
         Status.TIMEOUT -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
         Status.CONVERTION_ERROR -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
         Status.OTHER_ERROR -> {
-            showMessage(response.message!!)
+            showMessage(response.message)
             response.data
         }
     }
@@ -117,8 +117,9 @@ fun hideLoading() {
     }
 }
 
-fun AppCompatActivity.showMessage(message: String) {
-    showMessageTag(message, "dialog")
+fun AppCompatActivity.showMessage(message: String?) {
+
+    showMessageTag(message?: "Error", "dialog")
 }
 
 fun AppCompatActivity.showConfirmMessage(title: String, message: String, tag: String) {

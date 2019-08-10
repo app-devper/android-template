@@ -28,9 +28,9 @@ class LocalMessagingHelper(context: Application) {
         get() {
             val packageName = mContext.packageName
             val launchIntent = mContext.packageManager.getLaunchIntentForPackage(packageName)
-            val className = launchIntent!!.component!!.className
+            val className = launchIntent?.component?.className
             return try {
-                Class.forName(className)
+                Class.forName(className!!)
             } catch (e: Exception) {
                 e.printStackTrace()
                 null

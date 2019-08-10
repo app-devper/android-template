@@ -27,15 +27,17 @@ class MovieViewHolder(val view: View, private val f: (id: Int, title: String) ->
     }
 
     fun bind(movie: Movie?, fullImageUrl: String?) {
-        this.movie = movie
-        val popularity = getPopularityString(movie!!.popularity)
-        popularityTextView.text = popularity
-        titleTextView.text = movie.title
+        movie?.let {
+            this.movie = it
+            val popularity = getPopularityString(it.popularity)
+            popularityTextView.text = popularity
+            titleTextView.text = it.title
 
-        Glide.with(view).load(fullImageUrl).run {
-            apply(RequestOptions.centerCropTransform())
-            transition(DrawableTransitionOptions.withCrossFade())
-            into(imageView)
+            Glide.with(view).load(fullImageUrl).run {
+                apply(RequestOptions.centerCropTransform())
+                transition(DrawableTransitionOptions.withCrossFade())
+                into(imageView)
+            }
         }
     }
 

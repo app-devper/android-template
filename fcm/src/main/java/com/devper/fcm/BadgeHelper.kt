@@ -7,10 +7,10 @@ import android.util.Log
 import me.leolin.shortcutbadger.ShortcutBadger
 
 class BadgeHelper(private val mContext: Context) {
-    private var sharedPreferences: SharedPreferences? = null
+    private var sharedPreferences: SharedPreferences
 
     var badgeCount: Int
-        get() = sharedPreferences!!.getInt(BADGE_COUNT_KEY, 0)
+        get() = sharedPreferences.getInt(BADGE_COUNT_KEY, 0)
         set(badgeCount) {
             storeBadgeCount(badgeCount)
             if (badgeCount == 0) {
@@ -27,9 +27,11 @@ class BadgeHelper(private val mContext: Context) {
     }
 
     private fun storeBadgeCount(badgeCount: Int) {
-        val editor = sharedPreferences!!.edit()
-        editor.putInt(BADGE_COUNT_KEY, badgeCount)
-        editor.apply()
+        val editor = sharedPreferences.edit()
+        editor?.let {
+            editor.putInt(BADGE_COUNT_KEY, badgeCount)
+            editor.apply()
+        }
     }
 
     companion object {

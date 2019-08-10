@@ -22,7 +22,7 @@ class LoginViewModel internal constructor(private val repo: LoginRepository) : V
         password = ObservableField("password")
         results = Transformations.switchMap(login) {
             when (it) {
-                "Login" -> repo.login(username?.get()!!, password?.get()!!)
+                "Login" -> repo.login(username!!.get()!!, password!!.get()!!)
                 else -> AbsentLiveData.create()
             }
         }

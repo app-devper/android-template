@@ -19,16 +19,4 @@ class NetworkInfoHelper private constructor(context: Context) {
             }
             return connected
         }
-
-    companion object {
-
-        private var instance: NetworkInfoHelper? = null
-
-        fun getInstance(ctx: Context): NetworkInfoHelper {
-            if (instance == null) {
-                instance = NetworkInfoHelper(ctx)
-            }
-            return instance!!
-        }
-    }
 }

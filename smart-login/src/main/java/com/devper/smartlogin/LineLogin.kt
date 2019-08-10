@@ -2,19 +2,20 @@ package com.devper.smartlogin
 
 import android.content.Intent
 import android.util.Log
-
-import com.linecorp.linesdk.LineApiResponseCode
-import com.linecorp.linesdk.auth.LineLoginApi
 import com.devper.smartlogin.util.Constants.LINE_LOGIN_REQUEST
 import com.devper.smartlogin.util.SmartLoginException
 import com.devper.smartlogin.util.UserUtil
+import com.linecorp.linesdk.LineApiResponseCode
+import com.linecorp.linesdk.auth.LineLoginApi
 
 class LineLogin : SmartLogin() {
 
     override fun login(config: SmartLoginConfig) {
         val activity = config.activity
-        val loginIntent = LineLoginApi.getLoginIntent(activity, config.lineChannelId!!)
-        activity.startActivityForResult(loginIntent, LINE_LOGIN_REQUEST)
+        config.lineChannelId?.let {
+            val loginIntent = LineLoginApi.getLoginIntent(activity, it)
+            activity.startActivityForResult(loginIntent, LINE_LOGIN_REQUEST)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?, config: SmartLoginConfig) {
@@ -31,7 +32,7 @@ class LineLogin : SmartLogin() {
             }
             LineApiResponseCode.CANCEL -> {
                 // Login canceled by user
-                Log.e("ERROR", "LINE Login Canceled by user!!")
+                Log.e("ERROR", "LINE Login Canceled by user?")
                 config.callback.onLoginFailure(SmartLoginException("User cancelled the login line", LoginType.Line))
             }
             else -> {

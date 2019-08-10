@@ -23,7 +23,7 @@ class PagedListDataSource(
             it.let { response ->
                 isInitialLoading.postValue(false)
                 networkState.postValue(NetworkState.LOADED)
-                callback.onResult(response.body!!.data!!.results!!, 0, response.body!!.data!!.count, response.body!!.data!!.previous, response.body!!.data!!.next)
+                callback.onResult(response.body?.data?.results!!, 0, response.body!!.data!!.count, response.body?.data?.previous, response.body?.data?.next)
             }
         }, this::setInitialError)
     }
@@ -33,7 +33,7 @@ class PagedListDataSource(
         api.members(params.key, headers).toApiResponse({
             it.let { response ->
                 networkState.postValue(NetworkState.LOADED)
-                callback.onResult(response.body!!.data!!.results!!, response.body!!.data!!.next)
+                callback.onResult(response.body?.data?.results!!, response.body?.data?.next)
             }
         }, this::setError)
     }

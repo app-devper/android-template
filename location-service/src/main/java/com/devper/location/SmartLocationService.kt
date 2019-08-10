@@ -40,7 +40,7 @@ class SmartLocationService(private val mActivity: Activity, lifecycle: Lifecycle
 
             mBound = true
             if (mLocationPermissionGranted) {
-                mService!!.requestLocationUpdates(locationRequest)
+                mService?.requestLocationUpdates(locationRequest)
             }
         }
 
@@ -89,7 +89,7 @@ class SmartLocationService(private val mActivity: Activity, lifecycle: Lifecycle
                     grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
                         // Permission was granted.
                         mLocationPermissionGranted = true
-                        mService!!.requestLocationUpdates(locationRequest)
+                        mService?.requestLocationUpdates(locationRequest)
                     }
                     else -> {
 
