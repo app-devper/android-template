@@ -2,8 +2,11 @@ package com.devper.template
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -15,31 +18,37 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
-import org.koin.android.ext.android.get
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import com.devper.template.common.ui.BaseActivity
+import com.devper.fcm.BadgeHelper
 import com.devper.fcm.MessagingHandler
 import com.devper.template.common.AppDatabase
-import com.devper.template.widget.ProgressHudDialog
 import com.devper.template.common.pref.AppPreference
-import com.devper.template.R
+import com.devper.template.common.ui.BaseActivity
 import com.devper.template.databinding.ActivityNavigationBinding
 import com.devper.template.databinding.LayoutNavHeaderBinding
+import com.devper.template.widget.ConfirmDialog
+import com.devper.template.widget.ProgressHudDialog
+import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 
-class NavigationActivity : BaseActivity<ActivityNavigationBinding, MainViewModel>() {
+class MainActivity : BaseActivity<ActivityNavigationBinding, MainViewModel>(), ConfirmDialog.OnDialogListener {
 
     private lateinit var navController: NavController
     private lateinit var host: NavHostFragment
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val db: AppDatabase = get()
     private lateinit var navHeaderMainBinding: LayoutNavHeaderBinding
     private lateinit var messagingHandler: MessagingHandler
+    private val db: AppDatabase by inject()
+    private val pref: AppPreference by inject()
+    val progress: ProgressHudDialog by currentScope.inject { parametersOf(this) }
 
     override fun getLayout() = R.layout.activity_navigation
+
     override fun initViewModel() = getViewModel<MainViewModel>()
 
     override fun setupView() {
-        initProgress(ProgressHudDialog.init(this, "Loading...", false))
+
         setSupportActionBar(binding.toolbar)
         host = supportFragmentManager.findFragmentById(R.id.host_fragment) as NavHostFragment? ?: return
         // Set up Action Bar
@@ -48,6 +57,18 @@ class NavigationActivity : BaseActivity<ActivityNavigationBinding, MainViewModel
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        binding.drawerLayout.setScrimColor(Color.TRANSPARENT)
+        binding.drawerLayout.drawerElevation = 0F
+        val actionBarDrawerToggle = object :
+            ActionBarDrawerToggle(this, binding.drawerLayout, R.string.main_open_drawer, R.string.main_close_drawer) {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                super.onDrawerSlide(drawerView, slideOffset)
+                val slideX = drawerView.width * slideOffset
+                binding.content.translationX = slideX
+            }
+        }
+
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val dest: String = try {
@@ -58,23 +79,38 @@ class NavigationActivity : BaseActivity<ActivityNavigationBinding, MainViewModel
             if (destination.id == R.id.home_dest) {
                 appBarConfiguration = AppBarConfiguration(setOf(R.id.home_dest), binding.drawerLayout)
                 setupActionBar(navController, appBarConfiguration)
-                setupNavigationMenu(navController)
+                setupNavigationMenu()
                 setupNavMenu()
             }
-            Log.d("NavigationActivity", "Navigated to $dest")
+            Log.d("MainActivity", "Navigated to $dest")
         }
         messagingHandler = MessagingHandler(this, lifecycle)
+        messagingHandler.subscribeToTopic("all")
     }
 
     override fun setObserve() {
         messagingHandler.message.observe(this, Observer {
-            val title = it.getString("title")
+            val title = it.getString("title") ?: "Warning"
             val body = it.getString("body")
-            showMessageTagTitle(title!!, body!!, "push")
+            val destination = it.getString("destination")
+            setBadge()
+            body?.let {
+                if (destination != null) {
+                    showConfirmMessage(title, body, destination)
+                } else {
+                    showMessageTagTitle(title, body, "push")
+                }
+            }
         })
         messagingHandler.token.observe(this, Observer {
-            AppPreference.getInstance().fbToken = it
+            pref.fbToken = it
         })
+        setBadge()
+    }
+
+    private fun setBadge() {
+        val badgeCount = BadgeHelper(this).badgeCount.toString()
+        viewModel.badge.postValue(badgeCount)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -83,9 +119,9 @@ class NavigationActivity : BaseActivity<ActivityNavigationBinding, MainViewModel
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun setupNavigationMenu(navController: NavController) {
+    private fun setupNavigationMenu() {
         binding.navView.setNavigationItemSelectedListener {
-            val handled = onNavDestinationSelected(it, navController)
+            val handled = onNavDestinationSelected(it)
             binding.drawerLayout.closeDrawer(binding.navView)
             handled
         }
@@ -98,13 +134,11 @@ class NavigationActivity : BaseActivity<ActivityNavigationBinding, MainViewModel
     private fun setupNavMenu() {
         val sideNavView = binding.navView
         if (sideNavView.headerCount == 0) {
-            navHeaderMainBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_nav_header, sideNavView, false)
+            navHeaderMainBinding =
+                DataBindingUtil.inflate(layoutInflater, R.layout.layout_nav_header, sideNavView, false)
             sideNavView.addHeaderView(navHeaderMainBinding.root)
         }
-        val dao = db.user().getFirstUser()
-        dao?.let {
-            navHeaderMainBinding.user = it
-        }
+        navHeaderMainBinding.user = db.user().getFirstUser()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -124,24 +158,41 @@ class NavigationActivity : BaseActivity<ActivityNavigationBinding, MainViewModel
         super.onBackPressed()
     }
 
-    private fun onNavDestinationSelected(item: MenuItem, navController: NavController): Boolean {
+    private fun onNavDestinationSelected(item: MenuItem): Boolean {
+        return navigate(item.itemId)
+    }
+
+    private fun navigate(id: Int): Boolean {
         val options = NavOptions.Builder().run {
             setLaunchSingleTop(true)
             setEnterAnim(R.anim.nav_default_enter_anim)
             setExitAnim(R.anim.nav_default_exit_anim)
             setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
             setPopExitAnim(R.anim.nav_default_pop_exit_anim)
-            if (item.itemId == R.id.login_dest) {
-                setPopUpTo(R.id.home_dest, true)
+            if (id == R.id.login_dest) {
+                setPopUpTo(navController.currentDestination!!.id, true)
             }
             build()
         }
         return try {
-            navController.navigate(item.itemId, null, options)
+            navController.navigate(id, null, options)
             true
         } catch (e: IllegalArgumentException) {
             false
         }
+    }
+
+    override fun onPositiveClick(tag: String) {
+        if (tag == "401") {
+            navigate(R.id.login_dest)
+        } else {
+            val dest = resources.getIdentifier(tag, "id", packageName)
+            navigate(dest)
+        }
+    }
+
+    override fun onNegativeClick() {
+
     }
 
 }

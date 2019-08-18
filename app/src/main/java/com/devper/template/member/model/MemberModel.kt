@@ -5,15 +5,11 @@ import androidx.room.PrimaryKey
 import com.devper.template.common.model.BaseResponse
 import com.google.gson.annotations.SerializedName
 
-data class MemberResponse(
-    val data: Result?
-) : BaseResponse()
-
-data class Result(
+data class Result<T>(
     val count: Int,
     val next: String,
     val previous: String,
-    val results: List<Member>?
+    val results: List<T> = emptyList()
 )
 
 @Entity(tableName = "members")

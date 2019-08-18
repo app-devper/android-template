@@ -1,8 +1,10 @@
 package com.devper.template.common
 
+import com.devper.template.BuildConfig
+import com.devper.template.common.pref.AppPreference
+import com.devper.template.common.util.RequestInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import com.devper.template.BuildConfig
 import java.util.concurrent.TimeUnit
 
 const val SPLASH_DELAY: Long = 3000 // 3 seconds
@@ -15,7 +17,8 @@ val url: String
         return URL
     }
 
-fun createOkHttpClient(): OkHttpClient = OkHttpClient.Builder().run {
+fun createOkHttpClient(interceptor: RequestInterceptor): OkHttpClient = OkHttpClient.Builder().run {
+    addInterceptor(interceptor)
     if (BuildConfig.DEBUG) {
         addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
     }

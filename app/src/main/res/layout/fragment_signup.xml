@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.login.LoginViewModel"/>
+            type="com.devper.template.signup.SignupViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,10 +21,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="40dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="40dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
             app:cardCornerRadius="7dp"
@@ -42,12 +42,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/tv_login_title"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="60dp"
-                    android:text="@string/login_title"
+                    android:text="@string/signup_title"
                     android:textAllCaps="true"
                     android:textColor="@color/black_effective"
                     android:textSize="30sp"
@@ -55,69 +55,107 @@
                     tools:ignore="MissingConstraints"/>
 
                 <LinearLayout
-                    android:id="@+id/ly_soc_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_login_title">
-
-                    <ImageButton
-                        android:id="@+id/btn_google_login"
-                        android:layout_width="@dimen/size_login_social_button"
-                        android:layout_height="@dimen/size_login_social_button"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/transparent"
-                        android:onClick="@{()-> viewModel.googleLogin()}"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/login_ic_google"/>
-
-                    <ImageButton
-                        android:id="@+id/btn_line_login"
-                        android:layout_width="@dimen/size_login_social_button"
-                        android:layout_height="@dimen/size_login_social_button"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:onClick="@{()-> viewModel.lineLogin()}"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/login_ic_line"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_facebook_login"
-                        android:layout_width="@dimen/size_login_social_button"
-                        android:layout_height="@dimen/size_login_social_button"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:onClick="@{()-> viewModel.fbLogin()}"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/login_ic_facebook"/>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_or"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/login_or"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black_effective"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/ly_soc_login"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/ly_pin"
+                    android:id="@+id/ly_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        app:errorEnabled="true"
+                        app:errorTextAppearance="@style/Input.TextError"
+                        app:hintAnimationEnabled="false"
+                        app:hintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_name"
+                            style="@style/Input.Login"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_login_input"
+                            android:hint="@string/signup_name_hint"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:text="@={viewModel.user.firstName}"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        app:errorEnabled="true"
+                        app:errorTextAppearance="@style/Input.TextError"
+                        app:hintAnimationEnabled="false"
+                        app:hintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ly_name"
+                        tools:ignore="MissingConstraints">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_surname"
+                            style="@style/Input.Login"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_login_input"
+                            android:hint="@string/signup_surname_hint"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:text="@={viewModel.user.lastName}"
+                        />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ly_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:errorEnabled="true"
                     app:errorTextAppearance="@style/Input.TextError"
                     app:hintAnimationEnabled="false"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_or"
+                    app:layout_constraintTop_toBottomOf="@+id/ly_name"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email"
+                        style="@style/Input.Login"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_login_input"
+                        android:hint="@string/signup_email_hint"
+                        android:inputType="text"
+                        android:maxLength="50"
+                        android:text="@={viewModel.user.email}"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ly_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:errorTextAppearance="@style/Input.TextError"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ly_email"
                     tools:ignore="MissingConstraints">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -125,10 +163,10 @@
                         style="@style/Input.Login"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_login_input"
-                        android:hint="@string/login_username_hint"
+                        android:hint="@string/signup_username_hint"
                         android:inputType="text"
                         android:maxLength="20"
-                        android:text="@={viewModel.username}"
+                        android:text="@={viewModel.user.username}"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,11 +188,12 @@
                         style="@style/Input.Login"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_login_input"
-                        android:hint="@string/login_password_hint"
+                        android:hint="@string/signup_password_hint"
                         android:inputType="textPassword"
                         android:maxLength="20"
-                        android:text="@={viewModel.password}"
+                        android:text="@={viewModel.user.password}"
                         />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -162,28 +201,17 @@
                     style="@style/Button.Primary"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/height_login_button"
-                    android:onClick="@{()-> viewModel.login()}"
+                    android:onClick="@{()-> viewModel.signup()}"
                     android:paddingEnd="80dp"
                     android:paddingStart="80dp"
-                    android:text="@string/login_button"
+                    android:text="@string/signup_button"
                     android:textSize="@dimen/text_size_login_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ly_password"
                     tools:ignore="MissingConstraints"
-                    tools:targetApi="lollipop"/>
-
-                <TextView
-                    android:id="@+id/tv_signup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="@string/login_signup"
-                    android:textColor="@color/black_effective"
-                    android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_login"/>
-
+                    tools:targetApi="lollipop"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

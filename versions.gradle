@@ -28,7 +28,7 @@ versions.location = '17.0.0'
 versions.auth = '17.0.0'
 
 // Di
-versions.koin = '2.0.0'
+versions.koin = '2.0.1'
 
 // DB
 

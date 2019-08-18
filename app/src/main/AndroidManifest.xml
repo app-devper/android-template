@@ -20,7 +20,7 @@
             tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-                android:name=".NavigationActivity"
+                android:name=".MainActivity"
                 android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

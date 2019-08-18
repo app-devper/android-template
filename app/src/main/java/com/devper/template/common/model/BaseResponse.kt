@@ -1,9 +1,16 @@
 package com.devper.template.common.model
 
-open class BaseResponse internal constructor(){
+import com.google.gson.annotations.SerializedName
+
+open class BaseResponse {
+    @SerializedName("devMessage")
     val devMessage: String? = null
+    @SerializedName("resCode")
     val resCode: String? = null
+    @SerializedName("resMessage")
     val resMessage: String? = null
+    @SerializedName("serverTime")
     val serverTime: String? = null
-    val status: Int = 0
+    @SerializedName("status")
+    val code: Int = 500
 }

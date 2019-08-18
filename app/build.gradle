@@ -66,6 +66,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$versions.location"
 
     implementation "org.koin:koin-androidx-viewmodel:$versions.koin"
+    implementation "org.koin:koin-android-scope:$versions.koin"
 
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"

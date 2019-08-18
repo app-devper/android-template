@@ -28,8 +28,11 @@ abstract class BaseActivity<Binding : ViewDataBinding, Model : ViewModel> : AppC
     }
 
     abstract fun getLayout(): Int
+
     abstract fun initViewModel(): Model
+
     abstract fun setupView()
+
     abstract fun setObserve()
 
 }

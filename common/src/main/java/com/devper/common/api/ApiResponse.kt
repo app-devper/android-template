@@ -18,7 +18,7 @@ class ApiResponse<T> {
         t.printStackTrace()
         status = when (t) {
             is IOException -> Status.TIMEOUT
-            is IllegalStateException -> Status.CONVERTION_ERROR
+            is IllegalStateException -> Status.CONVERSION_ERROR
             else -> Status.OTHER_ERROR
         }
     }
@@ -42,12 +42,20 @@ class ApiResponse<T> {
             if (message == null || message.trim { it <= ' ' }.isEmpty()) {
                 message = response.message()
             }
-            errorMessage = message
             body = null
+            errorMessage = message
         }
     }
 
     val isSuccessful: Boolean
         get() = code in 200..299
 
+    val resource: Resource<T>
+        get() {
+            return if (isSuccessful) {
+                Resource.success(body)
+            } else {
+                Resource.error(status, errorMessage ?: "Unknown error", body)
+            }
+        }
 }

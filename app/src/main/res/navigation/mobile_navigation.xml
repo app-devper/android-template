@@ -32,6 +32,21 @@
                 app:launchSingleTop="true"
                 app:popUpTo="@id/home_dest"
                 app:popUpToInclusive="true"/>
+        <action
+                android:id="@+id/signup_action"
+                app:destination="@id/signup_dest"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/signup_dest"
+            android:name="com.devper.template.signup.SignupFragment"
+            tools:layout="@layout/fragment_signup">
+
+        <action
+                android:id="@+id/home_action"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/home_dest"
+                app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

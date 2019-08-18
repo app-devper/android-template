@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MessagingHandler(private val mActivity: Activity, lifecycle: Lifecycle) : LifecycleObserver {
 
@@ -35,6 +36,17 @@ class MessagingHandler(private val mActivity: Activity, lifecycle: Lifecycle) : 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     private fun stop() {
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(myReceiver)
+    }
+
+    fun subscribeToTopic(topic: String) {
+        FirebaseMessaging.getInstance().subscribeToTopic(topic)
+            .addOnCompleteListener { task ->
+                var msg = "Subscribe topic success"
+                if (!task.isSuccessful) {
+                    msg = "Subscribe topic fail"
+                }
+                Log.d(TAG, msg)
+            }
     }
 
     companion object {

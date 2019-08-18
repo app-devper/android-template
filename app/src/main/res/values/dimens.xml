@@ -37,4 +37,6 @@
     <dimen name="margin_movie_horizontal">16dp</dimen>
     <dimen name="margin_movie_vertical">16dp</dimen>
 
+    <dimen name="text_size_home_badge">10sp</dimen>
+
 </resources>

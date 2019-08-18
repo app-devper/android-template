@@ -10,18 +10,19 @@ import com.devper.template.member.NetworkStateItemViewHolder
 import com.devper.template.movie.model.Images
 import com.devper.template.movie.model.Movie
 
-class MovieAdapter(private val retry: () -> Unit, private val onClick: (id: Int, title: String) -> Unit) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(POST_COMPARATOR) {
+class MovieAdapter(private val retry: () -> Unit, private val onClick: (id: Int, title: String) -> Unit) :
+    PagedListAdapter<Movie, RecyclerView.ViewHolder>(POST_COMPARATOR) {
 
-    lateinit var images: Images
+    var images: Images? = null
     private var networkState: NetworkState? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val movie = getItem(position)
-        movie?.let {
-            when (getItemViewType(position)) {
-                R.layout.item_movie -> (holder as MovieViewHolder).bind(it, getFullImageUrl(it))
-                R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).bindTo(networkState)
+        when (getItemViewType(position)) {
+            R.layout.item_movie -> {
+                val movie = getItem(position)
+                (holder as MovieViewHolder).bind(movie, getFullImageUrl(movie!!))
             }
+            R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).bindTo(networkState)
         }
     }
 
@@ -48,7 +49,7 @@ class MovieAdapter(private val retry: () -> Unit, private val onClick: (id: Int,
     }
 
     private fun getFullImageUrl(movie: Movie): String {
-        return movie.getFullImageUrl(images.baseUrlFull)
+        return movie.getFullImageUrl(images!!.baseUrlFull)
     }
 
     fun setNetworkState(newNetworkState: NetworkState?) {

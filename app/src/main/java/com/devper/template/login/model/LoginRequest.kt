@@ -8,5 +8,11 @@ data class LoginRequest(
     @SerializedName("pwd")
     val password: String,
     @SerializedName("channel")
-    val channel: String = "app"
+    val channel: String = "app",
+    @SerializedName("deviceId")
+    val deviceId: String? = null,
+    @SerializedName("deviceType")
+    val deviceType: String? = null,
+    @SerializedName("deviceToken")
+    val deviceToken: String? = null
 )

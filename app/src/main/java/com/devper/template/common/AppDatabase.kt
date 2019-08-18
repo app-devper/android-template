@@ -10,7 +10,7 @@ import com.devper.template.common.model.User
 import com.devper.template.member.model.Member
 
 @Database(
-    entities = [Member::class, User::class], version = 3, exportSchema = false
+    entities = [Member::class, User::class], version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun member(): MemberDao

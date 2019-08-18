@@ -15,7 +15,7 @@ class Resource<out T>(val status: Status, val data: T?, val message: String?) {
         if (status !== resource?.status) {
             return false
         }
-        if (if (message != null) message != resource?.message else resource?.message != null) {
+        if (if (message != null) message != resource.message else resource.message != null) {
             return false
         }
         return if (data != null) data == resource.data else resource.data == null

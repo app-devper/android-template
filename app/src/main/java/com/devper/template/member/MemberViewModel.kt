@@ -20,13 +20,6 @@ class MemberViewModel internal constructor(private val repo: MemberRepository) :
     val networkState: LiveData<NetworkState> = Transformations.switchMap(pagedListResult) { it.networkState }
     val isInitialLoading: LiveData<Boolean> = Transformations.switchMap(pagedListResult) { it.isInitialLoading }
 
-    var results: LiveData<Resource<List<Member>>> = Transformations.switchMap(query) {
-        when (it) {
-            null -> AbsentLiveData.create()
-            else -> repo.getMember()
-        }
-    }
-
     fun getMember() {
         pagedListResult.value = repo.getMemberPaging()
     }

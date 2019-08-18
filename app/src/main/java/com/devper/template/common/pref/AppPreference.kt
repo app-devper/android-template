@@ -33,7 +33,7 @@ class AppPreference private constructor(context: Context) {
         }
 
     var fbToken: String?
-        get() = sharedpreferences.getString(PREF_FCM_TOKEN, "")
+        get() = sharedpreferences.getString(PREF_FCM_TOKEN, null)
         set(uuid) {
             val editor = sharedpreferences.edit()
             editor.putString(PREF_FCM_TOKEN, uuid)

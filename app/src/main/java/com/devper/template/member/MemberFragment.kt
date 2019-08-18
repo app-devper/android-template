@@ -1,12 +1,10 @@
 package com.devper.template.member
 
-import android.util.Log
 import androidx.lifecycle.Observer
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import com.devper.template.common.ui.BaseFragment
 import com.devper.template.R
+import com.devper.template.common.ui.BaseFragment
 import com.devper.template.databinding.FragmentMemberBinding
-import com.devper.template.handlerResponse
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MemberFragment : BaseFragment<FragmentMemberBinding, MemberViewModel>() {
 
@@ -27,10 +25,6 @@ class MemberFragment : BaseFragment<FragmentMemberBinding, MemberViewModel>() {
 
     override fun setObserve() {
         with(viewModel) {
-            results.observe(viewLifecycleOwner, Observer {
-                val result = handlerResponse(it)
-                Log.i("MemberFragment", "Results: " + result.toString())
-            })
 
             memberList.observe(viewLifecycleOwner, Observer {
                 adapter.submitList(it)

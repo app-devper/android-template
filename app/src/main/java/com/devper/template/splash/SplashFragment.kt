@@ -3,19 +3,19 @@ package com.devper.template.splash
 import android.os.Handler
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import org.koin.android.ext.android.get
-import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
-import com.devper.template.common.ui.BaseFragment
 import com.devper.template.MainViewModel
 import com.devper.template.R
 import com.devper.template.appCompat
 import com.devper.template.common.AppDatabase
 import com.devper.template.common.SPLASH_DELAY
+import com.devper.template.common.ui.BaseFragment
 import com.devper.template.databinding.FragmentSplashBinding
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 
 class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
 
-    private var db: AppDatabase = get()
+    private val db: AppDatabase by inject()
     private lateinit var mDelayHandler: Handler
 
     override fun getLayout() = R.layout.fragment_splash

@@ -1,14 +1,8 @@
-package com.devper.template.common.model
+package com.devper.template.signup.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "users")
-data class User(
-    @SerializedName("_id")
-    @PrimaryKey
-    var id: String,
+data class SignupRequest(
     @SerializedName("username")
     var username: String? = null,
     @SerializedName("password")
@@ -20,10 +14,5 @@ data class User(
     @SerializedName("lastName")
     var lastName: String? = null,
     @SerializedName("phone")
-    var phone: String? = null,
-    @SerializedName("imageUrl")
-    var imageUrl: String? = null
-) {
-    val fullName: String
-        get() = "$firstName $lastName"
-}
+    var phone: String? = null
+)

@@ -6,37 +6,12 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.devper.template.home.HomeViewModel"/>
+                type="com.devper.template.MainViewModel"/>
     </data>
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_movie_up_coming"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:spanCount="2"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
-
-        <TextView
-                android:id="@+id/tv_up_coming_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableTop="@drawable/movie_ic_cloud_off_white_60dp"
-                android:text="@string/movie_generic_error"
-                android:textAlignment="center"
-                android:visibility="gone"/>
-
-        <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
 
     </RelativeLayout>
 </layout>

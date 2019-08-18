@@ -161,7 +161,7 @@ class LocalMessagingHelper(context: Application) {
                 intent.putExtras(bundle)
                 intent.action = bundle.getString("click_action")
 
-                val notificationID = if (bundle.containsKey("id")) bundle.getString("id", "").hashCode() else System.currentTimeMillis().toInt()
+                val notificationID = if (bundle.containsKey("_id")) bundle.getString("_id", "").hashCode() else System.currentTimeMillis().toInt()
                 val pendingIntent = PendingIntent.getActivity(mContext, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                 val notificationManager = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

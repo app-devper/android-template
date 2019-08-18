@@ -4,11 +4,23 @@
     <string name="facebook_app_id" translatable="false">478207525978138</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb478207525978138</string>
 
-    <string name="login_button_login">Login</string>
-    <string name="login_dummy">Login Dummy</string>
+    <!--Log In-->
+    <string name="login_button">Log In</string>
+    <string name="login_title">Log In</string>
+    <string name="login_or">OR</string>
+    <string name="login_signup">Don\'t have an account? Sign Up</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
 
-    <string name="login_username_hint">USERNAME</string>
-    <string name="login_password_hint">PASSWORD</string>
+    <!--Sign Up-->
+    <string name="signup_button">Sign Up</string>
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_username_hint">Username</string>
+    <string name="signup_password_hint">Password</string>
+    <string name="signup_email_hint">Email</string>
+    <string name="signup_name_hint">Name</string>
+    <string name="signup_surname_hint">Surname</string>
+    <string name="signup_phone_hint">Phone</string>
 
     <!--Drawer-->
     <string name="main_open_drawer">Drawer Open</string>
@@ -32,8 +44,6 @@
 
     <string name="profile_desc">Rowan Sebastian Atkinson CBE is an English actor,  comedian and screenwriter</string>
     <string name="profile_title">Mr Bean</string>
-
-
 
     <!--Setting-->
     <string name="setting_title">Settings</string>

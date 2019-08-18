@@ -2,13 +2,10 @@ package com.devper.template.login
 
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.devper.template.*
-import org.koin.android.ext.android.get
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import com.devper.template.common.ui.BaseFragment
 import com.devper.fingerprint.BiometricController
 import com.devper.fingerprint.Callback
 import com.devper.smartlogin.*
@@ -17,18 +14,24 @@ import com.devper.smartlogin.users.SmartGoogleUser
 import com.devper.smartlogin.users.SmartLineUser
 import com.devper.smartlogin.users.SmartUser
 import com.devper.smartlogin.util.SmartLoginException
+import com.devper.template.*
 import com.devper.template.R
 import com.devper.template.common.AppDatabase
-import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.common.model.User
-import timber.log.Timber
+import com.devper.template.common.pref.AppPreference
+import com.devper.template.common.ui.BaseFragment
+import com.devper.template.common.util.makeLinks
+import com.devper.template.databinding.FragmentLoginBinding
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), SmartLoginCallbacks, Callback {
 
     private lateinit var config: SmartLoginConfig
     private lateinit var biometric: BiometricController
-    private var smartLogin: SmartLogin? = null
-    private var db: AppDatabase = get()
+    private lateinit var smartLogin: SmartLogin
+    private val db: AppDatabase by inject()
+    private val pref: AppPreference by inject()
 
     override fun getLayout() = R.layout.fragment_login
     override fun initViewModel() = getViewModel<LoginViewModel>()
@@ -36,6 +39,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), Smar
     override fun setupView() {
         appCompat().supportActionBar?.hide()
         binding.viewModel = viewModel
+        binding.tvSignup.makeLinks(Pair(getString(R.string.signup_button), View.OnClickListener {
+            findNavController().navigate(LoginFragmentDirections.signupAction())
+        }))
         db.user().clearUser()
         activity?.let{
             config = SmartLoginConfig(it, this)
@@ -50,30 +56,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), Smar
         with(viewModel){
             results.observe(viewLifecycleOwner, Observer { resource ->
                 if (resource != null) {
-                    val users = handlerResponse(resource)
-                    users?.let {
-                        if (it.isNotEmpty()) {
-                            Timber.i("Response:%s", users[0])
-                            next()
-                        }
+                    val result = handlerResponse(resource)
+                    result?.data?.let {
+                        pref.token = it.accessToken
+                        db.user().addUser(it.user)
+                        next()
                     }
                 }
             })
 
             login.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    "Line" -> {
-                        smartLogin = SmartLoginFactory.build(LoginType.Line)
-                        smartLogin?.login(config)
-                    }
-                    "Facebook" -> {
-                        smartLogin = SmartLoginFactory.build(LoginType.Facebook)
-                        smartLogin?.login(config)
-                    }
-                    "Google" -> {
-                        smartLogin = SmartLoginFactory.build(LoginType.Google)
-                        smartLogin?.login(config)
-                    }
+                if (it != LoginType.Custom) {
+                    smartLogin = SmartLoginFactory.build(it)
+                    smartLogin.login(config)
                 }
             })
         }
@@ -81,7 +76,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), Smar
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        smartLogin?.let {
+        smartLogin.let {
             showLoading()
             it.onActivityResult(requestCode, resultCode, data, config)
         }
@@ -122,10 +117,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(), Smar
     private fun next() {
         val navBuilder = NavOptions.Builder()
         val navOptions = navBuilder.setPopUpTo(R.id.login_dest, true).build()
-        val user =  db.user().getFirstUser()
-        if (user != null) {
-            findNavController().navigate(R.id.home_dest, null, navOptions)
-        }
+        findNavController().navigate(R.id.home_dest, null, navOptions)
     }
 
 }

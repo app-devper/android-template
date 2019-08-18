@@ -3,8 +3,8 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/shopping_cart"
-        android:icon="@drawable/main_ic_shopping_cart"
+        android:id="@id/member_dest"
         android:title="@string/main_shopping_cart"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/home_ic_shop_group"
+        app:showAsAction="always" />
 </menu>

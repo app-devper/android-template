@@ -2,13 +2,13 @@ package com.devper.template.member.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
+import com.devper.template.common.AppService
 import com.devper.template.common.util.NetworkState
-import com.devper.template.member.MemberService
 import com.devper.template.member.model.Member
 
-class PagedListDataSourceFactory(headers: Map<String, String>, api: MemberService) : DataSource.Factory<String, Member>() {
+class PagedListDataSourceFactory(api: AppService) : DataSource.Factory<String, Member>() {
 
-    private var pagedListDataSource = PagedListDataSource(headers, api)
+    private var pagedListDataSource = PagedListDataSource(api)
 
     val isInitialLoading: LiveData<Boolean> = pagedListDataSource.isInitialLoading
 

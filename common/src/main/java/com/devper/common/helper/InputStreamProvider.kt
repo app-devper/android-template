@@ -5,6 +5,7 @@ import android.net.Uri
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.BufferedInputStream
+import java.io.InputStream
 import java.net.URL
 
 fun fromURI(context: Context, uri: Uri): InputStreamWithSource? {
@@ -25,8 +26,8 @@ private fun fromOKHttp(uri: Uri): InputStreamWithSource? {
     val request = requestBuilder.build()
     val response = client.newCall(request).execute()
     val body = response.body()
-    if (body != null) {
-        return InputStreamWithSource(uri.toString(), body.byteStream())
+    body?.let {
+        return InputStreamWithSource(uri.toString(), it.byteStream())
     }
     return null
 }
@@ -34,3 +35,5 @@ private fun fromOKHttp(uri: Uri): InputStreamWithSource? {
 private fun fromContent(ctx: Context, uri: Uri) = InputStreamWithSource(uri.toString(), ctx.contentResolver.openInputStream(uri)!!)
 
 private fun getDefaultInputStreamForUri(uri: Uri) = InputStreamWithSource(uri.toString(), BufferedInputStream(URL(uri.toString()).openStream(), 4096))
+
+data class InputStreamWithSource(val source: String, val inputStream: InputStream)

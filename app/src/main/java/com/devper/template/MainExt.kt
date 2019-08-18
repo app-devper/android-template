@@ -1,141 +1,103 @@
 package com.devper.template
 
-import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.util.SparseArray
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.util.forEach
-import androidx.core.util.set
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.devper.common.api.Resource
 import com.devper.common.api.Status
-import com.devper.template.common.util.ServiceHelper
+import com.devper.template.common.model.BaseResponse
+import com.devper.template.common.util.parse
 import com.devper.template.widget.ConfirmDialog
 
-var progress: Dialog? = null
-
-fun initProgress(dialog: Dialog) {
-    progress = dialog
-}
-
-fun <T> AppCompatActivity.handlerResponse(response: Resource<T>?): T? {
+fun <T> MainActivity.handlerResponse(resource: Resource<T>?, isLoading: Boolean = true): T? {
     hideLoading()
-    if (response == null) {
+    if (resource == null) {
         return null
     }
-    return when (response.status) {
+    return when (resource.status) {
         Status.SUCCESS -> {
-            response.data
+            resource.data
         }
         Status.ERROR -> {
-            showMessage(response.message)
-            response.data
+            val response = resource.message?.parse<BaseResponse>()
+            showMessageTag(response?.resMessage ?: resource.message, response?.resCode ?: "")
+            resource.data
         }
         Status.LOADING -> {
-            showLoading()
-            response.data
+            if (isLoading) {
+                showLoading()
+            }
+            resource.data
         }
         Status.TIMEOUT -> {
-            showMessage(response.message)
-            response.data
+            showMessage(resource.message)
+            resource.data
         }
-        Status.CONVERTION_ERROR -> {
-            showMessage(response.message)
-            response.data
-        }
-        Status.OTHER_ERROR -> {
-            showMessage(response.message)
-            response.data
-        }
-    }
-}
-
-fun <T> AppCompatActivity.handlerResponseOnly(response: Resource<T>?): T? {
-    if (response == null) {
-        return null
-    }
-    return when (response.status) {
-        Status.SUCCESS -> {
-            response.data
-        }
-        Status.ERROR -> {
-            showMessage(response.message)
-            response.data
-        }
-        Status.LOADING -> {
-            response.data
-        }
-        Status.TIMEOUT -> {
-            showMessage(response.message)
-            response.data
-        }
-        Status.CONVERTION_ERROR -> {
-            showMessage(response.message)
-            response.data
+        Status.CONVERSION_ERROR -> {
+            showMessage(resource.message)
+            resource.data
         }
         Status.OTHER_ERROR -> {
-            showMessage(response.message)
-            response.data
+            showMessage(resource.message)
+            resource.data
         }
     }
 }
 
-fun Fragment.appCompat(): AppCompatActivity {
-    return activity as AppCompatActivity
+fun Fragment.appCompat(): MainActivity {
+    return activity as MainActivity
 }
 
-fun <T> Fragment.handlerResponseOnly(response: Resource<T>?): T? {
-    return appCompat().handlerResponseOnly(response)
+fun <T> Fragment.handlerResponse(resource: Resource<T>?, isLoading: Boolean = true): T? {
+    return appCompat().handlerResponse(resource, isLoading)
 }
 
-fun <T> Fragment.handlerResponse(response: Resource<T>?): T? {
-    hideLoading()
-    return appCompat().handlerResponse(response)
-}
-
-fun showLoading() {
-    progress?.let {
+fun MainActivity.showLoading() {
+    progress.let {
         if (!it.isShowing) {
             it.show()
         }
     }
 }
 
-fun hideLoading() {
-    progress?.let {
+fun MainActivity.hideLoading() {
+    progress.let {
         if (it.isShowing) {
             it.dismiss()
         }
     }
 }
 
-fun AppCompatActivity.showMessage(message: String?) {
-    showMessageTag(message?: "Error", "dialog")
+fun Fragment.showLoading() {
+    appCompat().showLoading()
 }
 
-fun AppCompatActivity.showConfirmMessage(title: String, message: String, tag: String) {
+fun Fragment.hideLoading() {
+    appCompat().hideLoading()
+}
+
+fun MainActivity.showMessage(message: String?) {
+    showMessageTag(message, "dialog")
+}
+
+fun MainActivity.showConfirmMessage(title: String, message: String, tag: String) {
     val fragment = ConfirmDialog.Builder().setTitle(title).setMessage(message).setPositive(android.R.string.yes).setNegative(android.R.string.no).build()
     fragment.show(supportFragmentManager, tag)
 }
 
-fun AppCompatActivity.showMessageTag(message: String, tag: String) {
+fun MainActivity.showMessageTag(message: String?, tag: String) {
     showMessageTagTitle("Warning", message, tag)
 }
 
-fun AppCompatActivity.showMessageTagTitle(title: String, message: String, tag: String) {
+fun MainActivity.showMessageTagTitle(title: String, message: String?, tag: String) {
+    if (message == null) {
+        return
+    }
     val fragment = ConfirmDialog.Builder().setTitle(title).setMessage(message).setPositive(android.R.string.ok).build()
     fragment.show(supportFragmentManager, tag)
 }
 
-fun AppCompatActivity.hideKeyboard() {
+fun MainActivity.hideKeyboard() {
     val view = this.currentFocus
     view?.let {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

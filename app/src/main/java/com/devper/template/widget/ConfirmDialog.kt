@@ -71,7 +71,7 @@ class ConfirmDialog : DialogFragment() {
 
         binding.btnConfirm.setOnClickListener {
             val listener = onDialogListener
-            listener?.onPositiveClick(tag)
+            listener?.onPositiveClick(tag ?: "dialog")
             dismiss()
         }
 
@@ -105,7 +105,7 @@ class ConfirmDialog : DialogFragment() {
     }
 
     interface OnDialogListener {
-        fun onPositiveClick(tag: String?)
+        fun onPositiveClick(tag: String)
 
         fun onNegativeClick()
     }
