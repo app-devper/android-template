@@ -5,9 +5,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.devper.common.api.Resource
 import com.devper.common.api.Status
-import com.devper.template.common.model.BaseResponse
-import com.devper.template.common.util.parse
-import com.devper.template.widget.ConfirmDialog
+import com.devper.template.app.ext.parse
+import com.devper.template.app.model.BaseResponse
+import com.devper.template.app.widget.ConfirmDialog
 
 fun <T> MainActivity.handlerResponse(resource: Resource<T>?, isLoading: Boolean = true): T? {
     hideLoading()

@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.devper.common.api.ApiResponse
 import com.devper.common.toApiResponse
-import com.devper.template.common.util.NetworkState
-import com.devper.template.movie.MovieService
+import com.devper.template.app.util.NetworkState
+import com.devper.template.app.api.MovieService
 import com.devper.template.movie.model.Movie
 import com.devper.template.movie.model.Movies
 

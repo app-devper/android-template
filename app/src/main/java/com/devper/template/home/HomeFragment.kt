@@ -7,12 +7,11 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import com.devper.template.MainViewModel
 import com.devper.template.R
+import com.devper.template.app.ext.setCount
 import com.devper.template.appCompat
-import com.devper.template.common.ui.BaseFragment
-import com.devper.template.common.util.setCount
+import com.devper.template.app.ui.BaseFragment
 import com.devper.template.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
-
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
 
@@ -35,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         with(viewModel) {
             badge.observe(viewLifecycleOwner, Observer {
                 Log.i("Badge", "Badge: $it")
-                menuItem?.setCount(context!!, it)
+                menuItem?.setCount(requireContext(), it)
             })
         }
     }
@@ -44,6 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
         inflater.inflate(R.menu.main_menu, menu)
         menuItem = menu.findItem(R.id.member_dest)
         val badge = viewModel.badge.value
-        menuItem?.setCount(context!!, badge ?: "0")
+        menuItem?.setCount(requireContext(), badge ?: "0")
     }
 }

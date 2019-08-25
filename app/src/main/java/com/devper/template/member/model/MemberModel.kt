@@ -2,14 +2,13 @@ package com.devper.template.member.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.devper.template.common.model.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 data class Result<T>(
     val count: Int,
     val next: String,
     val previous: String,
-    val results: List<T> = emptyList()
+    val results: List<T>
 )
 
 @Entity(tableName = "members")

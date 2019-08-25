@@ -20,13 +20,13 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.devper.fcm.BadgeHelper
 import com.devper.fcm.MessagingHandler
-import com.devper.template.common.AppDatabase
-import com.devper.template.common.pref.AppPreference
-import com.devper.template.common.ui.BaseActivity
+import com.devper.template.app.db.AppDatabase
+import com.devper.template.app.pref.AppPreference
+import com.devper.template.app.ui.BaseActivity
 import com.devper.template.databinding.ActivityNavigationBinding
 import com.devper.template.databinding.LayoutNavHeaderBinding
-import com.devper.template.widget.ConfirmDialog
-import com.devper.template.widget.ProgressHudDialog
+import com.devper.template.app.widget.ConfirmDialog
+import com.devper.template.app.widget.ProgressHudDialog
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<ActivityNavigationBinding, MainViewModel>(), C
 
     override fun getLayout() = R.layout.activity_navigation
 
-    override fun initViewModel() = getViewModel<MainViewModel>()
+    override fun initViewModel() = currentScope.getViewModel<MainViewModel>(this)
 
     override fun setupView() {
 

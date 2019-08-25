@@ -1,11 +1,15 @@
 package com.devper.template.signup
 
+import com.devper.template.signup.data.SignupRepository
+import com.devper.template.signup.ui.SignupFragment
+import com.devper.template.signup.ui.SignupViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import com.devper.common.createCallService
-import com.devper.template.common.url
 
 val signupModule = module {
-    single { SignupRepository(get(), get()) }
-    viewModel { SignupViewModel(get()) }
+    factory { SignupRepository(get(), get()) }
+    scope(named<SignupFragment>()) {
+        viewModel { SignupViewModel(get()) }
+    }
 }

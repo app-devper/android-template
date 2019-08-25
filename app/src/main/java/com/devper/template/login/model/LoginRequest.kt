@@ -10,9 +10,9 @@ data class LoginRequest(
     @SerializedName("channel")
     val channel: String = "app",
     @SerializedName("deviceId")
-    val deviceId: String? = null,
+    val deviceId: String?,
     @SerializedName("deviceType")
-    val deviceType: String? = null,
+    val deviceType: String?,
     @SerializedName("deviceToken")
-    val deviceToken: String? = null
+    val deviceToken: String?
 )

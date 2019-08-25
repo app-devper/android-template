@@ -25,7 +25,7 @@
 
     <fragment
             android:id="@+id/login_dest"
-            android:name="com.devper.template.login.LoginFragment"
+            android:name="com.devper.template.login.ui.LoginFragment"
             tools:layout="@layout/fragment_login">
         <action
                 android:id="@+id/home_action"
@@ -39,7 +39,7 @@
 
     <fragment
             android:id="@+id/signup_dest"
-            android:name="com.devper.template.signup.SignupFragment"
+            android:name="com.devper.template.signup.ui.SignupFragment"
             tools:layout="@layout/fragment_signup">
 
         <action
@@ -67,21 +67,21 @@
 
     <fragment
             android:id="@+id/profile_dest"
-            android:name="com.devper.template.profile.ProfileFragment"
+            android:name="com.devper.template.profile.ui.ProfileFragment"
             android:label="@string/main_menu_profile"
             tools:layout="@layout/fragment_profile">
     </fragment>
 
     <fragment
             android:id="@+id/member_dest"
-            android:name="com.devper.template.member.MemberFragment"
+            android:name="com.devper.template.member.ui.MemberFragment"
             android:label="@string/main_menu_member"
             tools:layout="@layout/fragment_member">
     </fragment>
 
     <fragment
             android:id="@+id/movie_dest"
-            android:name="com.devper.template.movie.MovieFragment"
+            android:name="com.devper.template.movie.ui.MovieFragment"
             android:label="@string/main_menu_movie"
             tools:layout="@layout/fragment_movie">
         <action
@@ -91,7 +91,7 @@
 
     <fragment
             android:id="@+id/movie_detail_dest"
-            android:name="com.devper.template.moviedetail.MovieDetailFragment"
+            android:name="com.devper.template.movie.ui.MovieDetailFragment"
             tools:layout="@layout/fragment_movie_detail">
         <argument android:name="movieId" app:argType="integer"/>
         <argument android:name="title" app:argType="string"/>

@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.devper.common.api.ApiResponse
 import com.devper.common.toApiResponse
-import com.devper.template.common.AppService
-import com.devper.template.common.model.DataResponse
-import com.devper.template.common.util.NetworkState
-import com.devper.template.common.util.data
+import com.devper.template.app.api.AppService
+import com.devper.template.app.model.DataResponse
+import com.devper.template.app.util.NetworkState
+import com.devper.template.app.util.data
 import com.devper.template.member.model.Member
 import com.devper.template.member.model.Result
 

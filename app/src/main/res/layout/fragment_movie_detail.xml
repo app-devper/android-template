@@ -8,7 +8,7 @@
     <data>
         <variable
                 name="viewDetailModel"
-                type="com.devper.template.moviedetail.MovieDetailViewModel"/>
+                type="com.devper.template.movie.ui.MovieDetailViewModel"/>
         <variable
                 name="movie"
                 type="com.devper.template.movie.model.Movie"/>
@@ -48,7 +48,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp">
 
                     <TextView
                             android:layout_width="wrap_content"

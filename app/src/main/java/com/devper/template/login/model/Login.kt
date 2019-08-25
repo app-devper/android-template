@@ -1,6 +1,6 @@
 package com.devper.template.login.model
 
-import com.devper.template.common.model.User
+import com.devper.template.app.model.User
 
 data class Login(
     val user: User,

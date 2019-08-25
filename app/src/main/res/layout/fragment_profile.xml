@@ -14,7 +14,7 @@
             android:layout_width="@dimen/toolbar_profile_width"
             android:layout_height="wrap_content">
 
-            <com.devper.template.widget.RoundedImageView
+            <com.devper.template.app.widget.RoundedImageView
                 android:id="@+id/img_profile"
                 android:layout_width="@dimen/toolbar_profile_width"
                 android:layout_height="@dimen/toolbar_profile_width"

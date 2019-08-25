@@ -1,7 +1,6 @@
 package com.devper.common
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import com.devper.common.api.ApiResponse
 import com.devper.common.api.Resource
 import okhttp3.OkHttpClient

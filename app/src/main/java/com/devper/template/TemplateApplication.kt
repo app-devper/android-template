@@ -7,8 +7,13 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.multidex.MultiDexApplication
 import com.devper.fcm.LocalMessagingHelper
-import com.devper.template.common.appModules
-import com.devper.template.common.pref.AppPreference
+import com.devper.template.app.appModule
+import com.devper.template.app.pref.AppPreference
+import com.devper.template.login.loginModule
+import com.devper.template.member.memberModule
+import com.devper.template.movie.movieModule
+import com.devper.template.profile.profileModule
+import com.devper.template.signup.signupModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -23,7 +28,10 @@ class TemplateApplication : MultiDexApplication(), Application.ActivityLifecycle
 
     override fun onCreate() {
         super.onCreate()
-
+        val appModules = listOf(
+            appModule, mainModule, loginModule, memberModule,
+            movieModule, signupModule, profileModule
+        )
         localMessagingHelper = LocalMessagingHelper(this)
 
         startKoin {
@@ -80,7 +88,7 @@ class TemplateApplication : MultiDexApplication(), Application.ActivityLifecycle
         if (pref.appUuid.isEmpty()) {
             pref.appUuid = UUID.randomUUID().toString()
         }
-        Timber.i("TemplateApplication UUID: %s", pref.appUuid)
+        Timber.i("App UUID: %s", pref.appUuid)
     }
 
 }

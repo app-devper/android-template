@@ -1,18 +1,24 @@
 package com.devper.template.movie
 
+import com.devper.template.movie.data.MovieRepository
+import com.devper.template.movie.ui.MovieDetailFragment
+import com.devper.template.movie.ui.MovieDetailViewModel
+import com.devper.template.movie.ui.MovieFragment
+import com.devper.template.movie.ui.MovieViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import com.devper.common.createCallService
-import com.devper.template.common.MOVIE_URL
-import com.devper.template.home.HomeViewModel
-import com.devper.template.moviedetail.MovieDetailRepository
-import com.devper.template.moviedetail.MovieDetailViewModel
 
 val movieModule = module {
-    single { createCallService<MovieService>(get(), MOVIE_URL) }
-    single { MovieRepository(get(), get()) }
-    single { MovieDetailRepository(get(), get()) }
-    viewModel { MovieViewModel(get()) }
-    viewModel { HomeViewModel(get()) }
-    viewModel { MovieDetailViewModel(get()) }
+
+    factory { MovieRepository(get(), get()) }
+
+    scope(named<MovieFragment>()) {
+        viewModel { MovieViewModel(get()) }
+    }
+
+    scope(named<MovieDetailFragment>()) {
+        viewModel { MovieDetailViewModel(get()) }
+    }
+
 }

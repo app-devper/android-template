@@ -5,10 +5,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.devper.template.MainViewModel
 import com.devper.template.R
+import com.devper.template.app.AppConfig.SPLASH_DELAY
+import com.devper.template.app.db.AppDatabase
 import com.devper.template.appCompat
-import com.devper.template.common.AppDatabase
-import com.devper.template.common.SPLASH_DELAY
-import com.devper.template.common.ui.BaseFragment
+import com.devper.template.app.ui.BaseFragment
 import com.devper.template.databinding.FragmentSplashBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
