@@ -25,5 +25,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.appcompat:appcompat:$versions.appcompat"
     implementation "com.google.android.gms:play-services-location:$versions.location"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

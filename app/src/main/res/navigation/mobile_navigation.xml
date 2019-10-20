@@ -1,101 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<navigation
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        app:startDestination="@id/splash_dest">
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/splash_dest">
 
     <fragment
-            android:id="@+id/splash_dest"
-            android:name="com.devper.template.splash.SplashFragment"
-            tools:layout="@layout/fragment_splash">
+        android:id="@+id/splash_dest"
+        android:name="com.devper.template.presentation.splash.SplashFragment"
+        tools:layout="@layout/fragment_splash">
         <action
-                android:id="@+id/home_action"
-                app:launchSingleTop="true"
-                app:popUpTo="@id/home_dest"
-                app:popUpToInclusive="true"/>
-
-        <action
-                android:id="@+id/login_action"
-                app:launchSingleTop="true"
-                app:popUpTo="@id/login_dest"
-                app:popUpToInclusive="true"/>
-    </fragment>
-
-    <fragment
-            android:id="@+id/login_dest"
-            android:name="com.devper.template.login.ui.LoginFragment"
-            tools:layout="@layout/fragment_login">
-        <action
-                android:id="@+id/home_action"
-                app:launchSingleTop="true"
-                app:popUpTo="@id/home_dest"
-                app:popUpToInclusive="true"/>
-        <action
-                android:id="@+id/signup_action"
-                app:destination="@id/signup_dest"/>
-    </fragment>
-
-    <fragment
-            android:id="@+id/signup_dest"
-            android:name="com.devper.template.signup.ui.SignupFragment"
-            tools:layout="@layout/fragment_signup">
+            android:id="@+id/home_action"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
 
         <action
-                android:id="@+id/home_action"
-                app:launchSingleTop="true"
-                app:popUpTo="@id/home_dest"
-                app:popUpToInclusive="true"/>
+            android:id="@+id/login_action"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/login_dest"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-            android:id="@+id/home_dest"
-            android:name="com.devper.template.home.HomeFragment"
-            android:label="@string/main_menu_home"
-            tools:layout="@layout/fragment_home">
+        android:id="@+id/login_dest"
+        android:name="com.devper.template.presentation.login.LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
-                android:id="@+id/movie_detail_action"
-                app:destination="@id/movie_detail_dest"/>
-    </fragment>
-
-    <fragment
-            android:id="@+id/setting_dest"
-            android:name="com.devper.template.setting.SettingFragment"
-            android:label="@string/main_menu_setting">
-    </fragment>
-
-    <fragment
-            android:id="@+id/profile_dest"
-            android:name="com.devper.template.profile.ui.ProfileFragment"
-            android:label="@string/main_menu_profile"
-            tools:layout="@layout/fragment_profile">
-    </fragment>
-
-    <fragment
-            android:id="@+id/member_dest"
-            android:name="com.devper.template.member.ui.MemberFragment"
-            android:label="@string/main_menu_member"
-            tools:layout="@layout/fragment_member">
-    </fragment>
-
-    <fragment
-            android:id="@+id/movie_dest"
-            android:name="com.devper.template.movie.ui.MovieFragment"
-            android:label="@string/main_menu_movie"
-            tools:layout="@layout/fragment_movie">
+            android:id="@+id/home_action"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
         <action
-                android:id="@+id/movie_detail_action"
-                app:destination="@id/movie_detail_dest"/>
+            android:id="@+id/signup_action"
+            app:destination="@id/signup_dest" />
     </fragment>
 
     <fragment
-            android:id="@+id/movie_detail_dest"
-            android:name="com.devper.template.movie.ui.MovieDetailFragment"
-            tools:layout="@layout/fragment_movie_detail">
-        <argument android:name="movieId" app:argType="integer"/>
-        <argument android:name="title" app:argType="string"/>
-        <argument android:name="baseUrl" app:argType="string"/>
+        android:id="@+id/signup_dest"
+        android:name="com.devper.template.presentation.signup.SignupFragment"
+        tools:layout="@layout/fragment_signup">
+
+        <action
+            android:id="@+id/home_action"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/home_dest"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/home_dest"
+        android:name="com.devper.template.presentation.home.HomeFragment"
+        android:label="@string/main_menu_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/movie_detail_action"
+            app:destination="@id/movie_detail_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/setting_dest"
+        android:name="com.devper.template.presentation.setting.SettingFragment"
+        android:label="@string/main_menu_setting" />
+
+    <fragment
+        android:id="@+id/profile_dest"
+        android:name="com.devper.template.presentation.profile.ProfileFragment"
+        android:label="@string/main_menu_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/member_dest"
+        android:name="com.devper.template.presentation.member.MemberFragment"
+        android:label="@string/main_menu_member"
+        tools:layout="@layout/fragment_member" />
+
+    <fragment
+        android:id="@+id/movie_dest"
+        android:name="com.devper.template.presentation.movie.MovieFragment"
+        android:label="@string/main_menu_movie"
+        tools:layout="@layout/fragment_movie">
+        <action
+            android:id="@+id/movie_detail_action"
+            app:destination="@id/movie_detail_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_detail_dest"
+        android:name="com.devper.template.presentation.movie.MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
 
     </fragment>
 

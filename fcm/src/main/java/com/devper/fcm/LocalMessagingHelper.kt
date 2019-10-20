@@ -212,7 +212,7 @@ class LocalMessagingHelper(context: Application) {
     companion object {
         private const val DEFAULT_VIBRATION = 300L
         private val TAG = LocalMessagingHelper::class.java.simpleName
-        private const val PACKAGE_NAME = BuildConfig.APPLICATION_ID
+        private const val PACKAGE_NAME = BuildConfig.LIBRARY_PACKAGE_NAME
         private var mIsForeground = false //this is a hack
         private var currentClass: Class<*>? = null
         private const val CHANNEL_ID = "channel_02"

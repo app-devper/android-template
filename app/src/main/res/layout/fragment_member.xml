@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.member.ui.MemberViewModel"/>
+            type="com.devper.template.presentation.member.MemberViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

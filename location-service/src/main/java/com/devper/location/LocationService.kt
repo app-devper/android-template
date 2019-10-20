@@ -219,7 +219,7 @@ class LocationService : Service() {
     }
 
     companion object {
-        private const val PACKAGE_NAME = BuildConfig.APPLICATION_ID
+        private const val PACKAGE_NAME = BuildConfig.LIBRARY_PACKAGE_NAME
         private val TAG = LocationService::class.java.simpleName
         private const val CHANNEL_ID = "location_01"
         private var currentClass: Class<*>? = null

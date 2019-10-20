@@ -79,7 +79,7 @@ class MessagingService : FirebaseMessagingService() {
 
     companion object {
         private val TAG = MessagingService::class.java.simpleName
-        private const val PACKAGE_NAME = BuildConfig.APPLICATION_ID
+        private const val PACKAGE_NAME = BuildConfig.LIBRARY_PACKAGE_NAME
         const val ACTION_TOKEN_BROADCAST = "$PACKAGE_NAME.token_broadcast"
         const val EXTRA_FCM_TOKEN = "$PACKAGE_NAME.fcm_token"
     }

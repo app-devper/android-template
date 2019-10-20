@@ -10,7 +10,7 @@
 
         <variable
             name="user"
-            type="com.devper.template.app.model.User"/>
+            type="com.devper.template.domain.model.user.User"/>
 
     </data>
 
@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <com.devper.template.app.widget.RoundedImageView
+        <com.devper.template.core.widget.RoundedImageView
             android:id="@+id/img_profile"
             android:layout_width="64dp"
             android:layout_height="64dp"

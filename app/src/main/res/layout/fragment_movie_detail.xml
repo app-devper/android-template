@@ -1,151 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-                name="viewDetailModel"
-                type="com.devper.template.movie.ui.MovieDetailViewModel"/>
+            name="viewDetailModel"
+            type="com.devper.template.presentation.movie.MovieDetailViewModel" />
+
         <variable
-                name="movie"
-                type="com.devper.template.movie.model.Movie"/>
-        <variable
-                name="baseUrl"
-                type="String"/>
+            name="movie"
+            type="com.devper.template.domain.model.movie.Movie" />
+
     </data>
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/margin_movie_vertical"
-                android:paddingLeft="@dimen/margin_movie_horizontal"
-                android:paddingRight="@dimen/margin_movie_horizontal"
-                android:paddingTop="@dimen/margin_movie_vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_movie_horizontal"
+            android:paddingTop="@dimen/margin_movie_vertical"
+            android:paddingRight="@dimen/margin_movie_horizontal"
+            android:paddingBottom="@dimen/margin_movie_vertical">
 
             <LinearLayout
-                    android:id="@+id/container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_movie_poster_detail"
-                    android:orientation="horizontal">
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_movie_poster_detail"
+                android:orientation="horizontal">
 
                 <ImageView
-                        android:id="@+id/posterImage"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/height_movie_poster_detail"
-                        android:layout_weight="1"
-                        android:background="@android:color/darker_gray"
-                        android:scaleType="centerCrop"
-                        app:imageUrl="@{movie.getFullImageUrl(baseUrl)}"/>
+                    android:id="@+id/posterImage"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_movie_poster_detail"
+                    android:layout_weight="1"
+                    android:background="@android:color/darker_gray"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{movie.posterPath}" />
 
                 <LinearLayout
-                        android:layout_width="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="10dp">
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/movie_genres_header"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/movie_genres_header"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold"/>
+                        android:id="@+id/genresTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@{movie.genresFull}"
+                        tools:text="Action, Adventure, Science Fiction, Thriller" />
 
                     <TextView
-                            android:id="@+id/genresTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@{movie.genresFull}"
-                            tools:text="Action, Adventure, Science Fiction, Thriller"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/movie_duration_header"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/movie_duration_header"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold"/>
+                        android:id="@+id/durationTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@{movie.runtimeFull}"
+                        tools:text="124 minutes" />
 
                     <TextView
-                            android:id="@+id/durationTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@{movie.runtimeFull}"
-                            tools:text="124 minutes"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/movie_language_header"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/movie_language_header"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold"/>
-
-                    <TextView
-                            android:id="@+id/languageTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{movie.originalLanguage}"
-                            tools:text="English"/>
+                        android:id="@+id/languageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{movie.originalLanguage}"
+                        tools:text="English" />
 
 
                 </LinearLayout>
             </LinearLayout>
 
             <TextView
-                    android:id="@+id/overviewHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/container"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/movie_overview_header"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold"/>
+                android:id="@+id/overviewHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/container"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/movie_overview_header"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
 
             <TextView
-                    android:id="@+id/overviewTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/overviewHeader"
-                    android:layout_marginBottom="8dp"
-                    android:ellipsize="end"
-                    android:text="@{movie.overview}"
-                    tools:text="Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond."/>
+                android:id="@+id/overviewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/overviewHeader"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:text="@{movie.overview}"
+                tools:text="Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond." />
 
             <Button
-                    android:id="@+id/bookButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/overviewTextView"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/movie_book_the_movie"
-                    app:buttonOnClick="@{movie.homepage}"/>
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:drawableTop="@drawable/movie_ic_cloud_off_white_60dp"-->
-            <!--android:text="@string/movie_generic_error"-->
-            <!--android:textAlignment="center"/>-->
-
-            <!--<ProgressBar-->
-            <!--android:id="@+id/progressBar"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerInParent="true"/>-->
+                android:id="@+id/bookButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/overviewTextView"
+                android:layout_marginTop="16dp"
+                android:text="@string/movie_book_the_movie"
+                app:buttonOnClick="@{movie.homepage}" />
 
         </RelativeLayout>
     </ScrollView>

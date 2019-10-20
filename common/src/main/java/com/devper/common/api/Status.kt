@@ -5,6 +5,7 @@ enum class Status {
     ERROR,
     LOADING,
     TIMEOUT,
+    CANCEL,
     CONVERSION_ERROR,
     OTHER_ERROR
 

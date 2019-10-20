@@ -1,37 +1,29 @@
 package com.devper.template
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
-import android.os.Bundle
-import android.provider.Settings
-import androidx.multidex.MultiDexApplication
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.devper.fcm.LocalMessagingHelper
-import com.devper.template.app.appModule
-import com.devper.template.app.pref.AppPreference
-import com.devper.template.login.loginModule
-import com.devper.template.member.memberModule
-import com.devper.template.movie.movieModule
-import com.devper.template.profile.profileModule
-import com.devper.template.signup.signupModule
-import org.koin.android.ext.android.inject
+import com.devper.template.di.appModule
+import com.devper.template.di.dataModule
+import com.devper.template.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
-import java.util.*
 
-class TemplateApplication : MultiDexApplication(), Application.ActivityLifecycleCallbacks {
+class TemplateApplication : Application(), LifecycleObserver {
 
     private lateinit var localMessagingHelper: LocalMessagingHelper
-    private val pref: AppPreference by inject()
 
     override fun onCreate() {
         super.onCreate()
-        val appModules = listOf(
-            appModule, mainModule, loginModule, memberModule,
-            movieModule, signupModule, profileModule
-        )
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+        val appModules = listOf(appModule, domainModule, dataModule)
         localMessagingHelper = LocalMessagingHelper(this)
 
         startKoin {
@@ -40,55 +32,19 @@ class TemplateApplication : MultiDexApplication(), Application.ActivityLifecycle
             modules(appModules)
         }
 
-        registerActivityLifecycleCallbacks(this)
-        verifyUUID()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
-    override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-
-    }
-
-    override fun onActivityStarted(activity: Activity) {
-        localMessagingHelper.setApplicationForeground(true)
-    }
-
-    override fun onActivityResumed(activity: Activity) {
-        localMessagingHelper.setApplicationForeground(true)
-        //localMessagingHelper.setCurrentClass(activity.javaClass)
-    }
-
-    override fun onActivityPaused(activity: Activity) {
-
-    }
-
-    override fun onActivityStopped(activity: Activity) {
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onAppBackgrounded() {
+        Timber.d("App in background")
         localMessagingHelper.setApplicationForeground(false)
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle?) {
-
-    }
-
-    override fun onActivityDestroyed(activity: Activity) {
-        localMessagingHelper.setApplicationForeground(false)
-        // localMessagingHelper.setCurrentClass(null)
-    }
-
-    @SuppressLint("HardwareIds")
-    private fun verifyUUID() {
-        var androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-        if ("9774d56d682e549c" == androidId) {
-            androidId = UUID.randomUUID().toString().replace("-", "")
-        }
-        if (pref.deviceUuid.isEmpty()) {
-            pref.deviceUuid = androidId
-        }
-        Timber.i("Device UUID: %s", pref.deviceUuid)
-
-        if (pref.appUuid.isEmpty()) {
-            pref.appUuid = UUID.randomUUID().toString()
-        }
-        Timber.i("App UUID: %s", pref.appUuid)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onAppForegrounded() {
+        Timber.d("App in foreground")
+        localMessagingHelper.setApplicationForeground(true)
     }
 
 }

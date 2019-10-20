@@ -10,6 +10,8 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
             android:name=".TemplateApplication"
             android:icon="@mipmap/ic_launcher"
@@ -20,7 +22,7 @@
             tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-                android:name=".MainActivity"
+                android:name=".presentation.main.MainActivity"
                 android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
