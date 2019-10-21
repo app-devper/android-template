@@ -27,7 +27,6 @@ class MovieDataSource(private val useCase: GetMoviesUseCase) : PageKeyedDataSour
                 networkState.postValue(NetworkState.error(it.message))
             }
         }
-
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
@@ -45,7 +44,6 @@ class MovieDataSource(private val useCase: GetMoviesUseCase) : PageKeyedDataSour
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-    }
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {}
 
 }

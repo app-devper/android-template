@@ -24,18 +24,9 @@ class NetworkStateItemViewHolder(view: View, private val retryCallback: () -> Un
     }
 
     fun bindTo(networkState: NetworkState?) {
-        progressBar.visibility =
-            toVisibility(
-                networkState?.status == Status.RUNNING
-            )
-        retry.visibility =
-            toVisibility(
-                networkState?.status == Status.FAILED
-            )
-        errorMsg.visibility =
-            toVisibility(
-                networkState?.msg != null
-            )
+        progressBar.visibility = toVisibility(networkState?.status == Status.RUNNING)
+        retry.visibility = toVisibility(networkState?.status == Status.FAILED)
+        errorMsg.visibility = toVisibility(networkState?.msg != null)
         errorMsg.text = networkState?.msg
     }
 

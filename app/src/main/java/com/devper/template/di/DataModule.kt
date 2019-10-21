@@ -8,7 +8,6 @@ import com.devper.template.data.preference.AppPreference
 import com.devper.template.data.remote.AppFactory
 import com.devper.template.data.remote.AppInterceptor
 import com.devper.template.data.remote.AppService
-import com.devper.template.data.repository.MemberRepository
 import com.devper.template.data.repository.DeviceRemoteRepository
 import com.devper.template.data.repository.MovieRemoteRepository
 import com.devper.template.data.repository.UserRemoteRepository
@@ -32,6 +31,5 @@ val dataModule = module {
     factory<DeviceRepository> { DeviceRemoteRepository(get(), get()) }
     factory<UserRepository> { UserRemoteRepository(get(), get(), get()) }
     factory<MovieRepository> { MovieRemoteRepository(get(), get()) }
-    factory { MemberRepository(get()) }
 
 }

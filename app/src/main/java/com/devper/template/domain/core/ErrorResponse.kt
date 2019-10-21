@@ -2,7 +2,7 @@ package com.devper.template.domain.core
 
 import com.google.gson.annotations.SerializedName
 
-data class BaseResponse(
+data class ErrorResponse(
     @SerializedName("devMessage")
     val devMessage: String,
     @SerializedName("resCode")

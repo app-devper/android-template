@@ -11,9 +11,7 @@ class AppInterceptor(private val pref: AppPreference) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-
         val originalRequest = chain.request()
-
         val newRequest = originalRequest.newBuilder().run {
             addHeader("Content-Type", "application/json")
             if (pref.token.isNotEmpty()) {
@@ -22,7 +20,6 @@ class AppInterceptor(private val pref: AppPreference) : Interceptor {
             addHeader("x-transaction-id", genTransactionId())
             build()
         }
-
         return chain.proceed(newRequest)
     }
 

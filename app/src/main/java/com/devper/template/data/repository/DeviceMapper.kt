@@ -1,11 +1,7 @@
 package com.devper.template.data.repository
 
 import com.devper.template.data.remote.device.DeviceRequest
-import com.devper.template.data.remote.user.LoginRequest
-import com.devper.template.data.remote.user.SignupRequest
 import com.devper.template.domain.model.application.AppInfo
-import com.devper.template.domain.model.user.LoginParam
-import com.devper.template.domain.model.user.SignupParam
 
 class DeviceMapper {
 

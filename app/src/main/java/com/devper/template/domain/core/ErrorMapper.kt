@@ -16,7 +16,7 @@ class ErrorMapper {
             is HttpException -> {
                 try {
                     val result = throwable.response()?.errorBody()?.string()
-                    val response = Gson().fromJson(result, BaseResponse::class.java)
+                    val response = Gson().fromJson(result, ErrorResponse::class.java)
                     AppException(response.resCode, response.resMessage)
                 } catch (e: Throwable) {
                     e.printStackTrace()

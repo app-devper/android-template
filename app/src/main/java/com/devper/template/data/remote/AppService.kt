@@ -1,9 +1,8 @@
 package com.devper.template.data.remote
 
 import com.devper.template.data.remote.core.DataResponse
-import com.devper.template.data.remote.core.ResultPaging
 import com.devper.template.data.remote.device.DeviceRequest
-import com.devper.template.data.remote.device.PublicKeyData
+import com.devper.template.data.remote.device.DeviceData
 import com.devper.template.data.remote.movie.ConfigurationData
 import com.devper.template.data.remote.movie.MovieData
 import com.devper.template.data.remote.movie.MoviesData
@@ -11,7 +10,6 @@ import com.devper.template.data.remote.user.LoginData
 import com.devper.template.data.remote.user.LoginRequest
 import com.devper.template.data.remote.user.SignupRequest
 import com.devper.template.data.remote.user.UserData
-import com.devper.template.domain.model.member.Member
 import retrofit2.http.*
 
 interface AppService {
@@ -28,12 +26,6 @@ interface AppService {
     @POST("api/users/{id}")
     suspend fun updateUser(@Path("id") id: String)
 
-    @GET("api/members")
-    suspend fun members(): DataResponse<ResultPaging<Member>>
-
-    @GET
-    suspend fun members(@Url url: String): DataResponse<ResultPaging<Member>>
-
     @GET("api/moviedb/movie/now_playing")
     suspend fun getMovies(@Query("page") page: Int): MoviesData
 
@@ -47,5 +39,5 @@ interface AppService {
     suspend fun getConfiguration(): ConfigurationData
 
     @POST("api/device")
-    suspend fun registerDevice(@Body request: DeviceRequest): DataResponse<PublicKeyData>
+    suspend fun registerDevice(@Body request: DeviceRequest): DataResponse<DeviceData>
 }

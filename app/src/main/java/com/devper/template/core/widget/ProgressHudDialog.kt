@@ -7,10 +7,7 @@ import android.view.View
 import com.devper.template.R
 import kotlinx.android.synthetic.main.dialog_progress_hud.*
 
-class ProgressHudDialog : Dialog {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, theme: Int) : super(context, theme)
+class ProgressHudDialog(context: Context, theme: Int) : Dialog(context, theme) {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         avi.show()

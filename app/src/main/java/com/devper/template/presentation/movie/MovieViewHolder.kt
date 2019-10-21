@@ -11,6 +11,7 @@ import com.devper.template.R
 import com.devper.template.domain.model.movie.Movie
 
 class MovieViewHolder(val view: View, private val f: (id: Int, title: String) -> Unit) : RecyclerView.ViewHolder(view) {
+
     private val titleTextView: TextView = view.findViewById(R.id.titleTextView)
     private val popularityTextView: TextView = view.findViewById(R.id.popularityTextView)
     private val imageView: ImageView = view.findViewById(R.id.imageView)
