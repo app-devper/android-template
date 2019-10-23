@@ -11,7 +11,7 @@ import com.devper.template.core.util.NetworkState
 import com.devper.template.domain.model.movie.Movie
 import com.devper.template.domain.usecase.movie.GetConfigUseCase
 import com.devper.template.domain.usecase.movie.GetMoviesUseCase
-import com.devper.template.presentation.core.PagedListResult
+import com.devper.template.core.PagedListResult
 
 class MovieViewModel internal constructor(
     private val useCase: GetConfigUseCase,

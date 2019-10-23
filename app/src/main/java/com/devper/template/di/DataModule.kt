@@ -18,6 +18,7 @@ import com.devper.template.domain.repository.UserRepository
 import org.koin.dsl.module
 
 val dataModule = module {
+
     single { AppPreference.init(get()) }
     single { AppDatabase.create(get(), false) }
     single { AppInterceptor(get()) }

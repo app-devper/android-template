@@ -6,11 +6,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import com.devper.template.R
-import com.devper.template.core.ext.setCount
+import com.devper.template.core.extension.setCount
 import com.devper.template.databinding.FragmentHomeBinding
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.main.MainViewModel
-import com.devper.template.presentation.core.appCompat
+import com.devper.template.presentation.main.appCompat
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {

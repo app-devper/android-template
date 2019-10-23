@@ -1,4 +1,4 @@
-package com.devper.template.core.ext
+package com.devper.template.core.extension
 
 import android.graphics.Bitmap
 import java.io.ByteArrayOutputStream

@@ -18,9 +18,9 @@ class UserRemoteRepository(
         return db.user().clearUser()
     }
 
-    override suspend fun getCurrentUser(): User {
+    override suspend fun getCurrentUser(): User? {
         val mapper = UserMapper()
-        return db.user().getFirstUser().let {
+        return db.user().getFirstUser()?.let {
             mapper.toUserDomain(it)
         }
     }

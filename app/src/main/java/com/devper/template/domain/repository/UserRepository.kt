@@ -12,7 +12,7 @@ interface UserRepository {
 
     suspend fun getProfile(id: String): User
 
-    suspend fun getCurrentUser(): User
+    suspend fun getCurrentUser(): User?
 
     suspend fun clearUser()
 

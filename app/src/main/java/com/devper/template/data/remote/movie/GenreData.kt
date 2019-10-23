@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GenreData(
     @SerializedName("id")
-    var id: Int = 0,
+    val id: Int,
     @SerializedName("name")
-    var name: String? = null
+    val name: String
 )

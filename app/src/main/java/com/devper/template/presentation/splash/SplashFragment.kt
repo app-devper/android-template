@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSplashBinding
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.core.appCompat
+import com.devper.template.presentation.main.appCompat
 import com.devper.template.presentation.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

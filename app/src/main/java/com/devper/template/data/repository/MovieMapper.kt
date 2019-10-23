@@ -17,25 +17,25 @@ class MovieMapper {
         )
     }
 
-    fun toMovieDomain(data: MovieData, imagesData: ImagesData?): Movie {
+    fun toMovieDomain(data: MovieData,  images: Images): Movie {
         val genres = toDomain(data.genres)
         return Movie(
             data.id, data.adult, data.backdropPath, genres, data.genreIds,
             data.homepage, data.originalLanguage, data.originalTitle,
-            data.overview, data.popularity, imagesData?.baseUrlFull + data.posterPath,
+            data.overview, data.popularity, images.baseUrlFull + data.posterPath,
             data.releaseDate,
             data.revenue, data.runtime, data.status, data.tagLine, data.title,
             data.video, data.voteAverage, data.voteCount
         )
     }
 
-    fun toMoviesDomain(data: MoviesData, imagesData: ImagesData?): Movies {
-        val results = toMovieDomain(data.results, imagesData)
+    fun toMoviesDomain(data: MoviesData, images: Images): Movies {
+        val results = toMovieDomain(data.results, images)
         return Movies(data.page, results, data.totalResults, data.totalPages)
     }
 
-    private fun toMovieDomain(data: List<MovieData>?, imagesData: ImagesData?): List<Movie>? {
-        return data?.map { toMovieDomain(it, imagesData) }
+    private fun toMovieDomain(data: List<MovieData>?, images: Images): List<Movie>? {
+        return data?.map { toMovieDomain(it, images) }
     }
 
     private fun toDomain(data: List<GenreData>?): List<Genre>? {

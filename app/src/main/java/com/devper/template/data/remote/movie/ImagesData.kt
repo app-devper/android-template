@@ -17,21 +17,4 @@ data class ImagesData(
     val profileSizes: List<String>?,
     @SerializedName("still_sizes")
     val stillSizes: List<String>?
-){
-    val baseUrlFull: String
-        get() {
-            if (secureBaseUrl != null) {
-                posterSizes?.let {
-                    return if (it.size > 4) {
-                        // usually equal to 'w500'
-                        secureBaseUrl + it[4]
-                    } else {
-                        // back-off to hard-coded value
-                        secureBaseUrl + "w500"
-                    }
-                }
-            }
-            return ""
-        }
-}
-
+)

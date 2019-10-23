@@ -1,4 +1,4 @@
-package com.devper.template.presentation.core
+package com.devper.template.core
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

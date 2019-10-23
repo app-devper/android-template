@@ -10,8 +10,6 @@ class DeviceRemoteRepository(
 ) : DeviceRepository {
     override suspend fun registerDevice(): String {
         val mapper = DeviceMapper()
-        return api.registerDevice(mapper.toRequest(appInfo)).let {
-            it.data.publicKey
-        }
+        return api.registerDevice(mapper.toRequest(appInfo)).data.publicKey
     }
 }

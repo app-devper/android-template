@@ -12,12 +12,11 @@ import com.devper.smartlogin.*
 import com.devper.smartlogin.users.SmartUser
 import com.devper.smartlogin.util.SmartLoginException
 import com.devper.template.R
-import com.devper.template.core.ext.makeLinks
+import com.devper.template.core.extension.*
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.core.*
-import com.devper.template.presentation.main.MainViewModel
+import com.devper.template.presentation.main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -55,7 +54,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     }
                     is ResultState.Success -> {
                         hideLoading()
-                        mainViewModel.user.value = it.data
+                        mainViewModel.setUser(it.data)
                         next()
                     }
                     is ResultState.Error -> {

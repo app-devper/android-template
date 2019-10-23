@@ -1,6 +1,6 @@
 package com.devper.template.domain.usecase.user
 
-import com.devper.template.core.ext.md5
+import com.devper.template.core.extension.md5
 import com.devper.template.domain.model.user.LoginParam
 import com.devper.template.domain.repository.UserRepository
 import com.devper.template.domain.model.user.User

@@ -5,7 +5,6 @@ import com.devper.template.core.widget.ProgressHudDialog
 import com.devper.template.presentation.login.LoginViewModel
 import com.devper.template.presentation.main.MainActivity
 import com.devper.template.presentation.main.MainViewModel
-import com.devper.template.presentation.member.MemberViewModel
 import com.devper.template.presentation.movie.MovieDetailViewModel
 import com.devper.template.presentation.movie.MovieViewModel
 import com.devper.template.presentation.profile.ProfileViewModel
@@ -26,7 +25,6 @@ val appModule = module {
     viewModel { LoginViewModel(get(), get()) }
     viewModel { SignupViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
-    viewModel { MemberViewModel(get()) }
     viewModel { MovieViewModel(get(), get()) }
     viewModel { MovieDetailViewModel(get()) }
 

@@ -15,7 +15,7 @@ class SignupViewModel internal constructor(private val signupUseCase: SignupUseC
 
     fun signup() {
         Timber.d("Signup: $user")
-        if (user.username == null || user.password == null) {
+        if (user.username.isNullOrEmpty() || user.password.isNullOrEmpty()) {
             return
         }
         signupUseCase.execute(user) {

@@ -11,39 +11,26 @@ class MovieRemoteRepository(private val api: AppService, private val session: Ap
 
     override suspend fun getMovies(page: Int): Movies {
         val mapper = MovieMapper()
-        if (session.imagesData == null) {
-            getConfiguration().also {
-                return api.getMovies(page).let {
-                    mapper.toMoviesDomain(it, session.imagesData)
-                }
-            }
-        } else {
-            return api.getMovies(page).let {
-                mapper.toMoviesDomain(it, session.imagesData)
-            }
+        val config = getConfiguration()
+        return api.getMovies(page).let {
+            mapper.toMoviesDomain(it, config.images)
         }
     }
 
     override suspend fun getConfiguration(): Configuration {
         val mapper = MovieMapper()
-        return api.getConfiguration().let {
-            session.imagesData = it.images
+        val result = session.configurationData ?: api.getConfiguration()
+        return result.let {
+            session.configurationData = it
             mapper.toConfigurationDomain(it)
         }
     }
 
     override suspend fun getMovie(id: Int): Movie {
         val mapper = MovieMapper()
-        if (session.imagesData == null) {
-            getConfiguration().also {
-                return api.getMovie(id).let {
-                    mapper.toMovieDomain(it, session.imagesData)
-                }
-            }
-        } else {
-            return api.getMovie(id).let {
-                mapper.toMovieDomain(it, session.imagesData)
-            }
+        val config = getConfiguration()
+        return api.getMovie(id).let {
+            mapper.toMovieDomain(it, config.images)
         }
     }
 

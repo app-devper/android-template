@@ -5,8 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import coil.api.load
 import com.devper.imagepicker.REQUEST_IMAGE
 import com.devper.imagepicker.clearCache
@@ -16,10 +14,10 @@ import com.devper.template.data.database.AppDatabase
 import com.devper.template.databinding.FragmentProfileBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.core.appCompat
-import com.devper.template.presentation.core.hideLoading
-import com.devper.template.presentation.core.showLoading
-import com.devper.template.presentation.core.toError
+import com.devper.template.presentation.main.appCompat
+import com.devper.template.presentation.main.hideLoading
+import com.devper.template.presentation.main.showLoading
+import com.devper.template.presentation.main.toError
 import com.devper.template.presentation.main.MainViewModel
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel

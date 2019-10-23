@@ -5,10 +5,10 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentSignupBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.core.appCompat
-import com.devper.template.presentation.core.hideLoading
-import com.devper.template.presentation.core.showLoading
-import com.devper.template.presentation.core.toError
+import com.devper.template.presentation.main.appCompat
+import com.devper.template.presentation.main.hideLoading
+import com.devper.template.presentation.main.showLoading
+import com.devper.template.presentation.main.toError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_signup) {

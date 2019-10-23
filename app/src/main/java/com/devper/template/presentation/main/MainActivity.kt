@@ -27,8 +27,6 @@ import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.ActivityNavigationBinding
 import com.devper.template.databinding.LayoutNavHeaderBinding
 import com.devper.template.presentation.BaseActivity
-import com.devper.template.presentation.core.showConfirmMessage
-import com.devper.template.presentation.core.showMessageTagTitle
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -14,7 +14,7 @@ interface UserDao {
     suspend fun getUser(): List<UserData>
 
     @Query("SELECT * FROM users LIMIT 1")
-    suspend fun getFirstUser(): UserData
+    suspend fun getFirstUser(): UserData?
 
     @Query("SELECT * FROM users WHERE username = :username")
     suspend fun getUserByUsername(username: String): UserData

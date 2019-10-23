@@ -4,11 +4,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.devper.template.R
 import com.devper.template.databinding.FragmentMovieBinding
-import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.core.hideLoading
-import com.devper.template.presentation.core.showLoading
-import com.devper.template.presentation.core.toError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

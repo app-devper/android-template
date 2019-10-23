@@ -44,7 +44,7 @@ class LoginViewModel internal constructor(
     }
 
     fun clearUser() {
-        clearUserUseCase.execute("") {
+        clearUserUseCase.execute(null) {
             onError {
                 it.fillInStackTrace()
             }

@@ -1,16 +1,10 @@
-package com.devper.template.presentation.core
+package com.devper.template.presentation.main
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.devper.template.core.widget.ConfirmDialog
 import com.devper.template.domain.core.ErrorMapper
-import com.devper.template.presentation.main.MainActivity
-
-fun Fragment.appCompat(): MainActivity {
-    return activity as MainActivity
-}
-
 
 fun MainActivity.showLoading() {
     progress.let {
@@ -26,20 +20,6 @@ fun MainActivity.hideLoading() {
             it.dismiss()
         }
     }
-}
-
-fun Fragment.showLoading() {
-    appCompat().showLoading()
-}
-
-fun Fragment.hideLoading() {
-    appCompat().hideLoading()
-}
-
-fun Fragment.toError(throwable: Throwable?) {
-    val errorMapper = ErrorMapper()
-    val error = errorMapper.toErrorException(throwable)
-    appCompat().showMessageTag(error.resultCode, error.getDesc())
 }
 
 fun MainActivity.showMessage(message: String?) {
@@ -81,3 +61,22 @@ fun MainActivity.hideKeyboard() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
+
+fun Fragment.appCompat(): MainActivity {
+    return activity as MainActivity
+}
+
+fun Fragment.showLoading() {
+    appCompat().showLoading()
+}
+
+fun Fragment.hideLoading() {
+    appCompat().hideLoading()
+}
+
+fun Fragment.toError(throwable: Throwable?) {
+    val errorMapper = ErrorMapper()
+    val error = errorMapper.toErrorException(throwable)
+    appCompat().showMessageTag(error.resultCode, error.getDesc())
+}
+

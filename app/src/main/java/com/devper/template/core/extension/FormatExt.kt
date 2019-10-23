@@ -1,4 +1,4 @@
-package com.devper.template.core.ext
+package com.devper.template.core.extension
 
 import com.google.gson.Gson
 import java.math.BigInteger

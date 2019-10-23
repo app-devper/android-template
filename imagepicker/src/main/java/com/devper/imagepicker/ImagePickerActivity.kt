@@ -95,6 +95,7 @@ class ImagePickerActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> if (resultCode == Activity.RESULT_OK) {
                 cropImage(getCacheImagePath(fileName))

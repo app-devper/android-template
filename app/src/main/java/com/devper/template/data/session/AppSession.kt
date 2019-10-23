@@ -1,5 +1,5 @@
 package com.devper.template.data.session
 
-import com.devper.template.data.remote.movie.ImagesData
+import com.devper.template.data.remote.movie.ConfigurationData
 
-data class AppSession(var imagesData: ImagesData? = null)
+data class AppSession(var configurationData: ConfigurationData? = null)

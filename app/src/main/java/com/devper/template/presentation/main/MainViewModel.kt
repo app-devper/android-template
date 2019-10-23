@@ -1,9 +1,9 @@
 package com.devper.template.presentation.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.model.movie.Movie
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.device.RegisterDeviceUseCase
 import com.devper.template.domain.usecase.user.GetCurrentUserUseCase
@@ -13,22 +13,20 @@ class MainViewModel(
     private val registerDeviceUseCase: RegisterDeviceUseCase
 ) : ViewModel() {
 
-    val result: MutableLiveData<ResultState<String>> = MutableLiveData()
-    var user: MutableLiveData<User> = MutableLiveData()
+    private val result: MutableLiveData<ResultState<String>> = MutableLiveData()
+    private var _user: MutableLiveData<User> = MutableLiveData()
+    val user: LiveData<User> = _user
+
     var badge: MutableLiveData<String> = MutableLiveData()
 
     private fun getCurrentUser() {
-        getCurrentUseCase.execute("") {
-            onComplete { user.value = it }
-            onError {
-                it.printStackTrace()
-                user.value = null
-            }
+        getCurrentUseCase.execute(null) {
+            onComplete { _user.value = it }
         }
     }
 
     fun registerDevice() {
-        registerDeviceUseCase.execute(""){
+        registerDeviceUseCase.execute(null) {
             onStart { result.value = ResultState.Loading() }
             onComplete {
                 result.value = ResultState.Success(it)
@@ -39,7 +37,11 @@ class MainViewModel(
     }
 
     fun getUser(): User? {
-        return user.value
+        return _user.value
+    }
+
+    fun setUser(user: User) {
+        _user.value = user
     }
 
     override fun onCleared() {
