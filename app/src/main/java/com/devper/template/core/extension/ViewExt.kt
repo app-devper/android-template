@@ -1,23 +1,18 @@
 package com.devper.template.core.extension
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.Paint
-import android.graphics.drawable.LayerDrawable
 import android.text.Selection
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.devper.template.R
-import com.devper.template.core.widget.CountDrawable
 
 fun TextView.applyColor(@ColorRes color: Int) {
     this.setTextColor(ContextCompat.getColor(context, color))
@@ -62,10 +57,7 @@ fun View.toInvisible() {
 }
 
 fun View.toVisibleOrGone(isGone: Boolean) {
-    when {
-        isGone -> toGone()
-        else -> toVisible()
-    }
+    if (isGone) toGone() else toVisible()
 }
 
 fun View.toEnable() {
@@ -82,22 +74,3 @@ fun View.toEnableOrDisable(isEnableView: Boolean) {
 
 fun EditText.toText() = this.text.toString()
 
-val Int.dp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
-val Int.px: Int
-    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
-
-fun MenuItem.setCount(context: Context, count: String) {
-    val icon = this.icon as LayerDrawable
-    val badge: CountDrawable
-    // Reuse drawable if possible
-    val reuse = icon.findDrawableByLayerId(R.id.ic_group_count)
-    badge = if (reuse != null && reuse is CountDrawable) {
-        reuse
-    } else {
-        CountDrawable(context)
-    }
-    badge.setCount(count)
-    icon.mutate()
-    icon.setDrawableByLayerId(R.id.ic_group_count, badge)
-}

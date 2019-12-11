@@ -1,6 +1,5 @@
 package com.devper.template.data.remote
 
-import com.devper.template.data.remote.core.DataResponse
 import com.devper.template.data.remote.device.DeviceRequest
 import com.devper.template.data.remote.device.DeviceData
 import com.devper.template.data.remote.movie.ConfigurationData
@@ -15,15 +14,15 @@ import retrofit2.http.*
 interface AppService {
 
     @POST("api/auth")
-    suspend fun login(@Body request: LoginRequest): DataResponse<LoginData>
+    suspend fun login(@Body request: LoginRequest): LoginData
 
-    @POST("api/users/register")
-    suspend fun signup(@Body request: SignupRequest): DataResponse<UserData>
+    @POST("api/user/register")
+    suspend fun signup(@Body request: SignupRequest): UserData
 
-    @GET("api/users/{id}")
-    suspend fun getUserId(@Path("id") id: String): DataResponse<UserData>
+    @GET("api/user/{id}")
+    suspend fun getUserId(@Path("id") id: String):UserData
 
-    @POST("api/users/{id}")
+    @POST("api/user/{id}")
     suspend fun updateUser(@Path("id") id: String)
 
     @GET("api/moviedb/movie/now_playing")
@@ -39,5 +38,5 @@ interface AppService {
     suspend fun getConfiguration(): ConfigurationData
 
     @POST("api/device")
-    suspend fun registerDevice(@Body request: DeviceRequest): DataResponse<DeviceData>
+    suspend fun registerDevice(@Body request: DeviceRequest): DeviceData
 }

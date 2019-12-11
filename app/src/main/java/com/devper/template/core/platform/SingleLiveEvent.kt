@@ -1,4 +1,4 @@
-package com.devper.common.helper
+package com.devper.template.core.platform
 
 import android.util.Log
 import androidx.annotation.MainThread
@@ -61,6 +61,6 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     companion object {
 
-        private val TAG = "SingleLiveEvent"
+        private const val TAG = "SingleLiveEvent"
     }
 }

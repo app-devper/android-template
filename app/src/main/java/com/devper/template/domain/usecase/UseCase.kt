@@ -40,7 +40,6 @@ abstract class UseCase<Param, T> {
         private var onStart: (() -> Unit)? = null
         private var onComplete: ((T) -> Unit)? = null
         private var onError: ((Exception) -> Unit)? = null
-        private var onFinally: ((T?, Exception?) -> Unit)? = null
 
         fun onStart(block: () -> Unit) {
             onStart = block
@@ -54,18 +53,12 @@ abstract class UseCase<Param, T> {
             onError = block
         }
 
-        fun onFinally(block: (T?, Exception?) -> Unit) {
-            onFinally = block
-        }
-
         operator fun invoke(result: T) {
             onComplete?.invoke(result)
-            onFinally?.invoke(result, null)
         }
 
         operator fun invoke(error: Exception) {
             onError?.invoke(error)
-            onFinally?.invoke(null, error)
         }
 
         operator fun invoke() {

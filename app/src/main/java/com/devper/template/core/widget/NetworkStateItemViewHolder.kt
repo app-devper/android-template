@@ -8,8 +8,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devper.template.R
-import com.devper.template.core.util.NetworkState
-import com.devper.template.core.util.Status
+import com.devper.template.core.platform.NetworkState
+import com.devper.template.core.platform.Status
 
 class NetworkStateItemViewHolder(view: View, private val retryCallback: () -> Unit) : RecyclerView.ViewHolder(view) {
 

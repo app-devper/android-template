@@ -28,7 +28,7 @@ class UserRemoteRepository(
     override suspend fun login(request: LoginParam): User {
         val mapper = UserMapper()
         return api.login(mapper.toRequest(request)).let {
-            it.data.let { login ->
+            it.let { login ->
                 pref.token = login.accessToken
                 db.user().addUser(login.user)
                 mapper.toUserDomain(login.user)
@@ -39,14 +39,14 @@ class UserRemoteRepository(
     override suspend fun signup(request: SignupParam) {
         val mapper = UserMapper()
         return api.signup(mapper.toRequest(request)).let {
-            mapper.toUserDomain(it.data)
+            mapper.toUserDomain(it)
         }
     }
 
     override suspend fun getProfile(id: String): User {
         val mapper = UserMapper()
         return api.getUserId(id).let {
-            mapper.toUserDomain(it.data)
+            mapper.toUserDomain(it)
         }
     }
 

@@ -26,7 +26,6 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie
     override fun setObserve() {
         with(movieViewModel) {
             movieList.observe(viewLifecycleOwner, Observer {
-                Timber.i("MovieList: %s", it.size)
                 adapter.submitList(it)
             })
 

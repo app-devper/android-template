@@ -5,9 +5,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.devper.template.R
-import com.devper.template.core.util.NetworkState
+import com.devper.template.core.platform.NetworkState
 import com.devper.template.core.widget.NetworkStateItemViewHolder
-import com.devper.template.domain.model.movie.Images
 import com.devper.template.domain.model.movie.Movie
 
 class MovieAdapter(

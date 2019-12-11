@@ -1,4 +1,4 @@
-package com.devper.template.core.util
+package com.devper.template.core.platform
 
 import com.google.gson.GsonBuilder
 

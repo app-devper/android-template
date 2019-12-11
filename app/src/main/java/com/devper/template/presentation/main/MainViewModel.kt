@@ -13,7 +13,7 @@ class MainViewModel(
     private val registerDeviceUseCase: RegisterDeviceUseCase
 ) : ViewModel() {
 
-    private val result: MutableLiveData<ResultState<String>> = MutableLiveData()
+    private val _result: MutableLiveData<ResultState<String>> = MutableLiveData()
     private var _user: MutableLiveData<User> = MutableLiveData()
     val user: LiveData<User> = _user
 
@@ -22,17 +22,21 @@ class MainViewModel(
     private fun getCurrentUser() {
         getCurrentUseCase.execute(null) {
             onComplete { _user.value = it }
+            onError { it.printStackTrace() }
         }
     }
 
     fun registerDevice() {
         registerDeviceUseCase.execute(null) {
-            onStart { result.value = ResultState.Loading() }
+            onStart { _result.value = ResultState.Loading() }
             onComplete {
-                result.value = ResultState.Success(it)
+                _result.value = ResultState.Success(it)
                 getCurrentUser()
             }
-            onError { result.value = ResultState.Error(it) }
+            onError {
+                it.printStackTrace()
+                _result.value = ResultState.Error(it)
+            }
         }
     }
 

@@ -25,8 +25,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
-    private val db: AppDatabase = get()
-
     private val profileViewModel: ProfileViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
 
@@ -34,13 +32,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         appCompat().supportActionBar?.show()
         with(binding) {
             imgProfile.setOnClickListener {
-                showImagePickerOptions(activity!!)
+                showImagePickerOptions(requireActivity())
             }
             imgPlus.setOnClickListener {
-                showImagePickerOptions(activity!!)
+                showImagePickerOptions(requireActivity())
             }
         }
-        clearCache(context!!)
+        clearCache(requireContext())
 
     }
 
@@ -87,7 +85,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             return
         }
         binding.imgProfile.load(url)
-        binding.imgProfile.setColorFilter(ContextCompat.getColor(context!!, android.R.color.transparent))
+        binding.imgProfile.setColorFilter(ContextCompat.getColor(requireContext(), android.R.color.transparent))
     }
 
 }

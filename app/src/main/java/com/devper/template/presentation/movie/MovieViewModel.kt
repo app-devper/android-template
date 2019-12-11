@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.devper.common.networkThread
-import com.devper.template.core.util.NetworkState
+import com.devper.template.core.platform.NetworkState
 import com.devper.template.domain.model.movie.Movie
 import com.devper.template.domain.usecase.movie.GetConfigUseCase
 import com.devper.template.domain.usecase.movie.GetMoviesUseCase
-import com.devper.template.core.PagedListResult
+import com.devper.template.core.platform.PagedListResult
 
 class MovieViewModel internal constructor(
     private val useCase: GetConfigUseCase,

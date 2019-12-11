@@ -1,4 +1,4 @@
-package com.devper.template.core.util
+package com.devper.template.core.platform
 
 enum class Status {
     RUNNING, SUCCESS, FAILED

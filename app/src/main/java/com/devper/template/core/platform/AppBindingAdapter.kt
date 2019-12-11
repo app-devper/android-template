@@ -1,4 +1,4 @@
-package com.devper.template.core
+package com.devper.template.core.platform
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

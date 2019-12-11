@@ -1,9 +1,8 @@
-package com.devper.template.core
+package com.devper.template.core.platform
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.devper.template.core.util.NetworkState
 
 class PagedListResult<T>(
     val result: LiveData<PagedList<T>> = MutableLiveData(),

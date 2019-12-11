@@ -2,7 +2,7 @@ package com.devper.template.presentation.movie
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.devper.template.core.util.NetworkState
+import com.devper.template.core.platform.NetworkState
 import com.devper.template.domain.model.movie.Movie
 import com.devper.template.domain.usecase.movie.GetMoviesUseCase
 

@@ -23,19 +23,15 @@ class ErrorMapper {
                     AppException(Status.ERROR.name, e.message ?: "")
                 }
             }
-
             is CancellationException -> {
                 AppException(Status.CANCEL.name, throwable.message ?: "")
             }
-
             is SocketTimeoutException -> {
                 AppException(Status.TIMEOUT.name, throwable.message ?: "")
             }
-
             is IOException -> {
                 AppException(Status.CONVERSION_ERROR.name, throwable.message ?: "")
             }
-
             is UnknownHostException -> {
                 AppException(Status.CONVERSION_ERROR.name, throwable.message ?: "")
             }
