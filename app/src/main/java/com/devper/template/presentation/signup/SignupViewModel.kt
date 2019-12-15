@@ -2,8 +2,8 @@ package com.devper.template.presentation.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.devper.template.core.model.user.SignupParam
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.model.user.SignupParam
 import com.devper.template.domain.usecase.user.SignupUseCase
 import timber.log.Timber
 

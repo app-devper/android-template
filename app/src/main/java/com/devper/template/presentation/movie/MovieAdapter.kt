@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devper.template.R
 import com.devper.template.core.platform.NetworkState
 import com.devper.template.core.widget.NetworkStateItemViewHolder
-import com.devper.template.domain.model.movie.Movie
+import com.devper.template.core.model.movie.Movie
 
 class MovieAdapter(
     private val retry: () -> Unit,

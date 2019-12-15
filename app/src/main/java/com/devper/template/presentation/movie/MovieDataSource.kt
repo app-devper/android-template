@@ -3,7 +3,7 @@ package com.devper.template.presentation.movie
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.devper.template.core.platform.NetworkState
-import com.devper.template.domain.model.movie.Movie
+import com.devper.template.core.model.movie.Movie
 import com.devper.template.domain.usecase.movie.GetMoviesUseCase
 
 class MovieDataSource(private val useCase: GetMoviesUseCase) : PageKeyedDataSource<Int, Movie>() {

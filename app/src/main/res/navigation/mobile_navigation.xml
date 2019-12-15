@@ -70,12 +70,6 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/member_dest"
-        android:name="com.devper.template.presentation.member.MemberFragment"
-        android:label="@string/main_menu_member"
-        tools:layout="@layout/fragment_member" />
-
-    <fragment
         android:id="@+id/movie_dest"
         android:name="com.devper.template.presentation.movie.MovieFragment"
         android:label="@string/main_menu_movie"

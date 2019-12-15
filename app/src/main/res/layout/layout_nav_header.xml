@@ -10,7 +10,7 @@
 
         <variable
             name="user"
-            type="com.devper.template.domain.model.user.User"/>
+            type="com.devper.template.core.model.user.User"/>
 
     </data>
 

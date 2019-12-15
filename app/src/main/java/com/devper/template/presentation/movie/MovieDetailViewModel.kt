@@ -3,7 +3,7 @@ package com.devper.template.presentation.movie
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.model.movie.Movie
+import com.devper.template.core.model.movie.Movie
 import com.devper.template.domain.usecase.movie.GetMovieUseCase
 
 class MovieDetailViewModel internal constructor(private val useCase: GetMovieUseCase) :

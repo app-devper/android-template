@@ -1,25 +1,17 @@
 package com.devper.template.presentation.profile
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import coil.api.load
-import com.devper.imagepicker.REQUEST_IMAGE
-import com.devper.imagepicker.clearCache
-import com.devper.imagepicker.showImagePickerOptions
 import com.devper.template.R
-import com.devper.template.data.database.AppDatabase
+import com.devper.template.core.picker.ImagePickerConfig
+import com.devper.template.core.picker.PickerCallback
 import com.devper.template.databinding.FragmentProfileBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.main.appCompat
-import com.devper.template.presentation.main.hideLoading
-import com.devper.template.presentation.main.showLoading
-import com.devper.template.presentation.main.toError
-import com.devper.template.presentation.main.MainViewModel
-import org.koin.android.ext.android.get
+import com.devper.template.presentation.main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,18 +19,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private val profileViewModel: ProfileViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private lateinit var picker: ImagePickerConfig
 
     override fun setupView() {
         appCompat().supportActionBar?.show()
+        picker = ImagePickerConfig(requireActivity(), object : PickerCallback {
+            override fun onSuccess(imagePath: Uri?) {
+                loadProfile(imagePath.toString())
+            }
+
+            override fun onCancel() {}
+        })
         with(binding) {
             imgProfile.setOnClickListener {
-                showImagePickerOptions(requireActivity())
+                picker.chooseImageFromGallery()
             }
             imgPlus.setOnClickListener {
-                showImagePickerOptions(requireActivity())
+                picker.chooseImageFromGallery()
             }
         }
-        clearCache(requireContext())
+        //clearCache(requireContext())
 
     }
 
@@ -68,16 +68,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                try {
-                    val uri = data?.getParcelableExtra<Uri>("path")
-                    loadProfile(uri.toString())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
+        picker.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun loadProfile(url: String?) {

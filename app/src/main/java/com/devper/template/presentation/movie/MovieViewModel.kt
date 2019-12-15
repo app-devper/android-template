@@ -6,12 +6,12 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.devper.common.networkThread
+import com.devper.template.core.model.movie.Movie
 import com.devper.template.core.platform.NetworkState
-import com.devper.template.domain.model.movie.Movie
+import com.devper.template.core.platform.PagedListResult
 import com.devper.template.domain.usecase.movie.GetConfigUseCase
 import com.devper.template.domain.usecase.movie.GetMoviesUseCase
-import com.devper.template.core.platform.PagedListResult
+import java.util.concurrent.Executors
 
 class MovieViewModel internal constructor(
     private val useCase: GetConfigUseCase,
@@ -29,7 +29,7 @@ class MovieViewModel internal constructor(
 
     private fun getMovies() {
         val dataSourceFactory = MovieDataSourceFactory(moviesUseCase)
-        val result = dataSourceFactory.toLiveData(pageSize = 20, fetchExecutor = networkThread())
+        val result = dataSourceFactory.toLiveData(pageSize = 20, fetchExecutor = Executors.newFixedThreadPool(3))
         pagedListResult.value = PagedListResult(result, dataSourceFactory.isInitialLoading, dataSourceFactory.networkState)
     }
 

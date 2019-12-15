@@ -1,4 +1,4 @@
-package com.devper.common.helper
+package com.devper.template.core.platform
 
 import android.content.Context
 import android.net.Uri

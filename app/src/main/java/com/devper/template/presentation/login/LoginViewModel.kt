@@ -4,9 +4,9 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devper.smartlogin.LoginType
+import com.devper.template.core.model.user.User
+import com.devper.template.core.model.user.LoginParam
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.model.user.LoginParam
-import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.user.ClearUserUseCase
 import com.devper.template.domain.usecase.user.LoginUseCase
 

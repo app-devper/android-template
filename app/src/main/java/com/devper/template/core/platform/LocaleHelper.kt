@@ -1,4 +1,4 @@
-package com.devper.common.helper
+package com.devper.template.core.platform
 
 import android.annotation.TargetApi
 import android.content.Context

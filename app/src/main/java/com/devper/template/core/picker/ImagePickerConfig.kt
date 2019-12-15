@@ -7,7 +7,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider.getUriForFile
 import java.io.File
 
-class ImagePickerConfig(private val activity: Activity, val callback: PickerCallback) {
+class ImagePickerConfig(private val activity: Activity, private val callback: PickerCallback) {
 
     fun takeCameraImage() {
         fileName = System.currentTimeMillis().toString() + ".jpg"

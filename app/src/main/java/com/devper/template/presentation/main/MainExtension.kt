@@ -3,8 +3,8 @@ package com.devper.template.presentation.main
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.devper.template.core.exception.AppException
 import com.devper.template.core.widget.ConfirmDialog
-import com.devper.template.domain.core.ErrorMapper
 
 fun MainActivity.showLoading() {
     progress.let {
@@ -75,8 +75,14 @@ fun Fragment.hideLoading() {
 }
 
 fun Fragment.toError(throwable: Throwable?) {
-    val errorMapper = ErrorMapper()
-    val error = errorMapper.toErrorException(throwable)
-    appCompat().showMessageTag(error.resultCode, error.getDesc())
+    when (throwable) {
+        is AppException -> {
+            appCompat().showMessageTag(throwable.resultCode, throwable.getDesc())
+        }
+        else -> {
+            appCompat().showMessageTag("error", throwable?.message)
+        }
+    }
+
 }
 

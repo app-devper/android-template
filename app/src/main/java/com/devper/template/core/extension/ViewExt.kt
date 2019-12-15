@@ -1,6 +1,7 @@
 package com.devper.template.core.extension
 
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.Paint
 import android.text.Selection
 import android.text.Spannable
@@ -13,6 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import java.io.ByteArrayOutputStream
 
 fun TextView.applyColor(@ColorRes color: Int) {
     this.setTextColor(ContextCompat.getColor(context, color))
@@ -73,4 +75,15 @@ fun View.toEnableOrDisable(isEnableView: Boolean) {
 }
 
 fun EditText.toText() = this.text.toString()
+
+val Int.dp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+val Int.px: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+fun Bitmap.toByteArray(quality: Int = 80): ByteArray {
+    val stream = ByteArrayOutputStream()
+    compress(Bitmap.CompressFormat.PNG, quality, stream)
+    return stream.toByteArray()
+}
 

@@ -38,7 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu, menu)
-        menuItem = menu.findItem(R.id.member_dest)
+        menuItem = menu.findItem(R.id.home_dest)
         val badge = mainViewModel.badge.value
         menuItem?.setCount(requireContext(), badge ?: "0")
     }

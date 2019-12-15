@@ -23,11 +23,9 @@ import com.devper.fcm.MessagingHandler
 import com.devper.template.R
 import com.devper.template.core.widget.ConfirmDialog
 import com.devper.template.core.widget.ProgressHudDialog
-import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.ActivityNavigationBinding
 import com.devper.template.databinding.LayoutNavHeaderBinding
 import com.devper.template.presentation.BaseActivity
-import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -39,7 +37,6 @@ class MainActivity : BaseActivity<ActivityNavigationBinding>(R.layout.activity_n
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navHeaderMainBinding: LayoutNavHeaderBinding
     private lateinit var messagingHandler: MessagingHandler
-    private val pref: AppPreference by inject()
     private val mainViewModel: MainViewModel by viewModel()
 
     val progress: ProgressHudDialog by currentScope.inject { parametersOf(this) }
@@ -100,7 +97,7 @@ class MainActivity : BaseActivity<ActivityNavigationBinding>(R.layout.activity_n
             }
         })
         messagingHandler.token.observe(this, Observer {
-            pref.fbToken = it
+            //pref.fbToken = it
         })
         setBadge()
     }

@@ -15,10 +15,6 @@
             android:id="@id/profile_dest"
             android:icon="@drawable/main_ic_profile"
             android:title="@string/main_menu_profile" />
-        <item
-            android:id="@id/member_dest"
-            android:icon="@drawable/main_ic_member"
-            android:title="@string/main_menu_member"/>
 
         <item
             android:id="@id/setting_dest"

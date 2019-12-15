@@ -1,1 +1,1 @@
-include ':app', ':common', ':location-service', ':smart-login', ':fcm',':imagepicker', ':fingerprint'
+include ':app', ':location-service', ':smart-login', ':fcm', ':fingerprint', ':data', ':domain', ':core'

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.devper.template.R
-import com.devper.template.domain.model.movie.Movie
+import com.devper.template.core.model.movie.Movie
 
 class MovieViewHolder(val view: View, private val f: (id: Int, title: String) -> Unit) : RecyclerView.ViewHolder(view) {
 
