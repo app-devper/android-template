@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.movie.MovieViewModel"/>
+            type="com.devper.template.presentation.movie.viewmodel.MovieViewModel"/>
     </data>
 
     <RelativeLayout

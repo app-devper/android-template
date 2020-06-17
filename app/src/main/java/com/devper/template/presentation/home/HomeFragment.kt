@@ -11,7 +11,7 @@ import com.devper.template.R
 import com.devper.template.core.widget.CountDrawable
 import com.devper.template.databinding.FragmentHomeBinding
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.main.MainViewModel
+import com.devper.template.presentation.main.viewmodel.MainViewModel
 import com.devper.template.presentation.main.appCompat
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

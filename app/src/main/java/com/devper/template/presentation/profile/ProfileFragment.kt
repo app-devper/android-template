@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import coil.api.load
 import com.devper.template.R
 import com.devper.template.core.picker.ImagePickerConfig
 import com.devper.template.core.picker.PickerCallback
@@ -12,6 +11,8 @@ import com.devper.template.databinding.FragmentProfileBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.main.*
+import com.devper.template.presentation.main.viewmodel.MainViewModel
+import com.devper.template.presentation.profile.viewmodel.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -2,13 +2,13 @@ package com.devper.template.di
 
 import android.app.Activity
 import com.devper.template.core.widget.ProgressHudDialog
-import com.devper.template.presentation.login.LoginViewModel
+import com.devper.template.presentation.login.viewmodel.LoginViewModel
 import com.devper.template.presentation.main.MainActivity
-import com.devper.template.presentation.main.MainViewModel
-import com.devper.template.presentation.movie.MovieDetailViewModel
-import com.devper.template.presentation.movie.MovieViewModel
-import com.devper.template.presentation.profile.ProfileViewModel
-import com.devper.template.presentation.signup.SignupViewModel
+import com.devper.template.presentation.main.viewmodel.MainViewModel
+import com.devper.template.presentation.movie.viewmodel.MovieDetailViewModel
+import com.devper.template.presentation.movie.viewmodel.MovieViewModel
+import com.devper.template.presentation.profile.viewmodel.ProfileViewModel
+import com.devper.template.presentation.signup.viewmodel.SignupViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

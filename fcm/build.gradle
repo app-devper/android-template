@@ -24,9 +24,6 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation "androidx.appcompat:appcompat:$versions.appcompat"
-    implementation "com.google.firebase:firebase-messaging:$versions.messaging"
-    implementation "me.leolin:ShortcutBadger:$versions.badger"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

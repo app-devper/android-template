@@ -5,7 +5,7 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import com.devper.template.R
-import kotlinx.android.synthetic.main.dialog_progress_hud.*
+import kotlinx.android.synthetic.main.dialog_loading.*
 
 class ProgressHudDialog(context: Context, theme: Int) : Dialog(context, theme) {
 
@@ -37,7 +37,7 @@ class ProgressHudDialog(context: Context, theme: Int) : Dialog(context, theme) {
         fun init(context: Context, message: CharSequence?, cancelable: Boolean): ProgressHudDialog {
             val dialog = ProgressHudDialog(context, R.style.ProgressHUD)
             dialog.setTitle("")
-            dialog.setContentView(R.layout.dialog_progress_hud)
+            dialog.setContentView(R.layout.dialog_loading)
             dialog.setMessage(message)
             dialog.setCancelable(cancelable)
             dialog.window?.attributes?.gravity = Gravity.CENTER

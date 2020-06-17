@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.main.MainViewModel" />
+            type="com.devper.template.presentation.main.viewmodel.MainViewModel" />
     </data>
 
     <RelativeLayout

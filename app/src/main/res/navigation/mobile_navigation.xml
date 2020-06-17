@@ -9,6 +9,7 @@
         android:id="@+id/splash_dest"
         android:name="com.devper.template.presentation.splash.SplashFragment"
         tools:layout="@layout/fragment_splash">
+
         <action
             android:id="@+id/home_action"
             app:launchSingleTop="true"
@@ -20,20 +21,24 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/login_dest"
             app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
         android:id="@+id/login_dest"
         android:name="com.devper.template.presentation.login.LoginFragment"
         tools:layout="@layout/fragment_login">
+
         <action
             android:id="@+id/home_action"
             app:launchSingleTop="true"
             app:popUpTo="@id/home_dest"
             app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/signup_action"
             app:destination="@id/signup_dest" />
+
     </fragment>
 
     <fragment
@@ -53,9 +58,11 @@
         android:name="com.devper.template.presentation.home.HomeFragment"
         android:label="@string/main_menu_home"
         tools:layout="@layout/fragment_home">
+
         <action
             android:id="@+id/movie_detail_action"
             app:destination="@id/movie_detail_dest" />
+
     </fragment>
 
     <fragment
@@ -74,22 +81,17 @@
         android:name="com.devper.template.presentation.movie.MovieFragment"
         android:label="@string/main_menu_movie"
         tools:layout="@layout/fragment_movie">
+
         <action
             android:id="@+id/movie_detail_action"
             app:destination="@id/movie_detail_dest" />
+
     </fragment>
 
     <fragment
         android:id="@+id/movie_detail_dest"
         android:name="com.devper.template.presentation.movie.MovieDetailFragment"
         tools:layout="@layout/fragment_movie_detail">
-        <argument
-            android:name="movieId"
-            app:argType="integer" />
-        <argument
-            android:name="title"
-            app:argType="string" />
-
     </fragment>
 
 </navigation>

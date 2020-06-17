@@ -18,14 +18,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.devper.fcm.BadgeHelper
-import com.devper.fcm.MessagingHandler
+import com.devper.template.core.platform.fcm.BadgeHelper
+import com.devper.template.core.platform.fcm.MessagingHandler
 import com.devper.template.R
 import com.devper.template.core.widget.ConfirmDialog
 import com.devper.template.core.widget.ProgressHudDialog
 import com.devper.template.databinding.ActivityNavigationBinding
 import com.devper.template.databinding.LayoutNavHeaderBinding
 import com.devper.template.presentation.BaseActivity
+import com.devper.template.presentation.main.viewmodel.MainViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf

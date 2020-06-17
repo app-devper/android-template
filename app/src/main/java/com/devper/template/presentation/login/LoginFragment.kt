@@ -1,7 +1,6 @@
 package com.devper.template.presentation.login
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -12,11 +11,12 @@ import com.devper.smartlogin.*
 import com.devper.smartlogin.users.SmartUser
 import com.devper.smartlogin.util.SmartLoginException
 import com.devper.template.R
-import com.devper.template.core.extension.*
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.login.viewmodel.LoginViewModel
 import com.devper.template.presentation.main.*
+import com.devper.template.presentation.main.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -83,7 +83,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     override fun onLoginSuccess(user: SmartUser) {
-        Log.i("LoginSuccess", "SmartUser: $user")
+//        Log.i("LoginSuccess", "SmartUser: $user")
 //        val newUser = User(user.userId ?: return).apply {
 //            firstName = user.firstName
 //            lastName = user.lastName

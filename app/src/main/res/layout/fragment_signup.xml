@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.signup.SignupViewModel"/>
+            type="com.devper.template.presentation.signup.viewmodel.SignupViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

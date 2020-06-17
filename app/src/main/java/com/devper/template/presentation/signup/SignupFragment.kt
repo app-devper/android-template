@@ -9,6 +9,7 @@ import com.devper.template.presentation.main.appCompat
 import com.devper.template.presentation.main.hideLoading
 import com.devper.template.presentation.main.showLoading
 import com.devper.template.presentation.main.toError
+import com.devper.template.presentation.signup.viewmodel.SignupViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_signup) {
