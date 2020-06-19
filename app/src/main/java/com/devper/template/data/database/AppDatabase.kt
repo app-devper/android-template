@@ -22,7 +22,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return databaseBuilder.run{
                 fallbackToDestructiveMigration()
-                allowMainThreadQueries()
                 build()
             }
         }

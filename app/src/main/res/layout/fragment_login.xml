@@ -70,7 +70,8 @@
                         android:background="@color/transparent"
                         android:onClick="@{()-> viewModel.googleLogin()}"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/login_ic_google"/>
+                        app:srcCompat="@drawable/login_ic_google"
+                        tools:ignore="ContentDescription" />
 
                     <ImageButton
                         android:id="@+id/btn_line_login"
@@ -81,7 +82,7 @@
                         android:onClick="@{()-> viewModel.lineLogin()}"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/login_ic_line"
-                        />
+                        tools:ignore="ContentDescription" />
 
                     <ImageButton
                         android:id="@+id/btn_facebook_login"
@@ -91,7 +92,8 @@
                         android:background="@color/transparent"
                         android:onClick="@{()-> viewModel.fbLogin()}"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/login_ic_facebook"/>
+                        app:srcCompat="@drawable/login_ic_facebook"
+                        tools:ignore="ContentDescription" />
                 </LinearLayout>
 
                 <TextView

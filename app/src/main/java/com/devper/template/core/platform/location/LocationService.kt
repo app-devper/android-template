@@ -9,7 +9,7 @@ import android.os.*
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.devper.location.BuildConfig
+import com.devper.template.BuildConfig
 
 import com.google.android.gms.location.*
 
@@ -220,7 +220,7 @@ class LocationService : Service() {
     }
 
     companion object {
-        private const val PACKAGE_NAME = BuildConfig.LIBRARY_PACKAGE_NAME
+        private const val PACKAGE_NAME = BuildConfig.APPLICATION_ID
         private val TAG = LocationService::class.java.simpleName
         private const val CHANNEL_ID = "location_01"
         private var currentClass: Class<*>? = null

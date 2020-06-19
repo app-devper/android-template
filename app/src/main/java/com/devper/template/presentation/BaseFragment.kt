@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.devper.template.presentation.main.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int) : Fragment() {
 
     lateinit var binding: Binding
+
+    val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
@@ -21,11 +25,11 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupView()
-        setObserve()
+        observeLiveData()
     }
 
     abstract fun setupView()
 
-    abstract fun setObserve()
+    abstract fun observeLiveData()
 
 }

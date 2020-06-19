@@ -13,10 +13,10 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.devper.fcm.BuildConfig
+import com.devper.template.BuildConfig
+import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -64,17 +64,17 @@ class LocalMessagingHelper(context: Application) {
             }
 
             val notification = NotificationCompat.Builder(mContext, CHANNEL_ID)
-                    .setContentTitle(title)
-                    .setContentText(bundle.getString("body"))
-                    .setTicker(bundle.getString("ticker"))
-                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-                    .setAutoCancel(bundle.getBoolean("auto_cancel", true))
-                    .setNumber(bundle.getInt("number"))
-                    .setSubText(bundle.getString("sub_text"))
-                    .setGroup(bundle.getString("group"))
-                    .setVibrate(longArrayOf(0, DEFAULT_VIBRATION))
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setExtras(bundle.getBundle("data"))
+                .setContentTitle(title)
+                .setContentText(bundle.getString("body"))
+                .setTicker(bundle.getString("ticker"))
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setAutoCancel(bundle.getBoolean("auto_cancel", true))
+                .setNumber(bundle.getInt("number"))
+                .setSubText(bundle.getString("sub_text"))
+                .setGroup(bundle.getString("group"))
+                .setVibrate(longArrayOf(0, DEFAULT_VIBRATION))
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setExtras(bundle.getBundle("data"))
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 notification.setChannelId(CHANNEL_ID)
@@ -138,7 +138,10 @@ class LocalMessagingHelper(context: Application) {
 
             //vibrate
             if (bundle.containsKey("vibrate")) {
-                val vibrate = bundle.getLong("vibrate", Math.round(bundle.getDouble("vibrate", bundle.getInt("vibrate").toDouble())))
+                val vibrate = bundle.getLong(
+                    "vibrate",
+                    Math.round(bundle.getDouble("vibrate", bundle.getInt("vibrate").toDouble()))
+                )
                 if (vibrate > 0) {
                     notification.setVibrate(longArrayOf(0, vibrate))
                 } else {
@@ -151,26 +154,37 @@ class LocalMessagingHelper(context: Application) {
                 notification.setDefaults(NotificationCompat.DEFAULT_LIGHTS)
             }
 
-            Log.d(TAG, "broadcast intent before showing notification")
+            Timber.d("broadcast intent before showing notification")
             val i = Intent(ACTION_BROADCAST)
             i.putExtras(bundle)
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(i)
 
-            if (!mIsForeground || bundle.getBoolean("show_in_foreground",false)) {
+            if (!mIsForeground || bundle.getBoolean("show_in_foreground", false)) {
                 val intent = Intent(mContext, intentClass)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 intent.putExtras(bundle)
                 intent.action = bundle.getString("click_action")
 
-                val notificationID = if (bundle.containsKey("_id")) bundle.getString("_id", "").hashCode() else System.currentTimeMillis().toInt()
-                val pendingIntent = PendingIntent.getActivity(mContext, notificationID, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                val notificationID = if (bundle.containsKey("_id")) bundle.getString("_id", "")
+                    .hashCode() else System.currentTimeMillis().toInt()
+                val pendingIntent = PendingIntent.getActivity(
+                    mContext,
+                    notificationID,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
 
-                val notificationManager = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                val notificationManager =
+                    mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
                 // Android O requires a Notification Channel.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     // Create the channel for the notification
-                    val mChannel = NotificationChannel(CHANNEL_ID, title, NotificationManager.IMPORTANCE_DEFAULT)
+                    val mChannel = NotificationChannel(
+                        CHANNEL_ID,
+                        title,
+                        NotificationManager.IMPORTANCE_DEFAULT
+                    )
                     // Set the Notification Channel for the Notification Manager.
                     notificationManager.createNotificationChannel(mChannel)
                 }
@@ -188,7 +202,7 @@ class LocalMessagingHelper(context: Application) {
             }
 
         } catch (e: Exception) {
-            Log.e(TAG, "failed to send local notification", e)
+            Timber.e("failed to send local notification")
         }
     }
 
@@ -212,8 +226,7 @@ class LocalMessagingHelper(context: Application) {
 
     companion object {
         private const val DEFAULT_VIBRATION = 300L
-        private val TAG = LocalMessagingHelper::class.java.simpleName
-        private const val PACKAGE_NAME = BuildConfig.LIBRARY_PACKAGE_NAME
+        private const val PACKAGE_NAME = BuildConfig.APPLICATION_ID
         private var mIsForeground = false //this is a hack
         private var currentClass: Class<*>? = null
         private const val CHANNEL_ID = "channel_02"

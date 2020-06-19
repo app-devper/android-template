@@ -11,13 +11,12 @@ import com.devper.smartlogin.*
 import com.devper.smartlogin.users.SmartUser
 import com.devper.smartlogin.util.SmartLoginException
 import com.devper.template.R
+import com.devper.template.core.extension.makeLinks
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.login.viewmodel.LoginViewModel
 import com.devper.template.presentation.main.*
-import com.devper.template.presentation.main.viewmodel.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login), SmartLoginCallbacks, Callback {
@@ -27,13 +26,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private lateinit var smartLogin: SmartLogin
 
     private val loginViewModel: LoginViewModel by viewModel()
-    private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun setupView() {
         appCompat().supportActionBar?.hide()
         binding.viewModel = loginViewModel
         binding.tvSignup.makeLinks(Pair(getString(R.string.signup_button), View.OnClickListener {
-            findNavController().navigate(LoginFragmentDirections.signupAction())
+            findNavController().navigate(R.id.signup_action)
         }))
         loginViewModel.clearUser()
         activity?.let {
@@ -45,7 +43,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
     }
 
-    override fun setObserve() {
+    override fun observeLiveData() {
         with(loginViewModel) {
             results.observe(viewLifecycleOwner, Observer {
                 when (it) {

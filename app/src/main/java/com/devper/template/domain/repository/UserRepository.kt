@@ -6,11 +6,11 @@ import com.devper.template.domain.model.user.User
 
 interface UserRepository {
 
-    suspend fun login(request: LoginParam): User
+    suspend fun login(request: LoginParam)
 
-    suspend fun signup(request: SignupParam)
+    suspend fun signUp(request: SignupParam)
 
-    suspend fun getProfile(id: String): User
+    suspend fun getProfile(): User
 
     suspend fun getCurrentUser(): User?
 

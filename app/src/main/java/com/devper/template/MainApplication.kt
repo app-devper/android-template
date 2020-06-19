@@ -7,7 +7,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.devper.template.core.platform.fcm.LocalMessagingHelper
 import com.devper.template.di.appModule
-import com.devper.template.domain.domainsModule
+import com.devper.template.di.domainsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -12,7 +12,8 @@ import com.devper.template.presentation.main.toError
 import com.devper.template.presentation.movie.viewmodel.MovieDetailViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(R.layout.fragment_movie_detail) {
+class MovieDetailFragment :
+    BaseFragment<FragmentMovieDetailBinding>(R.layout.fragment_movie_detail) {
 
     val viewModel: MovieDetailViewModel by viewModel()
 
@@ -20,27 +21,29 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(R.layout.fr
         binding.viewDetailModel = viewModel
         appCompat().supportActionBar?.show()
         appCompat().supportActionBar?.title = ""
-        viewModel.movieId(1)
     }
 
-    override fun setObserve() {
-        with(viewModel) {
-            movieResult.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is ResultState.Loading -> {
-                        showLoading()
-                    }
-                    is ResultState.Success -> {
-                        hideLoading()
-                        binding.movie = it.data
-                    }
-                    is ResultState.Error -> {
-                        hideLoading()
-                        toError(it.throwable)
-                    }
+    override fun observeLiveData() {
+        mainViewModel.movieLiveData.observe(viewLifecycleOwner, Observer {
+            viewModel.movieId(it.id)
+            appCompat().supportActionBar?.title = it.title
+        })
+        viewModel.movieResult.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultState.Loading -> {
+                    showLoading()
                 }
-            })
-        }
+                is ResultState.Success -> {
+                    hideLoading()
+                    binding.movie = it.data
+                }
+                is ResultState.Error -> {
+                    hideLoading()
+                    toError(it.throwable)
+                }
+            }
+        })
+
     }
 }
 

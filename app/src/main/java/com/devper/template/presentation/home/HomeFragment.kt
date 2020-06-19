@@ -19,15 +19,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private var menuItem: MenuItem? = null
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
-
     override fun setupView() {
         setHasOptionsMenu(true)
         binding.viewModel = mainViewModel
         appCompat().supportActionBar?.show()
     }
 
-    override fun setObserve() {
+    override fun observeLiveData() {
         with(mainViewModel) {
             badge.observe(viewLifecycleOwner, Observer {
                 Log.i("Badge", "Badge: $it")

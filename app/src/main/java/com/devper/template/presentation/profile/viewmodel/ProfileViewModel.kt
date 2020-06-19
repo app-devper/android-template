@@ -5,25 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.user.User
-import com.devper.template.domain.usecase.user.GetUserUseCase
+import com.devper.template.domain.usecase.user.GetProfileUseCase
 
-class ProfileViewModel internal constructor(private val getUserUseCase: GetUserUseCase) : ViewModel() {
+class ProfileViewModel internal constructor(private val getProfileUseCase: GetProfileUseCase) :
+    ViewModel() {
 
     private var results: MutableLiveData<ResultState<User>> = MutableLiveData()
 
-    fun getProfile(id: String) {
-        getUserUseCase.execute(id) {
+    fun getProfile() {
+        getProfileUseCase.execute(null) {
             onStart { results.value = ResultState.Loading() }
             onComplete { results.value = ResultState.Success(it) }
             onError { results.value = ResultState.Error(it) }
         }
     }
 
-    val liveDataProfile: LiveData<ResultState<User>> = results
+    val profileLiveDate: LiveData<ResultState<User>> = results
 
     override fun onCleared() {
         super.onCleared()
-        getUserUseCase.unsubscribe()
+        getProfileUseCase.unsubscribe()
     }
 
 }

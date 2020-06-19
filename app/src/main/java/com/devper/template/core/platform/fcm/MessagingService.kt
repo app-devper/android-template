@@ -3,7 +3,7 @@ package com.devper.template.core.platform.fcm
 import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.devper.fcm.BuildConfig
+import com.devper.template.BuildConfig
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -80,7 +80,7 @@ class MessagingService : FirebaseMessagingService() {
 
     companion object {
         private val TAG = MessagingService::class.java.simpleName
-        private const val PACKAGE_NAME = BuildConfig.LIBRARY_PACKAGE_NAME
+        private const val PACKAGE_NAME = BuildConfig.APPLICATION_ID
         const val ACTION_TOKEN_BROADCAST = "$PACKAGE_NAME.token_broadcast"
         const val EXTRA_FCM_TOKEN = "$PACKAGE_NAME.fcm_token"
     }

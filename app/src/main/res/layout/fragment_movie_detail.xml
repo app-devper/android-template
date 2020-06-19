@@ -12,7 +12,7 @@
 
         <variable
             name="movie"
-            type="com.devper.template.core.model.movie.Movie" />
+            type="com.devper.template.domain.model.movie.Movie" />
 
     </data>
 

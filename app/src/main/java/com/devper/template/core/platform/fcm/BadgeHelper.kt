@@ -7,6 +7,7 @@ import android.util.Log
 import me.leolin.shortcutbadger.ShortcutBadger
 
 class BadgeHelper(private val mContext: Context) {
+
     private var sharedPreferences: SharedPreferences
 
     var badgeCount: Int

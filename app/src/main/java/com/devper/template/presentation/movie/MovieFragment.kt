@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.devper.template.R
 import com.devper.template.databinding.FragmentMovieBinding
+import com.devper.template.domain.model.movie.Movie
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.movie.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,14 +17,16 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie
 
     override fun setupView() {
         binding.viewModel = movieViewModel
-        adapter = MovieAdapter(this::retry) { id: Int, title: String ->
-            val directions = MovieFragmentDirections.movieDetailAction(id, title)
-            findNavController().navigate(directions)
+        adapter = MovieAdapter(this::retry)
+        adapter.apply {
+            onClick = {
+                nextToMovieDetail(it)
+            }
         }
         binding.rvMovie.adapter = adapter
     }
 
-    override fun setObserve() {
+    override fun observeLiveData() {
         with(movieViewModel) {
             movieList.observe(viewLifecycleOwner, Observer {
                 adapter.submitList(it)
@@ -35,7 +38,10 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie
         }
     }
 
-    private fun retry() {
-    }
+    private fun retry() {}
 
+    private fun nextToMovieDetail(movie: Movie) {
+        mainViewModel.setMovie(movie)
+        findNavController().navigate(R.id.movie_detail_action)
+    }
 }

@@ -10,11 +10,12 @@ import com.devper.template.core.widget.NetworkStateItemViewHolder
 import com.devper.template.domain.model.movie.Movie
 
 class MovieAdapter(
-    private val retry: () -> Unit,
-    private val onClick: (id: Int, title: String) -> Unit
+    private val retry: () -> Unit
 ) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(POST_COMPARATOR) {
 
     private var networkState: NetworkState? = null
+
+    var onClick: (movie: Movie) -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
@@ -66,9 +67,11 @@ class MovieAdapter(
 
     companion object {
         val POST_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+                oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+                oldItem.id == newItem.id
         }
     }
 }

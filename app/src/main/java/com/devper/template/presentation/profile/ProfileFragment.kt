@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import coil.api.load
 import com.devper.template.R
 import com.devper.template.core.picker.ImagePickerConfig
 import com.devper.template.core.picker.PickerCallback
@@ -11,15 +12,12 @@ import com.devper.template.databinding.FragmentProfileBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.main.*
-import com.devper.template.presentation.main.viewmodel.MainViewModel
 import com.devper.template.presentation.profile.viewmodel.ProfileViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
     private val profileViewModel: ProfileViewModel by viewModel()
-    private val mainViewModel: MainViewModel by sharedViewModel()
     private lateinit var picker: ImagePickerConfig
 
     override fun setupView() {
@@ -43,27 +41,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     }
 
-    override fun setObserve() {
-        with(profileViewModel) {
-            liveDataProfile.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is ResultState.Loading -> {
-                        showLoading()
-                    }
-                    is ResultState.Success -> {
-                        hideLoading()
-                    }
-                    is ResultState.Error -> {
-                        hideLoading()
-                        toError(it.throwable)
-                    }
+    override fun observeLiveData() {
+        profileViewModel.profileLiveDate.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultState.Loading -> {
+
                 }
-            })
-        }
-        mainViewModel.user.observe(this, Observer {
+                is ResultState.Success -> {
+                }
+                is ResultState.Error -> {
+                    toError(it.throwable)
+                }
+            }
+        })
+
+        mainViewModel.userLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 loadProfile(it.imageUrl)
-                profileViewModel.getProfile(it.id)
+                profileViewModel.getProfile()
             }
         })
     }
@@ -77,7 +72,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             return
         }
         binding.imgProfile.load(url)
-        binding.imgProfile.setColorFilter(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+        binding.imgProfile.setColorFilter(
+            ContextCompat.getColor(requireContext(), android.R.color.transparent)
+        )
     }
 
 }

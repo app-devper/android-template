@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/signup_dest"
-        android:name="com.devper.template.presentation.signup.SignupFragment"
+        android:name="com.devper.template.presentation.signup.SignUpFragment"
         tools:layout="@layout/fragment_signup">
 
         <action

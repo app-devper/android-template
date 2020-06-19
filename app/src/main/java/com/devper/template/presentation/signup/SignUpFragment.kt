@@ -12,7 +12,7 @@ import com.devper.template.presentation.main.toError
 import com.devper.template.presentation.signup.viewmodel.SignupViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_signup) {
+class SignUpFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_signup) {
 
     val viewModel: SignupViewModel by viewModel()
 
@@ -21,24 +21,22 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
         binding.viewModel = viewModel
     }
 
-    override fun setObserve() {
-        with(viewModel) {
-            results.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is ResultState.Loading -> {
-                        showLoading()
-                    }
-                    is ResultState.Success -> {
-                        hideLoading()
-                        next()
-                    }
-                    is ResultState.Error -> {
-                        hideLoading()
-                        toError(it.throwable)
-                    }
+    override fun observeLiveData() {
+        viewModel.results.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultState.Loading -> {
+                    showLoading()
                 }
-            })
-        }
+                is ResultState.Success -> {
+                    hideLoading()
+                    next()
+                }
+                is ResultState.Error -> {
+                    hideLoading()
+                    toError(it.throwable)
+                }
+            }
+        })
     }
 
     private fun next() {

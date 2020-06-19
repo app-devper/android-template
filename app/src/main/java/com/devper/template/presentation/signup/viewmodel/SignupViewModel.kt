@@ -13,7 +13,7 @@ class SignupViewModel internal constructor(private val signupUseCase: SignupUseC
 
     var results: MutableLiveData<ResultState<Unit>> = MutableLiveData()
 
-    fun signup() {
+    fun signUp() {
         Timber.d("Signup: $user")
         if (user.username.isEmpty() || user.password.isEmpty()) {
             return

@@ -10,18 +10,17 @@ import coil.api.load
 import com.devper.template.R
 import com.devper.template.domain.model.movie.Movie
 
-class MovieViewHolder(val view: View, private val f: (id: Int, title: String) -> Unit) : RecyclerView.ViewHolder(view) {
+class MovieViewHolder(val view: View, private val f: (movie: Movie) -> Unit) :
+    RecyclerView.ViewHolder(view) {
 
     private val titleTextView: TextView = view.findViewById(R.id.titleTextView)
     private val popularityTextView: TextView = view.findViewById(R.id.popularityTextView)
     private val imageView: ImageView = view.findViewById(R.id.imageView)
-    private var movie: Movie? = null
+    private lateinit var movie: Movie
 
     init {
         view.setOnClickListener {
-            movie?.let {
-                f(it.id, it.title!!)
-            }
+            f.invoke(movie)
         }
     }
 
@@ -41,8 +40,9 @@ class MovieViewHolder(val view: View, private val f: (id: Int, title: String) ->
     }
 
     companion object {
-        fun create(parent: ViewGroup, f: (d: Int, title: String) -> Unit): MovieViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+        fun create(parent: ViewGroup, f: (movie: Movie) -> Unit): MovieViewHolder {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
             return MovieViewHolder(view, f)
         }
     }

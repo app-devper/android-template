@@ -25,25 +25,24 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun login(request: LoginParam): User {
+    override suspend fun login(request: LoginParam) {
         val mapper = UserMapper()
         return api.login(mapper.toRequest(request)).let { login ->
             pref.token = login.accessToken
-            db.user().addUser(login.user)
-            mapper.toUserDomain(login.user)
         }
     }
 
-    override suspend fun signup(request: SignupParam) {
+    override suspend fun signUp(request: SignupParam) {
         val mapper = UserMapper()
         return api.signup(mapper.toRequest(request)).let {
             mapper.toUserDomain(it)
         }
     }
 
-    override suspend fun getProfile(id: String): User {
+    override suspend fun getProfile(): User {
         val mapper = UserMapper()
-        return api.getUserId(id).let {
+        return api.getProfile().let {
+            db.user().addUser(it)
             mapper.toUserDomain(it)
         }
     }

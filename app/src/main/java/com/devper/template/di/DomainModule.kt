@@ -1,6 +1,5 @@
-package com.devper.template.domain
+package com.devper.template.di
 
-import com.devper.template.data.dataModule
 import com.devper.template.domain.usecase.device.RegisterDeviceUseCase
 import com.devper.template.domain.usecase.movie.GetConfigUseCase
 import com.devper.template.domain.usecase.movie.GetMovieUseCase
@@ -14,7 +13,7 @@ private val domainModule = module {
 
     factory { LoginUseCase(get()) }
     factory { SignupUseCase(get()) }
-    factory { GetUserUseCase(get()) }
+    factory { GetProfileUseCase(get()) }
     factory { GetCurrentUserUseCase(get()) }
     factory { ClearUserUseCase(get()) }
 

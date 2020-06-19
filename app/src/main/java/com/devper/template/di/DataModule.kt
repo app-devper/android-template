@@ -1,4 +1,4 @@
-package com.devper.template.data
+package com.devper.template.di
 
 import com.devper.template.domain.provider.AppInfoProvider
 import com.devper.template.domain.repository.DeviceRepository
