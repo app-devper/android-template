@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/movie_rounded_corner_bg"
+                android:background="@drawable/movie_round_corner_bg"
                 android:minWidth="@dimen/height_movie_popularity"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -49,7 +49,7 @@
                     android:layout_marginStart="5dp"
                     android:textSize="14sp"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/movie_ic_stars_white_24dp"
+                    android:drawableStart="@drawable/movie_ic_stars"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"

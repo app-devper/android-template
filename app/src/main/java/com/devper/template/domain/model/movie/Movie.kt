@@ -32,4 +32,14 @@ data class Movie(
         get() {
             return runtime.toString()
         }
+
+    val popularityDisplay: String
+        get() {
+            return getPopularityString(popularity)
+        }
+
+    private fun getPopularityString(popularity: Float): String {
+        val decimalFormat = java.text.DecimalFormat("#.#")
+        return decimalFormat.format(popularity.toDouble())
+    }
 }

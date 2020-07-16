@@ -8,7 +8,7 @@
 
         <variable
             name="viewDetailModel"
-            type="com.devper.template.presentation.movie.viewmodel.MovieDetailViewModel" />
+            type="com.devper.template.presentation.moviedetail.MovieDetailViewModel" />
 
         <variable
             name="movie"
@@ -41,7 +41,8 @@
                     android:layout_weight="1"
                     android:background="@android:color/darker_gray"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{movie.posterPath}" />
+                    app:imageUrl="@{movie.posterPath}"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="0dp"

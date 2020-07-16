@@ -42,4 +42,28 @@
 
     <color name="translucent">#77000000</color>
 
+    <color name="colorBlack">#000000</color>
+    <color name="colorGreyDarker">#30323a</color>
+    <color name="colorGreyDark">#565b6e</color>
+    <color name="colorGrey">#8389a2</color>
+    <color name="colorGreyLight">#c5c9db</color>
+    <color name="colorGreyLighter">#e6e8f2</color>
+    <color name="colorGreyBright">#f6f7fc</color>
+    <color name="colorBlueDarker">#131e62</color>
+    <color name="colorBlueDark">#102884</color>
+    <color name="colorBlue">#1d3db4</color>
+    <color name="colorBlueLight">#4b69d7</color>
+    <color name="colorBlueLighter">#a6b9ff</color>
+    <color name="colorBlueBright">#cfd9ff</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGreenDarker">#73a600</color>
+    <color name="colorGreen">#89c503</color>
+    <color name="colorGreenLight">#9fd623</color>
+    <color name="colorRedDark">#ce0e17</color>
+    <color name="colorRed">#eb1d27</color>
+    <color name="colorRedLight">#fc4e56</color>
+    <color name="colorYellowDark">#d67f00</color>
+    <color name="colorYellow">#e39d00</color>
+    <color name="colorYellowLight">#ffa21b</color>
+
 </resources>

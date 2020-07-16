@@ -17,8 +17,14 @@ sealed class ResultState<out T> {
      */
     data class Error(val throwable: Throwable) : ResultState<Nothing>()
 
-    /**
-     * A state which show when we end of [stream] or grouping onError or onNext into only emit
-     */
-    class Finally<T>(val data: T? = null, val throwable: Throwable? = null) : ResultState<T>()
+}
+
+val ResultState<*>.succeeded
+    get() = this is ResultState.Success && data != null
+
+inline fun <reified T> ResultState<T>.success(): T? {
+    return when (this) {
+        is ResultState.Success -> data
+        else -> null
+    }
 }

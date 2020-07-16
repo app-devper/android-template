@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.movie.viewmodel.MovieViewModel"/>
+            type="com.devper.template.presentation.movie.MovieViewModel"/>
     </data>
 
     <RelativeLayout
@@ -26,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawableTop="@drawable/movie_ic_cloud_off_white_60dp"
+            android:drawableTop="@drawable/movie_ic_cloud_off"
             android:text="@string/movie_generic_error"
             android:textAlignment="center"
             android:visibility="gone"/>

@@ -127,8 +127,11 @@ class SmartLocationService(private val mActivity: Activity, lifecycle: Lifecycle
 
     private class MyReceiver(val callBack: LocationCallBack) : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val location: Location = intent!!.getParcelableExtra(LocationService.EXTRA_LOCATION)
-            callBack.onLocationResult(location)
+            intent?.let {
+                val location: Location? = intent.getParcelableExtra(LocationService.EXTRA_LOCATION)
+                callBack.onLocationResult(location)
+            }
+
         }
     }
 }

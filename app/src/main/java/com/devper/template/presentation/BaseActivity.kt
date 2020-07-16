@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.devper.template.core.platform.LocaleHelper
+import com.devper.template.core.platform.helper.LocaleHelper
 
 abstract class BaseActivity<Binding : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity() {
 

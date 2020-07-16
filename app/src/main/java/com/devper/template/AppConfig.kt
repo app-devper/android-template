@@ -2,14 +2,16 @@ package com.devper.template
 
 object AppConfig {
 
-    const val SPLASH_DELAY: Long = 3000 // 3 seconds
-    private const val URL = "https://common-api-app.herokuapp.com/"
-
-    val url: String
-        get() {
-            return URL
-        }
-
+    const val LOGIN_ERROR = "LOGIN_ERROR"
+    const val CANCEL_ERROR = "CANCEL_ERROR"
+    const val DATA_ERROR = "DATA_ERROR"
+    const val PARSE_JSON_ERROR = "PARSE_JSON_ERROR"
+    const val INVALID_DATA_ERROR = "INVALID_DATA_ERROR"
+    const val TIME_OUT_ERROR = "TIME_OUT_ERROR"
+    const val UN_KNOWN_ERROR = "UN_KNOWN_ERROR"
+    const val CONNECTION_ERROR = "CONNECTION_ERROR"
+    const val OTHER_ERROR = "OTHER_ERROR"
+    const val NO_INTERNET_ERROR = "NO_INTERNET_ERROR"
 }
 
 

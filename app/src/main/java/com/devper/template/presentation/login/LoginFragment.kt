@@ -3,37 +3,35 @@ package com.devper.template.presentation.login
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
-import com.devper.fingerprint.BiometricController
-import com.devper.fingerprint.Callback
-import com.devper.smartlogin.*
-import com.devper.smartlogin.users.SmartUser
-import com.devper.smartlogin.util.SmartLoginException
 import com.devper.template.R
 import com.devper.template.core.extension.makeLinks
+import com.devper.template.core.platform.BiometricController
+import com.devper.template.core.smartlogin.*
+import com.devper.template.core.smartlogin.users.SmartUser
+import com.devper.template.core.smartlogin.util.SmartLoginException
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.login.viewmodel.LoginViewModel
 import com.devper.template.presentation.main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login), SmartLoginCallbacks, Callback {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login),
+    SmartLoginCallbacks, BiometricController.Callback {
 
     private lateinit var config: SmartLoginConfig
     private lateinit var biometric: BiometricController
     private lateinit var smartLogin: SmartLogin
 
-    private val loginViewModel: LoginViewModel by viewModel()
+    override val viewModel: LoginViewModel by viewModel()
 
     override fun setupView() {
-        appCompat().supportActionBar?.hide()
-        binding.viewModel = loginViewModel
+        hideToolbar()
+        hideBottomNavigation()
+        binding.viewModel = viewModel
         binding.tvSignup.makeLinks(Pair(getString(R.string.signup_button), View.OnClickListener {
-            findNavController().navigate(R.id.signup_action)
+            viewModel.nextToSignUp()
         }))
-        loginViewModel.clearUser()
+        viewModel.clearUser()
         activity?.let {
             config = SmartLoginConfig(it, this)
             biometric = BiometricController(it, this)
@@ -44,32 +42,31 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     override fun observeLiveData() {
-        with(loginViewModel) {
-            results.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is ResultState.Loading -> {
-                        showLoading()
-                    }
-                    is ResultState.Success -> {
-                        hideLoading()
-                        mainViewModel.setUser(it.data)
-                        next()
-                    }
-                    is ResultState.Error -> {
-                        hideLoading()
-                        toError(it.throwable)
-                    }
+        viewModel.results.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultState.Loading -> {
+                    showDialog()
                 }
-            })
+                is ResultState.Success -> {
+                    hideDialog()
+                    mainViewModel.initProfile()
+                    viewModel.nextToOtp()
+                }
+                is ResultState.Error -> {
+                    hideDialog()
+                    toError(it.throwable)
+                }
+            }
+        })
 
-            login.observe(viewLifecycleOwner, Observer {
-                if (it != LoginType.Custom) {
-                    smartLogin = SmartLoginFactory.build(it).apply {
-                        login(config)
-                    }
+        viewModel.login.observe(viewLifecycleOwner, Observer {
+            if (it != LoginType.Custom) {
+                smartLogin = SmartLoginFactory.build(it).apply {
+                    login(config)
                 }
-            })
-        }
+            }
+        })
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -81,19 +78,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     override fun onLoginSuccess(user: SmartUser) {
-//        Log.i("LoginSuccess", "SmartUser: $user")
-//        val newUser = User(user.userId ?: return).apply {
-//            firstName = user.firstName
-//            lastName = user.lastName
-//            email = user.email
-//            imageUrl = user.profileLink
-//        }
-//        when (user) {
-//            is SmartFacebookUser -> newUser.username = user.firstName + " " + user.lastName
-//            is SmartLineUser -> newUser.username = user.displayName
-//            is SmartGoogleUser -> newUser.username = user.displayName
-//        }
-
     }
 
     override fun onLoginFailure(e: SmartLoginException) {
@@ -109,10 +93,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     }
 
-    private fun next() {
-        val navBuilder = NavOptions.Builder()
-        val navOptions = navBuilder.setPopUpTo(R.id.login_dest, true).build()
-        findNavController().navigate(R.id.home_dest, null, navOptions)
-    }
 
 }

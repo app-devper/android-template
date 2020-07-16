@@ -155,7 +155,7 @@ class LocalMessagingHelper(context: Application) {
             }
 
             Timber.d("broadcast intent before showing notification")
-            val i = Intent(ACTION_BROADCAST)
+            val i = Intent(ACTION_PUSH_BROADCAST)
             i.putExtras(bundle)
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(i)
 
@@ -231,6 +231,6 @@ class LocalMessagingHelper(context: Application) {
         private var currentClass: Class<*>? = null
         private const val CHANNEL_ID = "channel_02"
 
-        const val ACTION_BROADCAST = "$PACKAGE_NAME.push_notification"
+        const val ACTION_PUSH_BROADCAST = "$PACKAGE_NAME.push_notification"
     }
 }

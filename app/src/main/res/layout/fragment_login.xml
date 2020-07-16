@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.login.viewmodel.LoginViewModel"/>
+            type="com.devper.template.presentation.login.LoginViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             android:layout_marginBottom="80dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
             app:cardCornerRadius="7dp"
@@ -35,18 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="20dp">
 
                 <TextView
                     android:id="@+id/tv_login_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="60dp"
                     android:text="@string/login_title"
                     android:textAllCaps="true"
                     android:textColor="@color/black_effective"
@@ -176,15 +171,33 @@
                     tools:targetApi="lollipop"/>
 
                 <TextView
-                    android:id="@+id/tv_signup"
-                    android:layout_width="match_parent"
+                    android:id="@+id/pin_code_forgot_textview"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:onClick="@{()-> viewModel.nextOtpChannel()}"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/pin_code_forgot_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pin_code_forgot_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+                <TextView
+                    android:id="@+id/tv_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
+                    android:padding="8dp"
                     android:text="@string/login_signup"
                     android:textColor="@color/black_effective"
                     android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_login"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pin_code_forgot_textview" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

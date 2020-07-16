@@ -1,26 +1,43 @@
 package com.devper.template.data.remote
 
+import com.devper.template.core.exception.InternetException
+import com.devper.template.core.platform.helper.NetworkInfoHelper
 import com.devper.template.data.preference.AppPreference
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
+import retrofit2.Invocation
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class HttpInterceptor(private val pref: AppPreference) : Interceptor {
+class HttpInterceptor(
+    private val pref: AppPreference,
+    private val networkInfoHelper: NetworkInfoHelper
+) : Interceptor {
 
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val newRequest = originalRequest.newBuilder().run {
-            addHeader("Content-Type", "application/json")
-            if (pref.token.isNotEmpty()) {
-                addHeader("Authorization", "Bearer ${pref.token}")
+        if (!networkInfoHelper.isOnline) {
+            throw InternetException("No internet connection")
+        } else {
+            val originalRequest = chain.request()
+            val newRequest = originalRequest.newBuilder().run {
+                addHeader("Content-Type", "application/json")
+                if (pref.token.isNotEmpty()) {
+                    addHeader("Authorization", "Bearer ${pref.token}")
+                }
+                addHeader("x-transaction-id", genTransactionId())
             }
-            addHeader("x-transaction-id", genTransactionId())
-            build()
+            val tag = originalRequest.tag(Invocation::class.java)
+            val annotation = tag?.method()?.getAnnotation(Timeout::class.java)
+            return if (annotation == null) {
+                chain.proceed(newRequest.build())
+            } else {
+                chain.withConnectTimeout(annotation.seconds, TimeUnit.SECONDS)
+                    .withReadTimeout(annotation.seconds, TimeUnit.SECONDS)
+                    .withWriteTimeout(annotation.seconds, TimeUnit.SECONDS)
+                    .proceed(newRequest.build())
+            }
         }
-        return chain.proceed(newRequest)
     }
 
     private fun randomAlphaNumeric(count: Int): String {

@@ -13,7 +13,7 @@ class MovieRepositoryImpl(private val api: ApiService, private val session: AppS
         val mapper = MovieMapper()
         val config = getConfiguration()
         return api.getMovies(page).let {
-            mapper.toMoviesDomain(it, config.images)
+            mapper.toDomain(it, config.images)
         }
     }
 
@@ -22,7 +22,7 @@ class MovieRepositoryImpl(private val api: ApiService, private val session: AppS
         val result = session.configurationData ?: api.getConfiguration()
         return result.let {
             session.configurationData = it
-            mapper.toConfigurationDomain(it)
+            mapper.toDomain(it)
         }
     }
 
@@ -30,7 +30,7 @@ class MovieRepositoryImpl(private val api: ApiService, private val session: AppS
         val mapper = MovieMapper()
         val config = getConfiguration()
         return api.getMovie(id).let {
-            mapper.toMovieDomain(it, config.images)
+            mapper.toDomain(it, config.images)
         }
     }
 

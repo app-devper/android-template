@@ -1,9 +1,14 @@
 package com.devper.template.domain.usecase.device
 
+import com.devper.template.domain.core.thread.CoroutineThreadDispatcher
+import com.devper.template.domain.repository.DeviceRepository
 import com.devper.template.domain.usecase.UseCase
 
-class RegisterDeviceUseCase(private val repo: com.devper.template.domain.repository.DeviceRepository) : UseCase<String?, String>() {
-    override suspend fun executeOnBackground(param: String?): String {
+class RegisterDeviceUseCase(
+    dispatcher: CoroutineThreadDispatcher,
+    private val repo: DeviceRepository
+) : UseCase<String?, Boolean>(dispatcher) {
+    override suspend fun executeOnBackground(param: String?): Boolean {
         return repo.registerDevice()
     }
 }

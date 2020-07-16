@@ -2,52 +2,74 @@ package com.devper.template.data.preference
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.devper.template.core.extension.md5
 
-class AppPreference private constructor(context: Context) {
+class AppPreference constructor(context: Context) {
 
-    private val sharedpreferences: SharedPreferences
+    private val preferences: SharedPreferences
 
     var token: String
-        get() = sharedpreferences.getString(PREF_TOKEN, "") ?: ""
+        get() = preferences.getString(PREF_TOKEN, "") ?: ""
         set(uuid) {
-            val editor = sharedpreferences.edit()
+            val editor = preferences.edit()
             editor.putString(PREF_TOKEN, uuid)
             editor.apply()
         }
 
-    var fbToken: String?
-        get() = sharedpreferences.getString(PREF_FCM_TOKEN, null)
-        set(uuid) {
-            val editor = sharedpreferences.edit()
-            editor.putString(PREF_FCM_TOKEN, uuid)
-            editor.apply()
-        }
+    val userId: String
+        get() = preferences.getString(PREF_USER_ID, "") ?: ""
 
-    var userId: String
-        get() = sharedpreferences.getString(PREF_USER_ID, "") ?: ""
-        set(id) {
-            val editor = sharedpreferences.edit()
-            editor.putString(PREF_USER_ID, id)
-            editor.apply()
+    val userKey: String
+        get() = preferences.getString(PREF_USER_KEY, "") ?: ""
+
+    fun setPin(pin: String) {
+        val editor = preferences.edit()
+        editor.putString(PREF_USER_PIN, pin.md5())
+        editor.apply()
+    }
+
+    fun setUserKey(id: String, key: String) {
+        val editor = preferences.edit()
+        editor.putString(PREF_USER_ID, id)
+        editor.putString(PREF_USER_KEY, key)
+        editor.apply()
+    }
+
+    fun verifyPin(pin: String): String {
+        val userPin = preferences.getString(PREF_USER_PIN, "")
+        if (userPin.isNullOrEmpty()) return "NOT_SET"
+        return if (pin.md5() == userPin) {
+            "SUCCESS"
+        } else {
+            "INVALID"
+        }
+    }
+
+    fun clear() {
+        val editor = preferences.edit()
+        editor.putString(PREF_TOKEN, "")
+        editor.putString(PREF_USER_ID, "")
+        editor.putString(PREF_USER_KEY, "")
+        editor.putString(PREF_USER_PIN, "")
+        editor.apply()
+    }
+
+    val isSetPin: Boolean
+        get() {
+            return !preferences.getString(PREF_USER_PIN, "").isNullOrEmpty() && userId.isNotEmpty()
         }
 
     init {
-        sharedpreferences = context.getSharedPreferences(PREF_APP, Context.MODE_PRIVATE)
+        preferences = context.getSharedPreferences(PREF_APP, Context.MODE_PRIVATE)
     }
 
     companion object {
 
         private const val PREF_APP = "prefs"
         private const val PREF_TOKEN = "PREF_TOKEN"
-        private const val PREF_FCM_TOKEN = "PREF_FCM_TOKEN"
         private const val PREF_USER_ID = "PREF_USER_ID"
-
-        private lateinit var instance: AppPreference
-
-        fun init(context: Context): AppPreference {
-            instance = AppPreference(context)
-            return instance
-        }
+        private const val PREF_USER_KEY = "PREF_USER_KEY"
+        private const val PREF_USER_PIN = "PREF_USER_PIN"
 
     }
 

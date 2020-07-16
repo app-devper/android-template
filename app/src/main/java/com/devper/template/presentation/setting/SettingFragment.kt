@@ -1,11 +1,25 @@
 package com.devper.template.presentation.setting
 
-import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
+import androidx.lifecycle.Observer
 import com.devper.template.R
+import com.devper.template.databinding.FragmentSettingBinding
+import com.devper.template.presentation.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingFragment : PreferenceFragmentCompat() {
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.pref_setting, rootKey)
+class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
+
+    override val viewModel: SettingViewModel by viewModel()
+
+    override fun setupView() {
+        showToolbar()
+        showBottomNavigation()
+        binding.viewModel = viewModel
     }
+
+    override fun observeLiveData() {
+        mainViewModel.userLiveData.observe(viewLifecycleOwner, Observer {
+            binding.user = it
+        })
+    }
+
 }

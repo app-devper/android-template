@@ -1,10 +1,10 @@
 package com.devper.template.data.remote.user
 
+import com.devper.template.core.exception.AppException
 import com.devper.template.data.database.AppDatabase
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.data.remote.ApiService
-import com.devper.template.domain.model.user.LoginParam
-import com.devper.template.domain.model.user.SignupParam
+import com.devper.template.domain.model.user.SignUpParam
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.repository.UserRepository
 
@@ -15,27 +15,21 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     override suspend fun clearUser() {
-        return db.user().clearUser()
+        pref.clear()
+        db.user().clearUser()
     }
 
-    override suspend fun getCurrentUser(): User? {
+    override suspend fun getCurrentUser(): User {
         val mapper = UserMapper()
         return db.user().getFirstUser()?.let {
-            mapper.toUserDomain(it)
-        }
+            mapper.toDomain(it)
+        } ?: throw AppException("USER_NOT_FOUND", "USER_NOT_FOUND")
     }
 
-    override suspend fun login(request: LoginParam) {
+    override suspend fun signUp(request: SignUpParam) {
         val mapper = UserMapper()
-        return api.login(mapper.toRequest(request)).let { login ->
-            pref.token = login.accessToken
-        }
-    }
-
-    override suspend fun signUp(request: SignupParam) {
-        val mapper = UserMapper()
-        return api.signup(mapper.toRequest(request)).let {
-            mapper.toUserDomain(it)
+        api.signUp(mapper.toRequest(request)).let {
+            mapper.toDomain(it)
         }
     }
 
@@ -43,7 +37,7 @@ class UserRepositoryImpl(
         val mapper = UserMapper()
         return api.getProfile().let {
             db.user().addUser(it)
-            mapper.toUserDomain(it)
+            mapper.toDomain(it)
         }
     }
 

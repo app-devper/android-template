@@ -27,16 +27,10 @@ class MovieViewHolder(val view: View, private val f: (movie: Movie) -> Unit) :
     fun bind(movie: Movie?) {
         movie?.let {
             this.movie = it
-            val popularity = getPopularityString(it.popularity)
-            popularityTextView.text = popularity
+            popularityTextView.text = it.popularityDisplay
             titleTextView.text = it.title
             imageView.load(it.posterPath)
         }
-    }
-
-    private fun getPopularityString(popularity: Float): String {
-        val decimalFormat = java.text.DecimalFormat("#.#")
-        return decimalFormat.format(popularity.toDouble())
     }
 
     companion object {

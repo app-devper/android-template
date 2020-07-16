@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <com.devper.template.core.widget.RoundedImageView
+        <com.devper.template.core.platform.widget.RoundedImageView
             android:id="@+id/img_profile"
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -36,14 +36,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{user.username}"/>
+            android:text="@{user.username}"
+            tools:text= "username"/>
 
         <TextView
             android:id="@+id/tv_email"
             style="@style/TextStyle.Title.Sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{user.email}"/>
+            android:text="@{user.email}"
+            tools:text= "username@email.com"/>
 
     </LinearLayout>
 

@@ -1,33 +1,35 @@
 package com.devper.template.presentation.movie
 
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.devper.template.R
 import com.devper.template.databinding.FragmentMovieBinding
 import com.devper.template.domain.model.movie.Movie
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.movie.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie) {
 
-    private lateinit var adapter: MovieAdapter
+    private var adapter: MovieAdapter = MovieAdapter()
 
-    private val movieViewModel: MovieViewModel by viewModel()
+    override val viewModel: MovieViewModel by viewModel()
 
     override fun setupView() {
-        binding.viewModel = movieViewModel
-        adapter = MovieAdapter(this::retry)
+        showToolbar()
+        showBottomNavigation()
+        binding.viewModel = viewModel
         adapter.apply {
             onClick = {
                 nextToMovieDetail(it)
             }
+            retry = {
+            }
         }
         binding.rvMovie.adapter = adapter
+        viewModel.getMovies()
     }
 
     override fun observeLiveData() {
-        with(movieViewModel) {
+        with(viewModel) {
             movieList.observe(viewLifecycleOwner, Observer {
                 adapter.submitList(it)
             })
@@ -38,10 +40,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie
         }
     }
 
-    private fun retry() {}
-
     private fun nextToMovieDetail(movie: Movie) {
-        mainViewModel.setMovie(movie)
-        findNavController().navigate(R.id.movie_detail_action)
+        mainViewModel.navigate(R.id.movie_to_movie_detail)
     }
 }

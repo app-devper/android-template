@@ -64,7 +64,7 @@ class AndroidAppInfo(private val application: Application) : AppInfoProvider {
         get() = Build.MODEL
 
     override val serialNo: String
-        @SuppressLint("MissingPermission")
+        @SuppressLint("MissingPermission", "HardwareIds")
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Build.getSerial()
         } else {

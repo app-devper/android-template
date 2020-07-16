@@ -2,36 +2,39 @@ package com.devper.template.presentation.home
 
 import android.content.Context
 import android.graphics.drawable.LayerDrawable
-import android.util.Log
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import com.devper.template.R
-import com.devper.template.core.widget.CountDrawable
+import com.devper.template.core.platform.widget.CountDrawable
 import com.devper.template.databinding.FragmentHomeBinding
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.main.viewmodel.MainViewModel
-import com.devper.template.presentation.main.appCompat
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import com.devper.template.presentation.BaseViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+
+    override val viewModel: BaseViewModel by viewModel()
 
     private var menuItem: MenuItem? = null
 
     override fun setupView() {
+        showToolbar()
+        showBottomNavigation()
         setHasOptionsMenu(true)
         binding.viewModel = mainViewModel
-        appCompat().supportActionBar?.show()
+    }
+
+    override fun onArguments(it: Bundle?) {
+        mainViewModel.initProfile()
     }
 
     override fun observeLiveData() {
-        with(mainViewModel) {
-            badge.observe(viewLifecycleOwner, Observer {
-                Log.i("Badge", "Badge: $it")
-                menuItem?.setCount(requireContext(), it)
-            })
-        }
+        mainViewModel.badge.observe(viewLifecycleOwner, Observer {
+            menuItem?.setCount(requireContext(), it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

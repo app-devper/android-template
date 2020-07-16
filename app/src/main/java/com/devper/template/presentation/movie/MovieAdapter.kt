@@ -6,31 +6,27 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.devper.template.R
 import com.devper.template.core.platform.NetworkState
-import com.devper.template.core.widget.NetworkStateItemViewHolder
+import com.devper.template.core.platform.widget.NetworkStateViewHolder
 import com.devper.template.domain.model.movie.Movie
 
-class MovieAdapter(
-    private val retry: () -> Unit
-) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(POST_COMPARATOR) {
+class MovieAdapter : PagedListAdapter<Movie, RecyclerView.ViewHolder>(POST_COMPARATOR) {
 
     private var networkState: NetworkState? = null
 
     var onClick: (movie: Movie) -> Unit = {}
+    var retry: () -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.item_movie -> {
-                val movie = getItem(position)
-                (holder as MovieViewHolder).bind(movie)
-            }
-            R.layout.item_network_state -> (holder as NetworkStateItemViewHolder).bindTo(networkState)
+            R.layout.item_movie -> (holder as MovieViewHolder).bind(getItem(position))
+            R.layout.item_network_state -> (holder as NetworkStateViewHolder).bindTo(networkState)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.item_movie -> MovieViewHolder.create(parent, onClick)
-            R.layout.item_network_state -> NetworkStateItemViewHolder.create(parent, retry)
+            R.layout.item_network_state -> NetworkStateViewHolder.create(parent, retry)
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }

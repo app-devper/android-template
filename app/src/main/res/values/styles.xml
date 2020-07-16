@@ -1,13 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
         <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
+        <item name="android:windowBackground">@color/colorGreyBright</item>
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowEnableSplitTouch">false</item>
     </style>
 
     <style name="ProgressHUD" parent="@android:style/Theme.Dialog">
@@ -126,6 +129,31 @@
     <style name="Button.Secondary" parent="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/all_button_secondary_bg</item>
+    </style>
+
+    <style name="Card">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="cardCornerRadius">6dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="Card.Top" parent="Card">
+        <item name="android:layout_marginTop">24dp</item>
+    </style>
+
+    <style name="Card.Bottom" parent="Card">
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="Card.Body" parent="Card">
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="Card.List" parent="Card">
+        <item name="android:layout_marginBottom">0dp</item>
     </style>
 
 

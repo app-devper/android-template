@@ -1,14 +1,15 @@
 package com.devper.template.domain.usecase
 
+import com.devper.template.domain.core.thread.CoroutineThreadDispatcher
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 typealias CompletionBlock<T> = UseCase.Request<T>.() -> Unit
 
-abstract class UseCase<Param, T> {
+abstract class UseCase<Param, T>(dispatcher: CoroutineThreadDispatcher) {
     private var parentJob: Job = Job()
-    private var backgroundContext: CoroutineContext = Dispatchers.IO
-    private var foregroundContext: CoroutineContext = Dispatchers.Main
+    private var backgroundContext: CoroutineContext = dispatcher.io()
+    private var foregroundContext: CoroutineContext = dispatcher.ui()
 
     protected abstract suspend fun executeOnBackground(param: Param): T
 

@@ -2,8 +2,6 @@ package com.devper.template.core.platform.fcm
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
-
 import me.leolin.shortcutbadger.ShortcutBadger
 
 class BadgeHelper(private val mContext: Context) {
@@ -14,13 +12,7 @@ class BadgeHelper(private val mContext: Context) {
         get() = sharedPreferences.getInt(BADGE_COUNT_KEY, 0)
         set(badgeCount) {
             storeBadgeCount(badgeCount)
-            if (badgeCount == 0) {
-                ShortcutBadger.removeCount(mContext)
-                Log.d(TAG, "Remove count")
-            } else {
-                ShortcutBadger.applyCount(mContext, badgeCount)
-                Log.d(TAG, "Apply count: $badgeCount")
-            }
+            ShortcutBadger.applyCount(mContext, badgeCount)
         }
 
     init {

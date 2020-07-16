@@ -23,8 +23,8 @@
     <dimen name="toolbar_profile_width">90dp</dimen>
     <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="activity_padding">16dp</dimen>
-    <dimen name="profile_title">23dp</dimen>
-    <dimen name="profile_desc">13dp</dimen>
+    <dimen name="profile_title">23sp</dimen>
+    <dimen name="profile_desc">13sp</dimen>
     <dimen name="meta_count">20dp</dimen>
     <dimen name="meta_label">12dp</dimen>
     <dimen name="dimen_40dp">40dp</dimen>
@@ -38,5 +38,21 @@
     <dimen name="margin_movie_vertical">16dp</dimen>
 
     <dimen name="text_size_home_badge">10sp</dimen>
+
+
+    <dimen name="keyboard_button_text_size">30sp</dimen>
+    <dimen name="keyboard_button_padding">15dp</dimen>
+    <dimen name="keyboard_button_ripple_padding">30dp</dimen>
+    <dimen name="pin_code_round_size">25dp</dimen>
+    <dimen name="pin_code_round_margin">10dp</dimen>
+    <dimen name="light_gray_bar_margin_top">20dp</dimen>
+    <dimen name="light_gray_bar_margin_bottom">5dp</dimen>
+    <dimen name="light_gray_bar_margin_sides">50dp</dimen>
+    <dimen name="pin_code_forgot_text_size">16sp</dimen>
+    <dimen name="pin_code_step_text_size">20sp</dimen>
+    <dimen name="pin_code_elements_margin">20dp</dimen>
+    <dimen name="activity_pin_code_padding">20dp</dimen>
+    <dimen name="pin_code_logo_margin">30dp</dimen>
+    <dimen name="pin_code_round_top_margin">10dp</dimen>
 
 </resources>

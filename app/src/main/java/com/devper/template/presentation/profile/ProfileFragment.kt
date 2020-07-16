@@ -6,22 +6,21 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import coil.api.load
 import com.devper.template.R
-import com.devper.template.core.picker.ImagePickerConfig
-import com.devper.template.core.picker.PickerCallback
+import com.devper.template.core.platform.picker.ImagePickerConfig
+import com.devper.template.core.platform.picker.PickerCallback
 import com.devper.template.databinding.FragmentProfileBinding
-import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.main.*
-import com.devper.template.presentation.profile.viewmodel.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
-    private val profileViewModel: ProfileViewModel by viewModel()
+    override val viewModel: ProfileViewModel by viewModel()
+
     private lateinit var picker: ImagePickerConfig
 
     override fun setupView() {
-        appCompat().supportActionBar?.show()
+        showToolbar()
+        showBottomNavigation()
         picker = ImagePickerConfig(requireActivity(), object : PickerCallback {
             override fun onSuccess(imagePath: Uri?) {
                 loadProfile(imagePath.toString())
@@ -38,28 +37,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             }
         }
         //clearCache(requireContext())
-
+        mainViewModel.getProfile()
     }
 
     override fun observeLiveData() {
-        profileViewModel.profileLiveDate.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is ResultState.Loading -> {
-
-                }
-                is ResultState.Success -> {
-                }
-                is ResultState.Error -> {
-                    toError(it.throwable)
-                }
-            }
-        })
-
         mainViewModel.userLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                loadProfile(it.imageUrl)
-                profileViewModel.getProfile()
-            }
+            binding.user = it
         })
     }
 

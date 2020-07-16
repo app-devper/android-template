@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.devper.template.BuildConfig" />
+
+        <variable
+            name="user"
+            type="com.devper.template.domain.model.user.User" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +24,14 @@
             android:layout_width="@dimen/toolbar_profile_width"
             android:layout_height="wrap_content">
 
-            <com.devper.template.core.widget.RoundedImageView
+            <com.devper.template.core.platform.widget.RoundedImageView
                 android:id="@+id/img_profile"
                 android:layout_width="@dimen/toolbar_profile_width"
                 android:layout_height="@dimen/toolbar_profile_width"
-                android:layout_marginBottom="@dimen/activity_padding"
                 android:layout_marginTop="@dimen/activity_padding"
+                android:layout_marginBottom="@dimen/activity_padding"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_ic_logo"/>
+                android:src="@drawable/main_ic_logo" />
 
             <ImageView
                 android:id="@+id/img_plus"
@@ -29,15 +39,17 @@
                 android:layout_height="@dimen/ic_plus_width"
                 android:layout_alignBottom="@id/img_profile"
                 android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/profile_ic_add"/>
+                app:srcCompat="@drawable/profile_ic_add"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/profile_title"
+            android:text="@{user.fullName}"
             android:textColor="@color/black"
-            android:textSize="@dimen/profile_title"/>
+            android:textSize="@dimen/profile_title"
+            tools:text="@string/profile_title" />
 
         <TextView
             android:id="@+id/profile_desc"
@@ -47,8 +59,9 @@
             android:gravity="center_horizontal"
             android:paddingLeft="@dimen/dimen_20dp"
             android:paddingRight="@dimen/dimen_20dp"
-            android:text="@string/profile_desc"
-            android:textSize="@dimen/profile_desc"/>
+            android:text="@{user.email}"
+            android:textSize="@dimen/profile_desc"
+            tools:text="@string/profile_desc" />
 
     </LinearLayout>
 </layout>

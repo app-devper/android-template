@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="warning_color">#F44336</color>
-    <color name="hint_color">#000000</color>
-    <color name="success_color">#4CAF50</color>
-    <color name="color_grey_light">#EFF1EC</color>
-    <color name="color_grey_light50">#8A9BAF</color>
-    <color name="color_gray_dark">#747474</color>
-</resources>
