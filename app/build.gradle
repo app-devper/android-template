@@ -54,8 +54,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation "androidx.preference:preference:$versions.preference"
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
     implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
     implementation "androidx.biometric:biometric:1.0.1"
     implementation "androidx.room:room-runtime:$versions.room"
@@ -68,7 +68,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$versions.location"
     implementation "com.google.android.gms:play-services-auth:18.0.0"
 
-    implementation "com.google.firebase:firebase-messaging:20.2.1"
+    implementation "com.google.firebase:firebase-messaging:20.2.3"
 
     implementation "com.facebook.android:facebook-android-sdk:$versions.facebook"
     implementation "com.facebook.android:facebook-login:$versions.facebook"

@@ -2,6 +2,7 @@ package com.devper.template.presentation
 
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -21,11 +22,24 @@ abstract class BaseActivity<Binding : ViewDataBinding>(private val layoutId: Int
         binding.lifecycleOwner = this
 
         setupView()
-        setObserve()
+        observeLiveData()
     }
 
     abstract fun setupView()
 
-    abstract fun setObserve()
+    abstract fun observeLiveData()
+
+    fun applyDisplayHomeAsUpEnabled(asUpEnable: Boolean) {
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(asUpEnable)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return true
+    }
 
 }

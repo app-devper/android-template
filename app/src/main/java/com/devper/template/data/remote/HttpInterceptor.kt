@@ -2,7 +2,7 @@ package com.devper.template.data.remote
 
 import com.devper.template.core.exception.InternetException
 import com.devper.template.core.platform.helper.NetworkInfoHelper
-import com.devper.template.data.preference.AppPreference
+import com.devper.template.data.session.AppSession
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
@@ -11,7 +11,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class HttpInterceptor(
-    private val pref: AppPreference,
+    private val session: AppSession,
     private val networkInfoHelper: NetworkInfoHelper
 ) : Interceptor {
 
@@ -22,8 +22,10 @@ class HttpInterceptor(
             val originalRequest = chain.request()
             val newRequest = originalRequest.newBuilder().run {
                 addHeader("Content-Type", "application/json")
-                if (pref.token.isNotEmpty()) {
-                    addHeader("Authorization", "Bearer ${pref.token}")
+                session.accessToken?.let {
+                    if (it.isNotEmpty()) {
+                        addHeader("Authorization", "Bearer $it")
+                    }
                 }
                 addHeader("x-transaction-id", genTransactionId())
             }

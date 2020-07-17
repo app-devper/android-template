@@ -2,10 +2,7 @@ package com.devper.template.presentation.main
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
-import com.devper.template.core.exception.AppException
 import com.devper.template.core.platform.widget.ConfirmDialog
-import com.devper.template.domain.core.ErrorMapper
 
 fun MainActivity.showLoading() {
     progress.let {

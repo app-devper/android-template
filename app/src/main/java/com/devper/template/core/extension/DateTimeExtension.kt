@@ -5,6 +5,7 @@ import java.util.*
 
 const val SERVER_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
 const val SERVER_DATE_PATTERN = "yyyy-MM-dd"
+
 const val PRESENT_DATE_PATTERN = "d MMM yyyy"
 const val PRESENT_TIME_PATTERN = "HH:mm"
 

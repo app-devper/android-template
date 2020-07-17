@@ -1,4 +1,4 @@
-package com.devper.template.core.platform
+package com.devper.template.core.platform.biometric
 
 import android.util.Log
 import androidx.biometric.BiometricPrompt

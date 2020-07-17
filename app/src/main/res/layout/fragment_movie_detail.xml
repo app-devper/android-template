@@ -8,7 +8,7 @@
 
         <variable
             name="viewDetailModel"
-            type="com.devper.template.presentation.moviedetail.MovieDetailViewModel" />
+            type="com.devper.template.presentation.movie.MovieDetailViewModel" />
 
         <variable
             name="movie"

@@ -1,6 +1,9 @@
 package com.devper.template.presentation.pinform
 
 import androidx.lifecycle.MutableLiveData
+import com.devper.template.AppConfig
+import com.devper.template.AppConfig.FLOW_CHANGE_PIN
+import com.devper.template.AppConfig.FLOW_SET_PIN
 import com.devper.template.R
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.SetPinParam
@@ -28,8 +31,12 @@ class PinFormViewModel(
         }
     }
 
-    fun nextToHome() {
-        onNavigate(R.id.pin_form_to_home, null)
+    fun nextPage() {
+        if (flow == FLOW_CHANGE_PIN) {
+            popBackStack()
+        } else if (flow == FLOW_SET_PIN) {
+            onNavigate(R.id.pin_form_to_home, null)
+        }
     }
 
     override fun onCleared() {

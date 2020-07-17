@@ -1,7 +1,9 @@
-package com.devper.template.presentation.pinchange
+package com.devper.template.presentation.pinform
 
 import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
+import com.devper.template.AppConfig.EXTRA_FLOW
+import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.PinParam
@@ -25,8 +27,8 @@ class PinChangeViewModel(
 
     fun nextPage(actionToken: String) {
         val bundle = bundleOf(
-            "flow" to flow,
-            "param" to actionToken
+            EXTRA_FLOW to flow,
+            EXTRA_PARAM to actionToken
         )
         onNavigate(R.id.change_pin_to_pin_form, bundle)
     }

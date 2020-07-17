@@ -8,14 +8,6 @@ class AppPreference constructor(context: Context) {
 
     private val preferences: SharedPreferences
 
-    var token: String
-        get() = preferences.getString(PREF_TOKEN, "") ?: ""
-        set(uuid) {
-            val editor = preferences.edit()
-            editor.putString(PREF_TOKEN, uuid)
-            editor.apply()
-        }
-
     val userId: String
         get() = preferences.getString(PREF_USER_ID, "") ?: ""
 
@@ -35,19 +27,9 @@ class AppPreference constructor(context: Context) {
         editor.apply()
     }
 
-    fun verifyPin(pin: String): String {
-        val userPin = preferences.getString(PREF_USER_PIN, "")
-        if (userPin.isNullOrEmpty()) return "NOT_SET"
-        return if (pin.md5() == userPin) {
-            "SUCCESS"
-        } else {
-            "INVALID"
-        }
-    }
 
     fun clear() {
         val editor = preferences.edit()
-        editor.putString(PREF_TOKEN, "")
         editor.putString(PREF_USER_ID, "")
         editor.putString(PREF_USER_KEY, "")
         editor.putString(PREF_USER_PIN, "")
@@ -66,7 +48,6 @@ class AppPreference constructor(context: Context) {
     companion object {
 
         private const val PREF_APP = "prefs"
-        private const val PREF_TOKEN = "PREF_TOKEN"
         private const val PREF_USER_ID = "PREF_USER_ID"
         private const val PREF_USER_KEY = "PREF_USER_KEY"
         private const val PREF_USER_PIN = "PREF_USER_PIN"

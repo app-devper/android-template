@@ -1,22 +1,22 @@
-package com.devper.template.presentation.loginpin
+package com.devper.template.presentation.pinform
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
-import com.devper.template.databinding.FragmentLoginPinBinding
+import com.devper.template.databinding.FragmentPinFormBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment_login_pin) {
+class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_pin_form) {
 
-    override val viewModel: LoginPinViewModel by viewModel()
+    override val viewModel: PinChangeViewModel by viewModel()
 
     override fun setupView() {
         showToolbar()
         hideBottomNavigation()
-        binding.viewModel = viewModel
         binding.pinCodeRoundView.onSuccess = {
-            viewModel.loginPin("", it)
+            viewModel.verifyPin(it)
         }
         binding.pinCodeKeyboardView.onClick = {
             binding.pinCodeRoundView.setPin(it)
@@ -24,14 +24,14 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
     }
 
     override fun observeLiveData() {
-        viewModel.resultLoginPin.observe(viewLifecycleOwner, Observer {
+        viewModel.resultVerify.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    viewModel.nextHome()
+                    viewModel.nextPage(it.data.actionToken)
                 }
                 is ResultState.Error -> {
                     hideDialog()
@@ -40,6 +40,10 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
                 }
             }
         })
+    }
+
+    override fun onArguments(it: Bundle?) {
+
     }
 
 }

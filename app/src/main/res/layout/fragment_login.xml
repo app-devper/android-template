@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:onClick="@{()-> viewModel.nextOtpChannel()}"
+                    android:onClick="@{()-> viewModel.nextToOtpSetPassword()}"
                     android:layout_marginTop="8dp"
                     android:text="@string/pin_code_forgot_text"
                     android:textColor="@color/black"

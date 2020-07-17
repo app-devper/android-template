@@ -2,6 +2,7 @@ package com.devper.template.presentation.password
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSetPasswordBinding
 import com.devper.template.domain.core.ResultState
@@ -20,8 +21,7 @@ class PasswordFragment : BaseFragment<FragmentSetPasswordBinding>(R.layout.fragm
     }
 
     override fun onArguments(it: Bundle?) {
-        val param = it?.getString("param")
-        Timber.i("param : %s", param)
+        val param = it?.getString(EXTRA_PARAM)
         param?.let {
             viewModel.actionToken = it
         }

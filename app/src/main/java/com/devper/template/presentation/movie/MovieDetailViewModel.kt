@@ -1,4 +1,4 @@
-package com.devper.template.presentation.moviedetail
+package com.devper.template.presentation.movie
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

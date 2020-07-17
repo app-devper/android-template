@@ -9,6 +9,7 @@ import com.devper.template.data.remote.movie.MoviesData
 import com.devper.template.data.remote.otp.*
 import com.devper.template.data.remote.user.SignUpRequest
 import com.devper.template.data.remote.user.UserData
+import com.devper.template.data.remote.user.UsersData
 import retrofit2.http.*
 
 interface ApiService {
@@ -36,6 +37,9 @@ interface ApiService {
 
     @GET("api/user/{id}")
     suspend fun getUserId(@Path("id") id: String): UserData
+
+    @GET("api/user")
+    suspend fun getUsers(@Query("page") page: Int): UsersData
 
     @GET("api/user/info")
     suspend fun getProfile(): UserData

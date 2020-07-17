@@ -23,6 +23,9 @@ class MainViewModel(
 
     var badge: MutableLiveData<String> = MutableLiveData()
 
+    private var _accessToken: MutableLiveData<String> = MutableLiveData()
+    val accessTokenLiveData: LiveData<String> = _accessToken
+
     fun getProfile() {
         getProfileUseCase.execute(null) {
             onStart { results.loading() }
@@ -43,6 +46,10 @@ class MainViewModel(
 
     fun setUser(user: User) {
         _user.value = user
+    }
+
+    fun setAccessToken(accessToken: String) {
+        _accessToken.value = accessToken
     }
 
     fun navigate(id: Int, bundle: Bundle? = null) {

@@ -6,9 +6,12 @@
 
     <data>
 
+        <import type="com.devper.template.BuildConfig" />
+
         <variable
             name="user"
             type="com.devper.template.domain.model.user.User" />
+
 
         <variable
             name="viewModel"
@@ -80,7 +83,8 @@
                         android:id="@+id/layoutAccountInfo"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:background="@drawable/custom_ripple">
+                        android:background="@drawable/custom_ripple"
+                        android:onClick="@{()-> viewModel.nextToUser()}">
 
                         <ImageView
                             android:id="@+id/imgAccountInfo"
@@ -98,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="@string/setting_menu_account_info"
+                            android:text="@string/setting_menu_user_info"
                             android:textColor="@color/colorBlack"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imgAccountInfo"
@@ -131,7 +135,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cvAccountInfo">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -409,6 +412,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
+                                android:text="@{BuildConfig.VERSION_NAME}"
                                 app:layout_constraintBaseline_toBaselineOf="@+id/tvMenuVersion"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 tools:text="0.1.0" />

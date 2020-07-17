@@ -78,11 +78,9 @@
     <string name="otp_code_error_invalid_exceed_title">รหัส OTP ผิดเกินจำนวนครั้ง</string>
     <string name="otp_code_error_invalid_exceed_sub_title">กรุณากดขอ OTP ใหม่</string>
 
-
     <string name="otp_channel_title">ช่องทางการรับรหัส OTP</string>
     <string name="otp_channel_sub_title">กรุณาเลือกช่องทาง</string>
     <string name="otp_channel_btn">รับรหัส OTP</string>
-
 
     <string name="change_password">เปลี่ยนรหัสผ่าน</string>
     <string name="change_password_title">เปลี่ยนรหัสผ่านใหม่</string>
@@ -96,8 +94,13 @@
     <string name="change_password_confirm_new_password_label">ยืนยันรหัสผ่านใหม่</string>
     <string name="change_password_confirm_password_error">ยืนยันรหัสผ่านไม่ตรงกัน</string>
     <string name="change_password_complete">เปลี่ยนรหัสผ่านใหม่สำเร็จ</string>
+    <string name="change_password_btn">เปลี่ยนรหัสผ่าน</string>
 
-    <string name="setting_menu_account_info">รายละเอียดบัญชี</string>
+    <string name="pin_confirm_title">ยืนยัน PIN</string>
+
+    <string name="pin_form_title">ใส่รหัส PIN</string>
+
+    <string name="setting_menu_user_info">ข้อมูลบัญชี</string>
     <string name="setting_menu_edit_user_info">แก้ไขข้อมูลส่วนตัว</string>
     <string name="setting_menu_change_password">เปลี่ยนรหัสผ่าน</string>
     <string name="setting_menu_change_pin">เปลี่ยนรหัส PIN</string>
@@ -107,6 +110,12 @@
     <string name="setting_menu_contact">ติดต่อเรา</string>
 
     <string name="setting_logout_confirm_msg">ต้องการออกจากระบบหรือไม่</string>
+
+    <string name="user_title">ข้อมูลบัญชี</string>
+
+    <string name="user_detail_title">รายละเอียดบัญชี</string>
+
+    <string name="back_again_exit">กดอีกครั้ง เพื่อออกจากแอป</string>
 
     <plurals name="duration">
         <item quantity="one">%d minute</item>

@@ -1,5 +1,6 @@
 package com.devper.template.presentation.splash
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSplashBinding
@@ -14,7 +15,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     override fun setupView() {
         hideToolbar()
         hideBottomNavigation()
-        viewModel.registerDevice()
     }
 
     override fun observeLiveData() {
@@ -30,5 +30,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                 }
             }
         })
+    }
+
+    override fun onArguments(it: Bundle?) {
+        viewModel.registerDevice()
     }
 }

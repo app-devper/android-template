@@ -1,4 +1,4 @@
-package com.devper.template.presentation.otpchannel
+package com.devper.template.presentation.otp
 
 import android.view.LayoutInflater
 import android.view.View

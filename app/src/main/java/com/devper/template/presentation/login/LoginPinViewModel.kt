@@ -1,4 +1,4 @@
-package com.devper.template.presentation.loginpin
+package com.devper.template.presentation.login
 
 import androidx.lifecycle.MutableLiveData
 import com.devper.template.R

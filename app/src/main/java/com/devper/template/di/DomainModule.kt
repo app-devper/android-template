@@ -26,6 +26,8 @@ private val domainModule = module {
     factory { GetProfileUseCase(get(), get()) }
     factory { GetCurrentUserUseCase(get(), get()) }
     factory { ClearUserUseCase(get(), get()) }
+    factory { GetUsersUseCase(get(), get()) }
+    factory { GetUserUseCase(get(), get()) }
 
     factory { GetConfigUseCase(get(), get()) }
     factory { GetMovieUseCase(get(), get()) }
@@ -34,6 +36,7 @@ private val domainModule = module {
     factory { GetChannelUseCase(get(), get()) }
     factory { VerifyUserUseCase(get(), get()) }
     factory { VerifyCodeUseCase(get(), get()) }
+
 
 }
 

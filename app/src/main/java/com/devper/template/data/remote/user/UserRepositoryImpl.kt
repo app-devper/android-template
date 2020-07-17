@@ -6,6 +6,7 @@ import com.devper.template.data.preference.AppPreference
 import com.devper.template.data.remote.ApiService
 import com.devper.template.domain.model.user.SignUpParam
 import com.devper.template.domain.model.user.User
+import com.devper.template.domain.model.user.Users
 import com.devper.template.domain.repository.UserRepository
 
 class UserRepositoryImpl(
@@ -24,6 +25,20 @@ class UserRepositoryImpl(
         return db.user().getFirstUser()?.let {
             mapper.toDomain(it)
         } ?: throw AppException("USER_NOT_FOUND", "USER_NOT_FOUND")
+    }
+
+    override suspend fun getUsers(page: Int): Users {
+        val mapper = UserMapper()
+        return api.getUsers(page).let {
+            mapper.toDomain(it)
+        }
+    }
+
+    override suspend fun getUser(userId: String): User {
+        val mapper = UserMapper()
+        return api.getUserId(userId).let {
+            mapper.toDomain(it)
+        }
     }
 
     override suspend fun signUp(request: SignUpParam) {

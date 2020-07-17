@@ -24,7 +24,7 @@ fun String.md5(): String {
 
 fun String.currencyToDouble(): Double = replace(",".toRegex(), "").toDoubleOrNull() ?: 0.0
 
-fun String.toCurrencyNoDigit(): String  =  String.format("%,.0f", currencyToDouble())
+fun String.toNoDigit(): String  =  String.format("%,.0f", currencyToDouble())
 
 fun String.toIntNoComma(): Int = this.replace(",", "").toInt()
 

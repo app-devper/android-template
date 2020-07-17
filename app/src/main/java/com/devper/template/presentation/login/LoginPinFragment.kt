@@ -1,36 +1,41 @@
-package com.devper.template.presentation.pinchange
+package com.devper.template.presentation.login
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
-import com.devper.template.databinding.FragmentPinFormBinding
+import com.devper.template.databinding.FragmentLoginPinBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_pin_form) {
+class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment_login_pin) {
 
-    override val viewModel: PinChangeViewModel by viewModel()
+    override val viewModel: LoginPinViewModel by viewModel()
 
     override fun setupView() {
         showToolbar()
         hideBottomNavigation()
+        binding.viewModel = viewModel
         binding.pinCodeRoundView.onSuccess = {
-            viewModel.verifyPin(it)
+            viewModel.loginPin("", it)
         }
         binding.pinCodeKeyboardView.onClick = {
             binding.pinCodeRoundView.setPin(it)
         }
     }
 
+    override fun onArguments(it: Bundle?) {}
+
     override fun observeLiveData() {
-        viewModel.resultVerify.observe(viewLifecycleOwner, Observer {
+        viewModel.resultLoginPin.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    viewModel.nextPage(it.data.actionToken)
+                    mainViewModel.setAccessToken(it.data)
+                    viewModel.nextHome()
                 }
                 is ResultState.Error -> {
                     hideDialog()
@@ -40,5 +45,6 @@ class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment
             }
         })
     }
+
 
 }

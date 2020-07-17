@@ -1,7 +1,9 @@
-package com.devper.template.presentation.otpchannel
+package com.devper.template.presentation.otp
 
 import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
+import com.devper.template.AppConfig.EXTRA_FLOW
+import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.core.success
@@ -33,8 +35,8 @@ class OtpChannelViewModel(private val getChannelUseCase: GetChannelUseCase) : Ba
     fun nextOtpVerify() {
         val channel = adapter.getSelected()
         val bundle = bundleOf(
-            "param" to VerifyUserParam(userRefId, channel.channel),
-            "flow" to flow
+            EXTRA_FLOW to flow,
+            EXTRA_PARAM to VerifyUserParam(userRefId, channel.channel)
         )
         onNavigate(R.id.otp_channel_to_otp_verify, bundle)
     }

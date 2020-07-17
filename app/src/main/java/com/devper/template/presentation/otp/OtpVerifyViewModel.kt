@@ -1,7 +1,11 @@
-package com.devper.template.presentation.otpverify
+package com.devper.template.presentation.otp
 
 import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
+import com.devper.template.AppConfig.EXTRA_FLOW
+import com.devper.template.AppConfig.EXTRA_PARAM
+import com.devper.template.AppConfig.FLOW_SET_PASSWORD
+import com.devper.template.AppConfig.FLOW_SET_PIN
 import com.devper.template.R
 import com.devper.template.core.platform.widget.KeyboardButtonEnum
 import com.devper.template.domain.core.ResultState
@@ -84,12 +88,12 @@ class OtpVerifyViewModel(
 
     fun nextPage(verifyCode: VerifyCode) {
         val bundle = bundleOf(
-            "flow" to flow,
-            "param" to verifyCode.actionToken
+            EXTRA_FLOW to flow,
+            EXTRA_PARAM to verifyCode.actionToken
         )
-        if (flow == "set_password") {
+        if (flow == FLOW_SET_PASSWORD) {
             onNavigate(R.id.otp_verify_to_set_password, bundle)
-        } else {
+        } else if (flow == FLOW_SET_PIN) {
             onNavigate(R.id.otp_verify_to_pin_form, bundle)
         }
     }

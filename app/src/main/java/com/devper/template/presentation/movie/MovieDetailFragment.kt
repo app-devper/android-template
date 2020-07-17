@@ -1,37 +1,33 @@
-package com.devper.template.presentation.otpchannel
+package com.devper.template.presentation.movie
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
-import com.devper.template.databinding.FragmentOtpChannelBinding
+import com.devper.template.databinding.FragmentMovieDetailBinding
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.model.movie.Movie
 import com.devper.template.presentation.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.fragment_otp_channel) {
+class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(R.layout.fragment_movie_detail) {
 
-    override val viewModel: OtpChannelViewModel by viewModel()
+    override val viewModel: MovieDetailViewModel by viewModel()
 
     override fun setupView() {
         showToolbar()
         hideBottomNavigation()
-        binding.viewModel = viewModel
-    }
-
-    override fun onArguments(it: Bundle?) {
-        val param = it?.getString("param")
-        viewModel.getChannel(param)
+        binding.viewDetailModel = viewModel
     }
 
     override fun observeLiveData() {
-        viewModel.results.observe(viewLifecycleOwner, Observer {
+        viewModel.movieResult.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
                 }
                 is ResultState.Success -> {
                     hideLoading()
-                    viewModel.setOtpChannel(it.data)
+                    binding.movie = it.data
                 }
                 is ResultState.Error -> {
                     hideLoading()
@@ -41,4 +37,13 @@ class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.frag
         })
     }
 
+    private fun setMovie(it: Movie) {
+        setTitle(it.title ?: "")
+        viewModel.movieId(it.id)
+    }
+
+    override fun onArguments(it: Bundle?) {
+        viewModel.movieId(1)
+    }
 }
+

@@ -2,7 +2,7 @@ package com.devper.template.presentation.pinform
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
+import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPinFormBinding
 import com.devper.template.domain.core.ResultState
@@ -26,7 +26,7 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
     }
 
     override fun onArguments(it: Bundle?) {
-        val param = it?.getString("param")
+        val param = it?.getString(EXTRA_PARAM)
         Timber.i("param : %s", param)
         param?.let {
             viewModel.actionToken = it
@@ -41,7 +41,7 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    checkFlow()
+                    viewModel.nextPage()
                 }
                 is ResultState.Error -> {
                     hideDialog()
@@ -49,14 +49,6 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
                 }
             }
         })
-    }
-
-    private fun checkFlow() {
-        if (viewModel.flow == "change_pin") {
-            findNavController().popBackStack()
-        } else {
-            viewModel.nextToHome()
-        }
     }
 
 }

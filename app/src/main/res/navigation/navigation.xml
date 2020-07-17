@@ -53,7 +53,8 @@
 
     <fragment
         android:id="@+id/pin_code_dest"
-        android:name="com.devper.template.presentation.loginpin.LoginPinFragment"
+        android:name="com.devper.template.presentation.login.LoginPinFragment"
+        android:label="@string/login_title"
         tools:layout="@layout/fragment_login_pin">
 
         <action
@@ -74,7 +75,8 @@
 
     <fragment
         android:id="@+id/otp_channel_dest"
-        android:name="com.devper.template.presentation.otpchannel.OtpChannelFragment"
+        android:name="com.devper.template.presentation.otp.OtpChannelFragment"
+        android:label="@string/otp_channel_title"
         tools:layout="@layout/fragment_otp_channel">
 
         <action
@@ -88,7 +90,8 @@
 
     <fragment
         android:id="@+id/otp_verify_dest"
-        android:name="com.devper.template.presentation.otpverify.OtpVerifyFragment"
+        android:name="com.devper.template.presentation.otp.OtpVerifyFragment"
+        android:label="@string/otp_code_title"
         tools:layout="@layout/fragment_otp_verify">
 
         <action
@@ -110,6 +113,7 @@
     <fragment
         android:id="@+id/pin_form_dest"
         android:name="com.devper.template.presentation.pinform.PinFormFragment"
+        android:label="@string/pin_form_title"
         tools:layout="@layout/fragment_login_pin">
         <action
             android:id="@+id/pin_form_to_home"
@@ -172,6 +176,10 @@
             app:destination="@id/change_pin_dest" />
 
         <action
+            android:id="@+id/setting_to_user"
+            app:destination="@id/user_dest" />
+
+        <action
             android:id="@+id/setting_to_login"
             app:destination="@id/pin_code_dest"
             app:launchSingleTop="true"
@@ -181,8 +189,24 @@
     </fragment>
 
     <fragment
+        android:id="@+id/user_dest"
+        android:name="com.devper.template.presentation.user.UserFragment"
+        android:label="@string/user_title"
+        tools:layout="@layout/fragment_user">
+        <action
+            android:id="@+id/user_to_user_detail"
+            app:destination="@id/user_detail_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_detail_dest"
+        android:name="com.devper.template.presentation.user.UserDetailFragment"
+        android:label="@string/user_detail_title"
+        tools:layout="@layout/fragment_user_detail" />
+
+    <fragment
         android:id="@+id/change_password_dest"
-        android:name="com.devper.template.presentation.passwordchange.PasswordChangeFragment"
+        android:name="com.devper.template.presentation.password.PasswordChangeFragment"
         android:label="@string/change_password"
         tools:layout="@layout/fragment_change_password">
 
@@ -190,7 +214,8 @@
 
     <fragment
         android:id="@+id/change_pin_dest"
-        android:name="com.devper.template.presentation.pinchange.PinChangeFragment"
+        android:name="com.devper.template.presentation.pinform.PinChangeFragment"
+        android:label="@string/pin_confirm_title"
         tools:layout="@layout/fragment_pin_form">
 
         <action
@@ -222,7 +247,7 @@
 
     <fragment
         android:id="@+id/movie_detail_dest"
-        android:name="com.devper.template.presentation.moviedetail.MovieDetailFragment"
+        android:name="com.devper.template.presentation.movie.MovieDetailFragment"
         tools:layout="@layout/fragment_movie_detail" />
 
 </navigation>

@@ -1,32 +1,33 @@
-package com.devper.template.presentation.signup
+package com.devper.template.presentation.user
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.devper.template.AppConfig
 import com.devper.template.R
-import com.devper.template.databinding.FragmentSignupBinding
+import com.devper.template.databinding.FragmentUserDetailBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignUpFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_signup) {
+class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(R.layout.fragment_user_detail) {
 
-    override val viewModel: SignUpViewModel by viewModel()
+    override val viewModel: UserDetailViewModel by viewModel()
 
     override fun setupView() {
-        hideToolbar()
+        showToolbar()
         hideBottomNavigation()
         binding.viewModel = viewModel
     }
 
     override fun observeLiveData() {
-        viewModel.results.observe(viewLifecycleOwner, Observer {
+        viewModel.userResult.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
                 }
                 is ResultState.Success -> {
                     hideLoading()
-                    viewModel.popBackStack()
+                    viewModel.setUser(it.data)
                 }
                 is ResultState.Error -> {
                     hideLoading()
@@ -36,7 +37,11 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
         })
     }
 
-
-    override fun onArguments(it: Bundle?) {}
-
+    override fun onArguments(it: Bundle?) {
+        val param = it?.getString(AppConfig.EXTRA_PARAM)
+        param?.let{
+            viewModel.getUser(it)
+        }
+    }
 }
+

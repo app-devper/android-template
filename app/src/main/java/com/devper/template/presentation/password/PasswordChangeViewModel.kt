@@ -1,4 +1,4 @@
-package com.devper.template.presentation.passwordchange
+package com.devper.template.presentation.password
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData

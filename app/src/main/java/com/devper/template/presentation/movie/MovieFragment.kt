@@ -1,5 +1,6 @@
 package com.devper.template.presentation.movie
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentMovieBinding
@@ -25,7 +26,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie
             }
         }
         binding.rvMovie.adapter = adapter
-        viewModel.getMovies()
+
     }
 
     override fun observeLiveData() {
@@ -42,5 +43,9 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(R.layout.fragment_movie
 
     private fun nextToMovieDetail(movie: Movie) {
         mainViewModel.navigate(R.id.movie_to_movie_detail)
+    }
+
+    override fun onArguments(it: Bundle?) {
+        viewModel.getMovies()
     }
 }

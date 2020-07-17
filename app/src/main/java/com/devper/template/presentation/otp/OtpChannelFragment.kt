@@ -1,32 +1,38 @@
-package com.devper.template.presentation.moviedetail
+package com.devper.template.presentation.otp
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
-import com.devper.template.databinding.FragmentMovieDetailBinding
+import com.devper.template.databinding.FragmentOtpChannelBinding
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.model.movie.Movie
 import com.devper.template.presentation.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(R.layout.fragment_movie_detail) {
+class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.fragment_otp_channel) {
 
-    override val viewModel: MovieDetailViewModel by viewModel()
+    override val viewModel: OtpChannelViewModel by viewModel()
 
     override fun setupView() {
         showToolbar()
         hideBottomNavigation()
-        binding.viewDetailModel = viewModel
+        binding.viewModel = viewModel
+    }
+
+    override fun onArguments(it: Bundle?) {
+        val param = it?.getString(EXTRA_PARAM)
+        viewModel.getChannel(param)
     }
 
     override fun observeLiveData() {
-        viewModel.movieResult.observe(viewLifecycleOwner, Observer {
+        viewModel.results.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
                 }
                 is ResultState.Success -> {
                     hideLoading()
-                    binding.movie = it.data
+                    viewModel.setOtpChannel(it.data)
                 }
                 is ResultState.Error -> {
                     hideLoading()
@@ -36,9 +42,4 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(R.layout.fr
         })
     }
 
-    private fun setMovie(it: Movie) {
-        setTitle(it.title ?: "")
-        viewModel.movieId(it.id)
-    }
 }
-

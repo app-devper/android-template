@@ -2,6 +2,7 @@ package com.devper.template.presentation.profile
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import coil.api.load
@@ -37,6 +38,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             }
         }
         //clearCache(requireContext())
+
+    }
+
+    override fun onArguments(it: Bundle?) {
         mainViewModel.getProfile()
     }
 

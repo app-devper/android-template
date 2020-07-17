@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.core.exception.AppException
-import com.devper.template.core.extension.toGone
-import com.devper.template.core.extension.toVisible
 import com.devper.template.domain.core.ErrorMapper
 import com.devper.template.presentation.main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -35,6 +35,9 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
             retry = {
                 getArgument()
             }
+            popBackStack = {
+                findNavController().popBackStack()
+            }
         }
         setupView()
         observeLiveData()
@@ -42,7 +45,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
     }
 
     private fun getArgument() {
-        viewModel.flow = arguments?.getString("flow")
+        viewModel.flow = arguments?.getString(EXTRA_FLOW)
         onArguments(arguments)
     }
 
@@ -50,7 +53,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
 
     abstract fun observeLiveData()
 
-    open fun onArguments(it: Bundle?) {}
+    abstract fun onArguments(it: Bundle?)
 
     open fun showToolbar() {
         appCompat().supportActionBar?.show()
@@ -97,11 +100,11 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         return ErrorMapper.toAppError(throwable)
     }
 
-    fun hideBottomNavigation(){
+    fun hideBottomNavigation() {
         appCompat().hideBottomNavigation()
     }
 
-    fun showBottomNavigation(){
+    fun showBottomNavigation() {
         appCompat().showBottomNavigation()
     }
 

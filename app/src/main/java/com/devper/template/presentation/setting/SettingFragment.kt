@@ -1,5 +1,6 @@
 package com.devper.template.presentation.setting
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSettingBinding
@@ -21,5 +22,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             binding.user = it
         })
     }
+
+    override fun onArguments(it: Bundle?) {}
 
 }

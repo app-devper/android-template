@@ -13,7 +13,10 @@ open class BaseViewModel : ViewModel() {
             _flow.value = value
         }
     var onNavigate: (id: Int, bundle: Bundle?) -> Unit = { _, _ -> }
-    var retry:() -> Unit = {}
 
-     var isLoading = MutableLiveData(View.GONE)
+    var retry: () -> Unit = {}
+
+    var isLoading = MutableLiveData(View.GONE)
+
+    var popBackStack: () -> Unit = {}
 }

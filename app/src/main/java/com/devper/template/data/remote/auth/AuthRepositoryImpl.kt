@@ -14,7 +14,6 @@ class AuthRepositoryImpl(
         val mapper = LoginMapper()
         return api.login(mapper.toRequest(param)).let { login ->
             pref.setUserKey(param.username, param.password)
-            pref.token = login.accessToken
             login.accessToken
         }
     }
@@ -34,10 +33,7 @@ class AuthRepositoryImpl(
     override suspend fun loginPin(param: LoginPinParam): String {
         val mapper = LoginMapper()
         param.username = pref.userId
-        return api.loginPin(mapper.toRequest(param)).let { login ->
-            pref.token = login.accessToken
-            login.accessToken
-        }
+        return api.loginPin(mapper.toRequest(param)).accessToken
     }
 
     override suspend fun verifyPin(param: PinParam): Verify {

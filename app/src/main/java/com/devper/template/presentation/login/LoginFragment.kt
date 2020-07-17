@@ -1,11 +1,12 @@
 package com.devper.template.presentation.login
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.extension.makeLinks
-import com.devper.template.core.platform.BiometricController
+import com.devper.template.core.platform.biometric.BiometricController
 import com.devper.template.core.smartlogin.*
 import com.devper.template.core.smartlogin.users.SmartUser
 import com.devper.template.core.smartlogin.util.SmartLoginException
@@ -31,7 +32,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         binding.tvSignup.makeLinks(Pair(getString(R.string.signup_button), View.OnClickListener {
             viewModel.nextToSignUp()
         }))
-        viewModel.clearUser()
+
         activity?.let {
             config = SmartLoginConfig(it, this)
             biometric = BiometricController(it, this)
@@ -41,16 +42,21 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
     }
 
+    override fun onArguments(it: Bundle?) {
+        viewModel.clearUser()
+    }
+
     override fun observeLiveData() {
-        viewModel.results.observe(viewLifecycleOwner, Observer {
+        viewModel.resultsLogin.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
+                    mainViewModel.setAccessToken(it.data)
                     mainViewModel.initProfile()
-                    viewModel.nextToOtp()
+                    viewModel.nextToOtpSetPin()
                 }
                 is ResultState.Error -> {
                     hideDialog()
