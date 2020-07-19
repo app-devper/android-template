@@ -1,7 +1,7 @@
 package com.devper.template.presentation.login
 
-import androidx.lifecycle.MutableLiveData
 import com.devper.template.R
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.LoginPinParam
 import com.devper.template.domain.usecase.auth.LoginPinUseCase
@@ -11,7 +11,7 @@ class LoginPinViewModel(
     private val loginPinUseCase: LoginPinUseCase
 ) : BaseViewModel() {
 
-    var resultLoginPin: MutableLiveData<ResultState<String>> = MutableLiveData()
+    var resultLoginPin: SingleLiveEvent<ResultState<String>> = SingleLiveEvent()
 
     fun loginPin(username: String, pin: String) {
         loginPinUseCase.execute(LoginPinParam(username, pin)) {

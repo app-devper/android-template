@@ -1,6 +1,7 @@
 package com.devper.template.presentation.signup
 
 import androidx.lifecycle.MutableLiveData
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.model.user.SignUpParam
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.usecase.user.SignUpUseCase
@@ -11,7 +12,7 @@ class SignUpViewModel(private val signUpUseCase: SignUpUseCase) : BaseViewModel(
 
     var user = MutableLiveData<SignUpParam>(SignUpParam())
 
-    var results: MutableLiveData<ResultState<Unit>> = MutableLiveData()
+    var results = SingleLiveEvent<ResultState<Unit>>()
 
     fun signUp() {
         user.value?.let { user ->

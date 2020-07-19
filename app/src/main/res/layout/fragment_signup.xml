@@ -190,7 +190,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_login"
+                    android:id="@+id/btn_set_password"
                     style="@style/Button.Primary"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/height_login_button"

@@ -9,6 +9,7 @@ import com.devper.template.data.remote.movie.MoviesData
 import com.devper.template.data.remote.otp.*
 import com.devper.template.data.remote.user.SignUpRequest
 import com.devper.template.data.remote.user.UserData
+import com.devper.template.data.remote.user.UserRequest
 import com.devper.template.data.remote.user.UsersData
 import retrofit2.http.*
 
@@ -44,8 +45,11 @@ interface ApiService {
     @GET("api/user/info")
     suspend fun getProfile(): UserData
 
-    @POST("api/user/{id}")
-    suspend fun updateUser(@Path("id") id: String)
+    @PUT("api/user/info")
+    suspend fun updateProfile(@Body request: UserRequest): UserData
+
+    @PUT("api/user/{id}")
+    suspend fun updateUser(@Path("id") id: String, @Body request: UserRequest): UserData
 
     @GET("api/moviedb/movie/now_playing")
     suspend fun getMovies(@Query("page") page: Int): MoviesData

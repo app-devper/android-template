@@ -5,17 +5,19 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb478207525978138</string>
 
     <!--Log In-->
-    <string name="login_button">Log In</string>
-    <string name="login_title">Log In</string>
+    <string name="login_title">ลงชื่อเข้าใช้งาน</string>
+    <string name="login_btn">เข้าสู่ระบบ</string>
     <string name="login_or">OR</string>
-    <string name="login_signup">Don\'t have an account? Sign Up</string>
+    <string name="login_signup">ยังไม่มีชื่อผู้ใช้งาน Sign Up</string>
     <string name="login_username_hint">Username</string>
-    <string name="login_password_hint">Password</string>
+    <string name="login_password_hint">รหัสผ่าน</string>
+    <string name="login_forgot_password">ลืมรหัสผ่าน</string>
+    <string name="login_no_user">ยังไม่มีชื่อผู้ใช้งาน</string>
+    <string name="login_register">ลงทะเบียนขอสิทธิ์เข้าใช้งาน</string>
 
     <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again.</string>
     <string name="touch_sensor">Touch sensor.</string>
     <string name="fingerprint_recognized">Fingerprint recognized.</string>
-    <string name="cancel">Cancel</string>
 
     <!--Sign Up-->
     <string name="signup_button">Sign Up</string>
@@ -58,12 +60,49 @@
     <string name="movie_duration_header">Duration</string>
     <string name="movie_language_header">Language</string>
 
+    <string name="edit_user_info">แก้ไขข้อมูลส่วนตัว</string>
+    <string name="edit_user_info_title">ข้อมูลส่วนตัว</string>
+    <string name="edit_user_info_subtitle">กรุณากรอกข้อมูลให้เป็นปัจจุบัน</string>
 
-    <string name="pin_code_forgot_text">Forgot?</string>
+    <string name="person_first_name">ชื่อ</string>
+    <string name="person_last_name">นามสกุล</string>
+    <string name="person_full_name">ชื่อ-นามสกุล</string>
+    <string name="person_citizen_id">เลขประจำตัวประชาชน</string>
+    <string name="person_birthday">วัน เดือน ปีเกิด</string>
+    <string name="person_age">อายุ</string>
+
+    <string name="contact_info">ข้อมูลการติดต่อ</string>
+    <string name="contact_phone">เบอร์โทรศัพท์บ้าน</string>
+    <string name="contact_mobile_phone">เบอร์โทรศัพท์มือถือ</string>
+    <string name="contact_email">อีเมล</string>
+    <string name="edit_contact_info_email_warning">* กรุณากรอกอีเมลเพื่อใช้เป็นช่องทางในการติดต่อ</string>
+
+    <string name="cancel">ยกเลิก</string>
+    <string name="close">ปิด</string>
+    <string name="agree">ตกลง</string>
+    <string name="confirm">ยืนยัน</string>
+    <string name="save">บันทึก</string>
+    <string name="next">ถัดไป</string>
+
+    <string name="address">ที่อยู่</string>
+    <string name="address_no">เลขที่อยู่</string>
+    <string name="address_building">อาคาร</string>
+    <string name="address_floor">ชั้นที่</string>
+    <string name="address_room">ห้องที่</string>
+    <string name="address_village">หมู่บ้าน</string>
+    <string name="address_moo">หมู่ที่</string>
+    <string name="address_alley">ตรอก</string>
+    <string name="address_soi">ซอย</string>
+    <string name="address_road">ถนน</string>
+    <string name="address_sub_district">ตำบล/แขวง</string>
+    <string name="address_district">อำเภอ/เขต</string>
+    <string name="address_province">จังหวัด</string>
+    <string name="address_postcode">รหัสไปรษณีย์</string>
+
+    <string name="pin_code_forgot_pin">ลืมรหัส PIN</string>
     <string name="pin_code_fingerprint_text">Fingerprint</string>
     <string name="pin_code_fingerprint_success">Fingerprint recognized</string>
     <string name="pin_code_fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
-
 
     <string name="otp_code_title">ใส่รหัส OTP</string>
     <string name="otp_code_channel_label">ระบบได้ส่งรหัส OTP ไปยัง %s</string>
@@ -99,6 +138,11 @@
     <string name="pin_confirm_title">ยืนยัน PIN</string>
 
     <string name="pin_form_title">ใส่รหัส PIN</string>
+    <string name="pin_create">ตั้งรหัส PIN</string>
+    <string name="pin_confirm">ยืนยันรหัส PIN</string>
+    <string name="pin_description">ตั้งรหัส PIN 6 หลัก สำหรับใช้ยืนยันการทำรายการ ไม่ควรใช้เป็นตัวเลขที่คาดเดาได้ง่าย อย่างเช่น ตัวเลขเรียงกันหรือเลขซ้ำกัน</string>
+    <string name="pin_confirm_invalid">ยืนยันรหัส PIN ไม่ตรงกัน</string>
+    <string name="pin_invalid">ใส่รหัส PIN ไม่ถูกต้อง</string>
 
     <string name="setting_menu_user_info">ข้อมูลบัญชี</string>
     <string name="setting_menu_edit_user_info">แก้ไขข้อมูลส่วนตัว</string>

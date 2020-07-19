@@ -16,13 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:paddingLeft="@dimen/margin_movie_horizontal"
                 android:paddingTop="@dimen/margin_movie_vertical"
                 android:paddingRight="@dimen/margin_movie_horizontal"
@@ -32,7 +33,8 @@
                     android:id="@+id/container"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_movie_poster_detail"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/posterImage"
@@ -108,7 +110,9 @@
                     android:layout_marginBottom="8dp"
                     android:text="@string/movie_overview_header"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/container" />
 
                 <TextView
                     android:id="@+id/overviewTextView"
@@ -117,19 +121,26 @@
                     android:layout_below="@id/overviewHeader"
                     android:layout_marginBottom="8dp"
                     android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/overviewHeader"
                     tools:text="Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond." />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bookButton"
+                    style="@style/Button.Primary"
+                    android:onClick="@{()-> viewModel.nextToUpdate()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/overviewTextView"
                     android:layout_marginTop="16dp"
-                    android:text="@string/movie_book_the_movie" />
+                    android:text="@string/movie_book_the_movie"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/overviewTextView"
+                    app:layout_constraintVertical_bias="1.0" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <include
             android:id="@+id/layoutLoading"

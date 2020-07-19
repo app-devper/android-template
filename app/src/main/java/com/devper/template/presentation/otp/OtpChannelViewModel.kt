@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.core.success
 import com.devper.template.domain.model.otp.OtpChannel
@@ -15,7 +16,7 @@ import com.devper.template.presentation.BaseViewModel
 class OtpChannelViewModel(private val getChannelUseCase: GetChannelUseCase) : BaseViewModel() {
 
     val adapter by lazy { OtpChannelAdapter() }
-    var results: MutableLiveData<ResultState<OtpChannel>> = MutableLiveData()
+    var results = SingleLiveEvent<ResultState<OtpChannel>>()
 
     private val userRefId: String
         get() = results.value?.success()?.userRefId ?: ""

@@ -3,21 +3,19 @@ package com.devper.template.presentation.password
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.devper.template.R
-import com.devper.template.databinding.FragmentChangePasswordBinding
+import com.devper.template.databinding.FragmentPasswordChangeBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PasswordChangeFragment : BaseFragment<FragmentChangePasswordBinding>(R.layout.fragment_change_password) {
+class PasswordChangeFragment : BaseFragment<FragmentPasswordChangeBinding>(R.layout.fragment_password_change) {
 
     override val viewModel: PasswordChangeViewModel by viewModel()
-    private val passwordViewModel: PasswordViewModel by viewModel()
 
     override fun setupView() {
         showToolbar()
         hideBottomNavigation()
         binding.viewModel = viewModel
-        binding.passwordViewModel = passwordViewModel
     }
 
     override fun observeLiveData() {
@@ -27,8 +25,8 @@ class PasswordChangeFragment : BaseFragment<FragmentChangePasswordBinding>(R.lay
                     showDialog()
                 }
                 is ResultState.Success -> {
-                    passwordViewModel.actionToken = it.data.actionToken
-                    passwordViewModel.setPassword()
+                    viewModel.actionToken = it.data.actionToken
+                    viewModel.setPassword()
                 }
                 is ResultState.Error -> {
                     hideDialog()
@@ -37,7 +35,7 @@ class PasswordChangeFragment : BaseFragment<FragmentChangePasswordBinding>(R.lay
             }
         })
 
-        passwordViewModel.resultSetPassword.observe(viewLifecycleOwner, Observer {
+        viewModel.resultSetPassword.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()

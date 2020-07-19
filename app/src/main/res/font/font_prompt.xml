@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- extra light -->
+    <font
+        android:font="@font/prompt_extralight"
+        android:fontStyle="normal"
+        android:fontWeight="200"
+
+        app:font="@font/prompt_extralight"
+        app:fontStyle="normal"
+        app:fontWeight="200"
+        tools:targetApi="o" />
+
+    <font
+        android:font="@font/prompt_extralightitalic"
+        android:fontStyle="italic"
+        android:fontWeight="200"
+
+        app:font="@font/prompt_extralightitalic"
+        app:fontStyle="italic"
+        app:fontWeight="200"
+        tools:targetApi="o" />
+
+    <!-- light -->
+    <font
+        android:font="@font/prompt_light"
+        android:fontStyle="normal"
+        android:fontWeight="300"
+
+        app:font="@font/prompt_light"
+        app:fontStyle="normal"
+        app:fontWeight="300"
+        tools:targetApi="o" />
+
+    <font
+        android:font="@font/prompt_lightitalic"
+        android:fontStyle="italic"
+        android:fontWeight="300"
+
+        app:font="@font/prompt_lightitalic"
+        app:fontStyle="italic"
+        app:fontWeight="300"
+        tools:targetApi="o" />
+
+    <!-- regular -->
+    <font
+        android:font="@font/prompt_regular"
+        android:fontStyle="normal"
+        android:fontWeight="400"
+
+        app:font="@font/prompt_regular"
+        app:fontStyle="normal"
+        app:fontWeight="400"
+        tools:targetApi="o" />
+
+    <font
+        android:font="@font/prompt_italic"
+        android:fontStyle="italic"
+        android:fontWeight="400"
+
+        app:font="@font/prompt_italic"
+        app:fontStyle="italic"
+        app:fontWeight="400"
+        tools:targetApi="o" />
+
+    <!-- medium -->
+
+    <font
+        android:font="@font/prompt_mediumitalic"
+        android:fontStyle="normal"
+        android:fontWeight="500"
+
+        app:font="@font/prompt_mediumitalic"
+        app:fontStyle="normal"
+        app:fontWeight="500"
+        tools:targetApi="o" />
+
+    <font
+        android:font="@font/prompt_mediumitalic"
+        android:fontStyle="italic"
+        android:fontWeight="500"
+
+        app:font="@font/prompt_mediumitalic"
+        app:fontStyle="italic"
+        app:fontWeight="500"
+        tools:targetApi="o" />
+
+    <!-- bold -->
+    <font
+        android:font="@font/prompt_bold"
+        android:fontStyle="normal"
+        android:fontWeight="700"
+
+        app:font="@font/prompt_bold"
+        app:fontStyle="normal"
+        app:fontWeight="700"
+        tools:targetApi="o" />
+
+    <font
+        android:font="@font/prompt_bolditalic"
+        android:fontStyle="italic"
+        android:fontWeight="700"
+
+        app:font="@font/prompt_bolditalic"
+        app:fontStyle="italic"
+        app:fontWeight="700"
+        tools:targetApi="o" />
+
+</font-family>

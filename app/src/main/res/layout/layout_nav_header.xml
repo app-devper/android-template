@@ -6,11 +6,11 @@
 
     <data>
 
-        <import type="com.devper.template.BuildConfig"/>
+        <import type="com.devper.template.BuildConfig" />
 
         <variable
             name="user"
-            type="com.devper.template.domain.model.user.User"/>
+            type="com.devper.template.domain.model.user.User" />
 
     </data>
 
@@ -28,7 +28,7 @@
             android:layout_marginTop="40dp"
             android:scaleType="fitCenter"
             android:src="@drawable/main_ic_logo"
-            app:imageUrl="@{user.imageUrl}"/>
+            app:imageUrl="@{user.imageUrl}" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -37,15 +37,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@{user.username}"
-            tools:text= "username"/>
+            tools:text="username" />
 
         <TextView
             android:id="@+id/tv_email"
-            style="@style/TextStyle.Title.Sub"
+            style="@style/TextStyle.Sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{user.email}"
-            tools:text= "username@email.com"/>
+            tools:text="username@email.com" />
 
     </LinearLayout>
 

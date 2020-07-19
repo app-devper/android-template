@@ -6,8 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
-        <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
+        <item name="android:fontFamily">@font/font_prompt</item>
         <item name="android:windowBackground">@color/colorGreyBright</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowEnableSplitTouch">false</item>
@@ -23,52 +22,38 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">false</item>
-        <item name="color">@color/white</item>
-    </style>
-
-    <style name="TextAppearance.Text.Regular" parent="android:TextAppearance">
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.Text.Bold" parent="android:TextAppearance">
-        <item name="android:fontFamily">sans-serif-black</item>
-    </style>
-
-    <style name="TextAppearance.Text.Light" parent="android:TextAppearance">
-        <item name="android:fontFamily">sans-serif-light</item>
-    </style>
-
-    <style name="TextAppearance.Text.Italic" parent="android:TextAppearance">
-        <item name="android:fontFamily">sans-serif-condensed-medium</item>
-    </style>
-
     <style name="TextStyle">
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:layout_marginLeft">2dp</item>
-        <item name="android:layout_marginRight">2dp</item>
-        <item name="android:textColor">@color/black_effective</item>
-    </style>
-
-    <style name="TextStyle.Title" parent="TextStyle">
-        <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
-    </style>
-
-    <style name="TextStyle.Title.Sub" parent="TextStyle.Title">
-        <item name="android:textAppearance">@style/TextAppearance.Text.Light</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextStyle.Heading" parent="TextStyle">
+    <style name="TextStyle.Title" parent="TextStyle">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextStyle.Sub" parent="TextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="TextStyle.Link" parent="TextStyle">
         <item name="android:textSize">16sp</item>
-        <item name="android:textAppearance">@style/TextAppearance.Text.Bold</item>
+        <item name="android:textColor">@color/colorBlue</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="TextStyle.Error" parent="TextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="TextStyle.Remark" parent="TextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray</item>
     </style>
 
     <style name="TextStyle.Comment" parent="TextStyle">
         <item name="android:textSize">16sp</item>
-        <item name="android:textAppearance">@style/TextAppearance.Text.Italic</item>
     </style>
 
     <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -78,7 +63,7 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="Toolbar.TitleText" parent="TextStyle.Heading">
+    <style name="Toolbar.Title" parent="TextStyle">
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textSize">22sp</item>
     </style>
@@ -136,6 +121,7 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">@color/white</item>
         <item name="cardCornerRadius">6dp</item>
         <item name="cardElevation">2dp</item>
     </style>

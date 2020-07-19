@@ -1,10 +1,10 @@
-package com.devper.template.presentation.pinform
+package com.devper.template.presentation.pin
 
 import androidx.lifecycle.MutableLiveData
-import com.devper.template.AppConfig
 import com.devper.template.AppConfig.FLOW_CHANGE_PIN
 import com.devper.template.AppConfig.FLOW_SET_PIN
 import com.devper.template.R
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.SetPinParam
 import com.devper.template.domain.usecase.auth.SetPinUseCase
@@ -21,7 +21,7 @@ class PinFormViewModel(
             _actionToken.value = value
         }
 
-    var resultSetPin: MutableLiveData<ResultState<Boolean>> = MutableLiveData()
+    var resultSetPin = SingleLiveEvent<ResultState<Boolean>>()
 
     fun setPin(pin: String) {
         setPinUseCase.execute(SetPinParam(actionToken, pin)) {

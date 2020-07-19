@@ -4,6 +4,7 @@ import androidx.core.os.bundleOf
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.FLOW_CHANGE_PASSWORD
 import com.devper.template.AppConfig.FLOW_CHANGE_PIN
+import com.devper.template.AppConfig.FLOW_UPDATE_PROFILE
 import com.devper.template.R
 import com.devper.template.presentation.BaseViewModel
 
@@ -29,5 +30,12 @@ class SettingViewModel : BaseViewModel() {
 
     fun nextToUser() {
         onNavigate(R.id.setting_to_user, null)
+    }
+
+    fun nextToUpdateProfile() {
+        val bundle = bundleOf(
+            EXTRA_FLOW to FLOW_UPDATE_PROFILE
+        )
+        onNavigate(R.id.setting_to_user_form, bundle)
     }
 }

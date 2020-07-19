@@ -7,6 +7,7 @@ import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.AppConfig.FLOW_SET_PASSWORD
 import com.devper.template.AppConfig.FLOW_SET_PIN
 import com.devper.template.R
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.core.platform.widget.KeyboardButtonEnum
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.otp.VerifyCode
@@ -31,8 +32,8 @@ class OtpVerifyViewModel(
             code.value = value
         }
 
-    var resultVerifyUser: MutableLiveData<ResultState<VerifyUser>> = MutableLiveData()
-    var resultVerifyCode: MutableLiveData<ResultState<VerifyCode>> = MutableLiveData()
+    var resultVerifyUser = SingleLiveEvent<ResultState<VerifyUser>>()
+    var resultVerifyCode = SingleLiveEvent<ResultState<VerifyCode>>()
 
     val verifyUser = MutableLiveData<VerifyUser>()
 

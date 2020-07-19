@@ -52,7 +52,8 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$versions.legacy"
     implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
-    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation "androidx.preference:preference:$versions.preference"
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
@@ -66,7 +67,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-vision:20.1.0"
     implementation "com.google.android.gms:play-services-maps:$versions.maps"
     implementation "com.google.android.gms:play-services-location:$versions.location"
-    implementation "com.google.android.gms:play-services-auth:18.0.0"
+    implementation "com.google.android.gms:play-services-auth:18.1.0"
 
     implementation "com.google.firebase:firebase-messaging:20.2.3"
 

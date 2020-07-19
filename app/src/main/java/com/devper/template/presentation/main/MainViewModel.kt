@@ -13,31 +13,29 @@ import com.devper.template.domain.usecase.user.GetProfileUseCase
 class MainViewModel(
     private val getProfileUseCase: GetProfileUseCase
 ) : ViewModel() {
-    private var results: MutableResult<User> = MutableResult()
-    private var _user: MutableLiveData<User> = MutableLiveData()
+    private var results = SingleLiveEvent<ResultState<User>>()
+    private var _user = MutableLiveData<User>()
     val userLiveData: LiveData<User> = _user
     val profileLiveDate: LiveData<ResultState<User>> = results
 
-    private var _navigate: SingleLiveEvent<Pair<Int, Bundle?>> = SingleLiveEvent()
+    private var _navigate = SingleLiveEvent<Pair<Int, Bundle?>>()
     val navigateLiveData: LiveData<Pair<Int, Bundle?>> = _navigate
 
-    var badge: MutableLiveData<String> = MutableLiveData()
+    var badge = MutableLiveData<String>()
 
-    private var _accessToken: MutableLiveData<String> = MutableLiveData()
+    private var _accessToken = MutableLiveData<String>()
     val accessTokenLiveData: LiveData<String> = _accessToken
 
     fun getProfile() {
         getProfileUseCase.execute(null) {
-            onStart { results.loading() }
-            onComplete { results.success(it) }
-            onError { results.error(it) }
+            onStart { results.value = ResultState.Loading() }
+            onComplete { results.value = ResultState.Success(it) }
+            onError { results.value = ResultState.Error(it) }
         }
     }
 
     fun initProfile() {
-        if (_user.value == null) {
-            getProfile()
-        }
+        getProfile()
     }
 
     fun getUser(): User? {

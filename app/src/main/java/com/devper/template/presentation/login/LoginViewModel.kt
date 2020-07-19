@@ -1,7 +1,6 @@
 package com.devper.template.presentation.login
 
 import androidx.core.os.bundleOf
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.EXTRA_PARAM
@@ -21,14 +20,14 @@ class LoginViewModel(
     private val clearUserUseCase: ClearUserUseCase
 ) : BaseViewModel() {
 
-    var username: ObservableField<String> = ObservableField("wowit")
-    var password: ObservableField<String> = ObservableField("password")
+    val username = MutableLiveData<String>("wowit")
+    val password =  MutableLiveData<String>("password")
 
-    var resultsLogin: MutableLiveData<ResultState<String>> = MutableLiveData()
-    var login: SingleLiveEvent<LoginType> = SingleLiveEvent()
+    val resultsLogin: SingleLiveEvent<ResultState<String>> = SingleLiveEvent()
+    val login: SingleLiveEvent<LoginType> = SingleLiveEvent()
 
     fun login() {
-        val param = LoginParam(username.get() ?: "", password.get() ?: "")
+        val param = LoginParam(username.value ?: "", password.value ?: "")
         loginUseCase.execute(param) {
             onStart { resultsLogin.value = ResultState.Loading() }
             onComplete { resultsLogin.value = ResultState.Success(it) }
@@ -61,10 +60,10 @@ class LoginViewModel(
 
     fun nextToOtpSetPassword() {
         val bundle = bundleOf(
-            EXTRA_PARAM to username.get(),
+            EXTRA_PARAM to username.value,
             EXTRA_FLOW to FLOW_SET_PASSWORD
         )
-        onNavigate(R.id.login_to_otp_channel, bundle)
+        onNavigate(R.id.login_to_forgot_password, bundle)
     }
 
     fun nextToSignUp() {

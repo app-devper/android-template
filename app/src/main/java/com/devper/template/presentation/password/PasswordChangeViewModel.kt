@@ -1,23 +1,24 @@
 package com.devper.template.presentation.password
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.PasswordParam
 import com.devper.template.domain.model.auth.Verify
+import com.devper.template.domain.usecase.auth.SetPasswordUseCase
 import com.devper.template.domain.usecase.auth.VerifyPasswordUseCase
-import com.devper.template.presentation.BaseViewModel
 
 class PasswordChangeViewModel(
+    setPasswordUseCase: SetPasswordUseCase,
     private val verifyPasswordUseCase: VerifyPasswordUseCase
-) : BaseViewModel() {
+) : PasswordViewModel(setPasswordUseCase) {
 
-    var currentPassword: ObservableField<String> = ObservableField("password")
+    var currentPassword = MutableLiveData<String>("password")
 
-    var resultVerifyPassword: MutableLiveData<ResultState<Verify>> = MutableLiveData()
+    var resultVerifyPassword = SingleLiveEvent<ResultState<Verify>>()
 
     fun changePassword() {
-        verifyPassword(PasswordParam(currentPassword.get() ?: ""))
+        verifyPassword(PasswordParam(currentPassword.value ?: ""))
     }
 
     private fun verifyPassword(param: PasswordParam) {

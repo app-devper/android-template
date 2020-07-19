@@ -20,6 +20,8 @@ object AppConfig {
     const val FLOW_SET_PASSWORD = "set_password"
     const val FLOW_CHANGE_PASSWORD = "change_password"
     const val FLOW_CHANGE_PIN = "change_pin"
+    const val FLOW_UPDATE_PROFILE = "update_profile"
+    const val FLOW_UPDATE_USER = "update_user"
 }
 
 

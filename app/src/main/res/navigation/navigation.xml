@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/splash_dest">
 
+    <include app:graph="@navigation/navigation_login" />
+
     <fragment
         android:id="@+id/splash_dest"
         android:name="com.devper.template.presentation.splash.SplashFragment"
@@ -19,37 +21,13 @@
 
         <action
             android:id="@+id/splash_to_login"
-            app:destination="@id/login_dest"
+            app:destination="@id/navigation_login"
             app:launchSingleTop="true"
             app:popUpTo="@id/splash_dest"
             app:popUpToInclusive="true" />
 
     </fragment>
 
-    <fragment
-        android:id="@+id/login_dest"
-        android:name="com.devper.template.presentation.login.LoginFragment"
-        tools:layout="@layout/fragment_login">
-
-        <action
-            android:id="@+id/login_to_home"
-            app:destination="@id/home_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/login_dest"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/login_to_signup"
-            app:destination="@id/signup_dest" />
-
-        <action
-            android:id="@+id/login_to_otp_channel"
-            app:destination="@id/otp_channel_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/login_dest"
-            app:popUpToInclusive="true" />
-
-    </fragment>
 
     <fragment
         android:id="@+id/pin_code_dest"
@@ -66,87 +44,11 @@
 
         <action
             android:id="@+id/pin_code_to_login"
-            app:destination="@id/login_dest"
+            app:destination="@id/navigation_login"
             app:launchSingleTop="true"
             app:popUpTo="@id/pin_code_dest"
             app:popUpToInclusive="true" />
 
-    </fragment>
-
-    <fragment
-        android:id="@+id/otp_channel_dest"
-        android:name="com.devper.template.presentation.otp.OtpChannelFragment"
-        android:label="@string/otp_channel_title"
-        tools:layout="@layout/fragment_otp_channel">
-
-        <action
-            android:id="@+id/otp_channel_to_otp_verify"
-            app:destination="@id/otp_verify_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/otp_channel_dest"
-            app:popUpToInclusive="true" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/otp_verify_dest"
-        android:name="com.devper.template.presentation.otp.OtpVerifyFragment"
-        android:label="@string/otp_code_title"
-        tools:layout="@layout/fragment_otp_verify">
-
-        <action
-            android:id="@+id/otp_verify_to_pin_form"
-            app:destination="@id/pin_form_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/otp_verify_dest"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/otp_verify_to_set_password"
-            app:destination="@id/set_password_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/otp_verify_dest"
-            app:popUpToInclusive="true" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/pin_form_dest"
-        android:name="com.devper.template.presentation.pinform.PinFormFragment"
-        android:label="@string/pin_form_title"
-        tools:layout="@layout/fragment_login_pin">
-        <action
-            android:id="@+id/pin_form_to_home"
-            app:destination="@id/home_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/pin_form_dest"
-            app:popUpToInclusive="true" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/set_password_dest"
-        android:name="com.devper.template.presentation.password.PasswordFragment"
-        tools:layout="@layout/fragment_set_password">
-        <action
-            android:id="@+id/set_password_to_login"
-            app:destination="@id/login_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/set_password_dest"
-            app:popUpToInclusive="true" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/signup_dest"
-        android:name="com.devper.template.presentation.signup.SignUpFragment"
-        tools:layout="@layout/fragment_signup">
-
-        <action
-            android:id="@+id/signup_to_home"
-            app:destination="@id/home_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/signup_dest"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -180,6 +82,10 @@
             app:destination="@id/user_dest" />
 
         <action
+            android:id="@+id/setting_to_user_form"
+            app:destination="@id/user_form_dest" />
+
+        <action
             android:id="@+id/setting_to_login"
             app:destination="@id/pin_code_dest"
             app:launchSingleTop="true"
@@ -199,23 +105,41 @@
     </fragment>
 
     <fragment
+        android:id="@+id/user_form_dest"
+        android:name="com.devper.template.presentation.user.UserFormFragment"
+        android:label="@string/setting_menu_edit_user_info"
+        tools:layout="@layout/fragment_user_form">
+    </fragment>
+
+    <fragment
         android:id="@+id/user_detail_dest"
         android:name="com.devper.template.presentation.user.UserDetailFragment"
         android:label="@string/user_detail_title"
-        tools:layout="@layout/fragment_user_detail" />
+        tools:layout="@layout/fragment_user_detail" >
+        <action
+            android:id="@+id/user_to_user_update"
+            app:destination="@id/user_update_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_update_dest"
+        android:name="com.devper.template.presentation.user.UserUpdateFragment"
+        android:label="@string/setting_menu_edit_user_info"
+        tools:layout="@layout/fragment_user_form">
+    </fragment>
 
     <fragment
         android:id="@+id/change_password_dest"
         android:name="com.devper.template.presentation.password.PasswordChangeFragment"
         android:label="@string/change_password"
-        tools:layout="@layout/fragment_change_password">
+        tools:layout="@layout/fragment_password_change">
 
     </fragment>
 
     <fragment
         android:id="@+id/change_pin_dest"
-        android:name="com.devper.template.presentation.pinform.PinChangeFragment"
-        android:label="@string/pin_confirm_title"
+        android:name="com.devper.template.presentation.pin.PinChangeFragment"
+        android:label="@string/setting_menu_change_pin"
         tools:layout="@layout/fragment_pin_form">
 
         <action
@@ -225,6 +149,13 @@
             app:popUpTo="@id/change_pin_dest"
             app:popUpToInclusive="true" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/pin_form_dest"
+        android:name="com.devper.template.presentation.pin.PinFormFragment"
+        android:label="@string/setting_menu_change_pin"
+        tools:layout="@layout/fragment_pin_form">
     </fragment>
 
     <fragment

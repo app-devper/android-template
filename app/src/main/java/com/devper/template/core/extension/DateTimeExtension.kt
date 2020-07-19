@@ -3,7 +3,7 @@ package com.devper.template.core.extension
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val SERVER_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
+const val SERVER_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS"
 const val SERVER_DATE_PATTERN = "yyyy-MM-dd"
 
 const val PRESENT_DATE_PATTERN = "d MMM yyyy"
@@ -24,11 +24,14 @@ fun String.toDisplayTime(): String? {
 }
 
 private fun toDateBc(date: String, inFormat: String, outFormat: String): String {
-    val local = Locale("th")
     val calendar = Calendar.getInstance()
         .apply {
-            time = SimpleDateFormat(inFormat, local).parse(date) ?: return date
-            add(Calendar.YEAR, 543)
+            time = SimpleDateFormat(inFormat, Locale.getDefault()).run {
+                timeZone = TimeZone.getTimeZone("UTC")
+                parse(date) ?: return date
+            }
         }
-    return SimpleDateFormat(outFormat, local).format(calendar.time)
+    return SimpleDateFormat(outFormat, Locale("th")).run {
+        format(calendar.time)
+    }
 }

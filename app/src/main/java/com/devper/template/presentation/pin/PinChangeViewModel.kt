@@ -1,10 +1,10 @@
-package com.devper.template.presentation.pinform
+package com.devper.template.presentation.pin
 
 import androidx.core.os.bundleOf
-import androidx.lifecycle.MutableLiveData
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
+import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.PinParam
 import com.devper.template.domain.model.auth.Verify
@@ -15,7 +15,7 @@ class PinChangeViewModel(
     private val verifyPinUseCase: VerifyPinUseCase
 ) : BaseViewModel() {
 
-    var resultVerify: MutableLiveData<ResultState<Verify>> = MutableLiveData()
+    var resultVerify = SingleLiveEvent<ResultState<Verify>>()
 
     fun verifyPin(pin: String) {
         verifyPinUseCase.execute(PinParam(pin)) {

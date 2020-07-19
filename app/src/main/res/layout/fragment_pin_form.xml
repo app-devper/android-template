@@ -7,29 +7,41 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
+        <TextView
+            style="@style/TextStyle.Title"
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/pin_create"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/TextStyle.Sub"
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:text="@string/pin_description"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <com.devper.template.core.platform.widget.PinCodeRoundView
+            android:id="@+id/pin_code_round_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/activity_pin_code_padding"
-            android:paddingBottom="@dimen/activity_pin_code_padding"
-            app:layout_constraintBottom_toTopOf="@+id/pin_code_keyboard_view"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_pin_form_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/pin_code_step_text_size" />
-
-            <com.devper.template.core.platform.widget.PinCodeRoundView
-                android:id="@+id/pin_code_round_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pin_code_round_top_margin"
-                android:layout_marginBottom="@dimen/pin_code_elements_margin" />
-        </LinearLayout>
+            android:layout_marginTop="@dimen/pin_code_round_top_margin"
+            android:layout_marginBottom="@dimen/pin_code_elements_margin"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
         <com.devper.template.core.platform.widget.KeyboardView
             android:id="@+id/pin_code_keyboard_view"

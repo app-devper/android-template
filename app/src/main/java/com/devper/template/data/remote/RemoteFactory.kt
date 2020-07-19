@@ -38,7 +38,9 @@ class RemoteFactory(private val context: Context) {
         val retrofit = Retrofit.Builder().run {
             baseUrl(url)
             client(okHttpClient)
-            addConverterFactory(GsonConverterFactory.create())
+            addConverterFactory(
+                GsonConverterFactory.create(GsonBuilder().setLenient().create())
+            )
             build()
         }
         return retrofit.create(T::class.java)
@@ -88,10 +90,6 @@ class RemoteFactory(private val context: Context) {
 
         return keyStore
     }
-
-    private fun createGson(): Gson = GsonBuilder()
-        .setLenient()
-        .create()
 
     @SuppressLint("TrustAllX509TrustManager")
     private fun getTrustAllHostsSSLSocketFactory(): Pair<SSLSocketFactory, X509TrustManager>? {

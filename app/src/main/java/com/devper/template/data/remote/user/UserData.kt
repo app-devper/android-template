@@ -9,8 +9,10 @@ data class UserData(
     @SerializedName("_id")
     @PrimaryKey
     val id: String,
+    @SerializedName("role")
+    val role: String,
     @SerializedName("username")
-    val username: String?,
+    val username: String,
     @SerializedName("email")
     val email: String?,
     @SerializedName("firstName")

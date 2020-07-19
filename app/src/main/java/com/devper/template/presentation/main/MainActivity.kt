@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             currentId = destination.id
             binding.toolbar.title = destination.label
-            applyDisplayHomeAsUpEnabled(isBackHome(destination.id))
+            applyDisplayHomeAsUpEnabled(hasBack(destination.id))
         }
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
@@ -97,7 +97,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         return id in listOf(R.id.home_dest, R.id.movie_dest, R.id.profile_dest, R.id.setting_dest)
     }
 
-    private fun isBackHome(id: Int): Boolean {
+    private fun hasBack(id: Int): Boolean {
         return id !in listOf(R.id.pin_code_dest, R.id.home_dest, R.id.movie_dest, R.id.profile_dest, R.id.setting_dest)
     }
 
@@ -117,14 +117,10 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun navigate(id: Int): Boolean {
         val options = NavOptions.Builder().run {
-            setLaunchSingleTop(true)
             setEnterAnim(R.anim.nav_default_enter_anim)
             setExitAnim(R.anim.nav_default_exit_anim)
             setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
             setPopExitAnim(R.anim.nav_default_pop_exit_anim)
-            navController.currentDestination?.let {
-                setPopUpTo(it.id, true)
-            }
             build()
         }
         return try {
