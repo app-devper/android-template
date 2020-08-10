@@ -115,9 +115,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            tools:text="123456">
+            tools:text="123456" />
 
-        </TextView>
+        <TextView
+            android:id="@+id/tvCode"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.verifyUser.code}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_otp"
+            tools:text="XXXC" />
 
         <TextView
             android:id="@+id/tvRequestOtp"

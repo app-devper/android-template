@@ -2,6 +2,7 @@ package com.devper.template.data.device
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import android.content.Context.TELEPHONY_SERVICE
 import android.os.Build
 import android.provider.Settings
@@ -9,7 +10,7 @@ import android.telephony.TelephonyManager
 import com.devper.template.domain.provider.AppInfoProvider
 import java.util.*
 
-class AndroidAppInfo(private val application: Application) : AppInfoProvider {
+class AndroidAppInfo(private val application: Context) : AppInfoProvider {
 
     override val imsi: String
         @SuppressLint("HardwareIds", "MissingPermission")

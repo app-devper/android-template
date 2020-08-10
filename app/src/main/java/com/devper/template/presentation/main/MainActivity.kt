@@ -1,41 +1,59 @@
 package com.devper.template.presentation.main
 
 import android.content.Intent
+import android.os.CountDownTimer
 import android.os.Handler
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
+import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
 import com.devper.template.R
 import com.devper.template.core.extension.toGone
 import com.devper.template.core.extension.toVisible
 import com.devper.template.core.platform.fcm.BadgeHelper
 import com.devper.template.core.platform.fcm.MessagingHandler
+import com.devper.template.core.platform.session.CountDownSession
 import com.devper.template.core.platform.widget.ProgressHudDialog
-import com.devper.template.data.session.AppSession
+import com.devper.template.data.session.AppSessionProvider
 import com.devper.template.databinding.ActivityHomeBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseActivity
-import org.koin.android.ext.android.inject
-import org.koin.androidx.scope.currentScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private lateinit var navController: NavController
     private lateinit var host: NavHostFragment
     private lateinit var messagingHandler: MessagingHandler
+
+    @Inject
+    lateinit var session: AppSessionProvider
+
+    @Inject
+    lateinit var countDownSession: CountDownSession
     private var isWaitForSecondBackClick = false
     private var currentId: Int = 0
-    private val mainViewModel: MainViewModel by viewModel()
-    private val session: AppSession by inject()
+    private val mainViewModel: MainViewModel by viewModels()
 
-    val progress: ProgressHudDialog by currentScope.inject { parametersOf(this) }
+    private val progress: ProgressHudDialog by lazy {
+        ProgressHudDialog.init(this, "Loading...", false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        countDownSession.onFinish = {
+            mainViewModel.keepAlive()
+        }
+    }
 
     override fun setupView() {
         setSupportActionBar(binding.toolbar)
@@ -62,12 +80,15 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         messagingHandler.messageLiveData.observe(this, Observer {
             setBadge()
         })
+
         messagingHandler.tokenLiveData.observe(this, Observer {
             //pref.fbToken = it
         })
+
         mainViewModel.navigateLiveData.observe(this, Observer {
             navController.navigate(it.first, it.second)
         })
+
         mainViewModel.profileLiveDate.observe(this, Observer {
             when (it) {
                 is ResultState.Loading -> {
@@ -76,15 +97,31 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     mainViewModel.setUser(it.data)
                 }
                 is ResultState.Error -> {
+                    mainViewModel.error(it.throwable)
                 }
             }
         })
+
+        mainViewModel.resultLogin.observe(this, Observer {
+            when (it) {
+                is ResultState.Loading -> {
+                }
+                is ResultState.Success -> {
+                    mainViewModel.setAccessToken(it.data)
+                    countDownSession.start()
+                }
+                is ResultState.Error -> {
+                    mainViewModel.error(it.throwable)
+                }
+            }
+        })
+
         mainViewModel.userLiveData.observe(this, Observer {
 
         })
 
-        mainViewModel.accessTokenLiveData.observe(this, Observer {
-            session.accessToken = it
+        mainViewModel.accessTokenLiveData.observe(this, Observer { accessToken ->
+            session.accessToken = accessToken
         })
     }
 
@@ -94,11 +131,11 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun isHome(id: Int): Boolean {
-        return id in listOf(R.id.home_dest, R.id.movie_dest, R.id.profile_dest, R.id.setting_dest)
+        return id in listOf(R.id.home_dest, R.id.profile_dest, R.id.setting_dest)
     }
 
     private fun hasBack(id: Int): Boolean {
-        return id !in listOf(R.id.pin_code_dest, R.id.home_dest, R.id.movie_dest, R.id.profile_dest, R.id.setting_dest)
+        return id !in listOf(R.id.pin_code_dest, R.id.home_dest, R.id.profile_dest, R.id.setting_dest)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -139,6 +176,40 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         binding.bottomNavigation.toVisible()
     }
 
+    fun clearLogin() {
+        mainViewModel.clearAccessToken()
+        countDownSession.clear()
+        timer?.cancel()
+    }
+
+    fun handlerLogin() {
+        handlerTimeOut()
+        countDownSession.start()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        handlerTimeOut()
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun isLogin(): Boolean {
+        return mainViewModel.isLogin()
+    }
+
+    private fun handlerTimeOut() {
+        timer?.cancel()
+        if (isLogin()) {
+            timer = object : CountDownTimer(60000L, 1000L) {
+                override fun onFinish() {
+                    mainViewModel.error(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out))
+                    clearLogin()
+                }
+
+                override fun onTick(millisUntilFinished: Long) {}
+            }.start()
+        }
+    }
+
     override fun onBackPressed() {
         when (isHome(currentId)) {
             true -> {
@@ -152,6 +223,26 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
             else -> super.onBackPressed()
         }
+    }
+
+    fun showLoading() {
+        progress.let {
+            if (!it.isShowing) {
+                it.show()
+            }
+        }
+    }
+
+    fun hideLoading() {
+        progress.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
+        }
+    }
+
+    companion object {
+        private var timer: CountDownTimer? = null
     }
 
 }

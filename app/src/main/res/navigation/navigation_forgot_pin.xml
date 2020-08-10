@@ -1,0 +1,90 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_forgot_pin"
+    app:startDestination="@id/forgot_pin_dest">
+
+    <action
+        android:id="@+id/action_to_login"
+        app:destination="@id/pin_code_dest"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/navigation_forgot_pin"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/forgot_pin_dest"
+        android:name="com.devper.template.presentation.pin.PinForgotFragment"
+        android:label="@string/forgot_pin"
+        tools:layout="@layout/fragment_pin_forgot">
+
+        <action
+            android:id="@+id/forgot_pin_to_otp_channel"
+            app:destination="@id/otp_channel_dest" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/otp_channel_dest"
+        android:name="com.devper.template.presentation.otp.OtpChannelFragment"
+        android:label="@string/forgot_pin"
+        tools:layout="@layout/fragment_otp_channel">
+
+        <action
+            android:id="@+id/otp_channel_to_otp_verify"
+            app:destination="@id/otp_verify_dest"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/otp_channel_dest"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/otp_verify_dest"
+        android:name="com.devper.template.presentation.otp.OtpVerifyFragment"
+        android:label="@string/forgot_pin"
+        tools:layout="@layout/fragment_otp_verify">
+
+        <action
+            android:id="@+id/otp_verify_to_set_password"
+            app:destination="@id/set_password_dest"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/otp_verify_dest"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/otp_verify_to_pin_form"
+            app:destination="@id/pin_form_dest"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/otp_verify_dest"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/pin_form_dest"
+        android:name="com.devper.template.presentation.pin.PinFormFragment"
+        android:label="@string/forgot_pin"
+        tools:layout="@layout/fragment_pin_form">
+
+        <action
+            android:id="@+id/pin_form_to_home"
+            app:destination="@id/pin_code_dest"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_forgot_pin"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/set_password_dest"
+        android:name="com.devper.template.presentation.password.PasswordSetFragment"
+        android:label="@string/forgot_pin"
+        tools:layout="@layout/fragment_password_form">
+        <action
+            android:id="@+id/set_password_to_login"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/set_password_dest"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

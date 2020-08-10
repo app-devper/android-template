@@ -55,14 +55,35 @@
                     android:layout_height="match_parent"
                     android:padding="16dp">
 
+                    <TextView
+                        android:id="@+id/tvCurrentUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_username_hint"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etCurrentUser"
+                        style="@style/Input"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="8dp"
+                        android:enabled="false"
+                        android:text="@{viewModel.userParam.username}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvCurrentUser" />
+
                     <com.devper.template.core.platform.widget.CustomTextView
                         android:id="@+id/tvNameLabel"
                         style="@style/TextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="@string/person_first_name"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/etCurrentUser"
                         app:require="true" />
 
                     <androidx.appcompat.widget.AppCompatEditText

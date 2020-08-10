@@ -1,16 +1,18 @@
 package com.devper.template.presentation.password
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPasswordChangeBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PasswordChangeFragment : BaseFragment<FragmentPasswordChangeBinding>(R.layout.fragment_password_change) {
 
-    override val viewModel: PasswordChangeViewModel by viewModel()
+    override val viewModel: PasswordChangeViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()

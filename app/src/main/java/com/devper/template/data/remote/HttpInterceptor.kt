@@ -2,16 +2,17 @@ package com.devper.template.data.remote
 
 import com.devper.template.core.exception.InternetException
 import com.devper.template.core.platform.helper.NetworkInfoHelper
-import com.devper.template.data.session.AppSession
+import com.devper.template.data.session.AppSessionProvider
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class HttpInterceptor(
-    private val session: AppSession,
+class HttpInterceptor @Inject constructor (
+    private val session: AppSessionProvider,
     private val networkInfoHelper: NetworkInfoHelper
 ) : Interceptor {
 
@@ -27,6 +28,7 @@ class HttpInterceptor(
                         addHeader("Authorization", "Bearer $it")
                     }
                 }
+                addHeader("x-app-language", "th")
                 addHeader("x-transaction-id", genTransactionId())
             }
             val tag = originalRequest.tag(Invocation::class.java)

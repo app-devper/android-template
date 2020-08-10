@@ -1,6 +1,8 @@
 package com.devper.template.presentation.pin
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.devper.template.AppConfig.FLOW_CHANGE_PIN
 import com.devper.template.AppConfig.FLOW_SET_PIN
 import com.devper.template.R
@@ -9,8 +11,10 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.SetPinParam
 import com.devper.template.domain.usecase.auth.SetPinUseCase
 import com.devper.template.presentation.BaseViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class PinFormViewModel(
+class PinFormViewModel @ViewModelInject constructor (
     private val setPinUseCase: SetPinUseCase
 ) : BaseViewModel() {
 
@@ -21,13 +25,13 @@ class PinFormViewModel(
             _actionToken.value = value
         }
 
-    var resultSetPin = SingleLiveEvent<ResultState<Boolean>>()
+    var resultSetPin = SingleLiveEvent<ResultState<Unit>>()
 
     fun setPin(pin: String) {
-        setPinUseCase.execute(SetPinParam(actionToken, pin)) {
-            onStart { resultSetPin.value = ResultState.Loading() }
-            onComplete { resultSetPin.value = ResultState.Success(true) }
-            onError { resultSetPin.value = ResultState.Error(it) }
+        viewModelScope.launch {
+            setPinUseCase(SetPinParam(actionToken, pin)).collect {
+                resultSetPin.value = it
+            }
         }
     }
 
@@ -39,9 +43,5 @@ class PinFormViewModel(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        setPinUseCase.unsubscribe()
-    }
 
 }

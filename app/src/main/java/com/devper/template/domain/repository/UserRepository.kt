@@ -15,7 +15,7 @@ interface UserRepository {
 
     suspend fun updateUser(param: UserUpdateParam): User
 
-    suspend fun getCurrentUser(): User
+    suspend fun getCurrentUser(): User?
 
     suspend fun getUsers(page: Int): Users
 

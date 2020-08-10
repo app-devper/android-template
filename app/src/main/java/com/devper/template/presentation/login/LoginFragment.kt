@@ -3,6 +3,7 @@ package com.devper.template.presentation.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.extension.makeLinks
@@ -13,9 +14,9 @@ import com.devper.template.core.smartlogin.util.SmartLoginException
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.main.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login),
     SmartLoginCallbacks, BiometricController.Callback {
 
@@ -23,7 +24,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private lateinit var biometric: BiometricController
     private lateinit var smartLogin: SmartLogin
 
-    override val viewModel: LoginViewModel by viewModel()
+    override val viewModel: LoginViewModel by viewModels()
 
     override fun setupView() {
         hideToolbar()
@@ -44,6 +45,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     override fun onArguments(it: Bundle?) {
         viewModel.clearUser()
+        clearLogin()
     }
 
     override fun observeLiveData() {
@@ -55,12 +57,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 is ResultState.Success -> {
                     hideDialog()
                     mainViewModel.setAccessToken(it.data)
-                    mainViewModel.initProfile()
+                    handlerLogin()
                     viewModel.nextToOtpSetPin()
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })
@@ -72,7 +74,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 }
             }
         })
+    }
 
+    override fun onCodeError(code: String) {
+        if (code == "CM-401-114") {
+            viewModel.nextToSetPassword()
+        }
+    }
+
+    override fun isShowCancel(code: String): Boolean {
+        if (code == "CM-401-114") {
+            return true
+        }
+        return super.isShowCancel(code)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,7 +102,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     override fun onLoginFailure(e: SmartLoginException) {
         hideLoading()
-        appCompat().showMessage(e.message)
+        showMessage(message = e.message ?: "")
     }
 
     override fun onAuthenticated() {

@@ -6,7 +6,8 @@ data class VerifyUser(
     val refCode: String,
     val channel: String,
     val expiredDate: String,
-    val userRefId: String
+    val userRefId: String,
+    var code: String = ""
 ) {
     val displayExpiredDate = expiredDate.toWrapDateTime()
 }

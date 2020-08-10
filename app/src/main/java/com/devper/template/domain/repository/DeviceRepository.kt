@@ -2,6 +2,6 @@ package com.devper.template.domain.repository
 
 interface DeviceRepository {
 
-    suspend fun registerDevice(): Boolean
+    suspend fun registerDevice(): String
 
 }

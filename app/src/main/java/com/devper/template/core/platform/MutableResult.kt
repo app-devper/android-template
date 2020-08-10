@@ -2,7 +2,6 @@ package com.devper.template.core.platform
 
 import androidx.lifecycle.MutableLiveData
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.core.success
 
 class MutableResult<T> : MutableLiveData<ResultState<T>>() {
 

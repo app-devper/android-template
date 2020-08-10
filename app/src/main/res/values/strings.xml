@@ -4,34 +4,50 @@
     <string name="facebook_app_id" translatable="false">478207525978138</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb478207525978138</string>
 
+    <string name="error_title">ขออภัย</string>
+    <string name="error_idle_time_out_title">คุณไม่ได้ทำรายการในเวลาที่กำหนด</string>
+    <string name="error_idle_time_out">คุณไม่ได้ทำรายการในเวลาที่กำหนด กรุณาเข้าสู่ระบบใหม่อีกครั้ง</string>
+    <string name="error_idle_time_out_btn">เข้าสู่ระบบใหม่</string>
+
     <!--Log In-->
     <string name="login_title">ลงชื่อเข้าใช้งาน</string>
     <string name="login_btn">เข้าสู่ระบบ</string>
     <string name="login_or">OR</string>
-    <string name="login_signup">ยังไม่มีชื่อผู้ใช้งาน Sign Up</string>
-    <string name="login_username_hint">Username</string>
+    <string name="login_signup">ยังไม่มีชื่อผู้ใช้งาน ลงทะเบียน</string>
+    <string name="login_username_hint">ชื่อผู้ใช้งาน</string>
     <string name="login_password_hint">รหัสผ่าน</string>
     <string name="login_forgot_password">ลืมรหัสผ่าน</string>
     <string name="login_no_user">ยังไม่มีชื่อผู้ใช้งาน</string>
     <string name="login_register">ลงทะเบียนขอสิทธิ์เข้าใช้งาน</string>
+
+    <string name="register">ลงทะเบียนเข้าใช้งาน</string>
+
+    <string name="forgot_password">ลืมรหัสผ่าน</string>
+    <string name="forgot_password_title">ลืมรหัสผ่าน</string>
+    <string name="forgot_password_sub_title">กรอกชื่อผู้ใช้งานเพื่อทำการตั้งรหัสผ่านใหม่</string>
+
+    <string name="forgot_pin">ลืมรหัส PIN</string>
+    <string name="forgot_pin_title">ลืมรหัส PIN</string>
+    <string name="forgot_pin_sub_title">กรุณายืนยันบัญชีผู้ใช้ของคุณ </string>
+    <string name="forgot_pin_confirm_title">ยืนยันเข้าสู่ขั้นตอนการลืมรหัสผ่าน</string>
+    <string name="forgot_pin_confirm_desc">เมื่อยืนยัน ระบบจะทำการรีเซ็ตรหัสผ่าน และรหัส PIN ที่ใช้ในระบบ</string>
+
+    <string name="password_title">ตั้งรหัสผ่าน</string>
+    <string name="password_sub_title">สำหรับเข้าใช้งานระบบ</string>
 
     <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again.</string>
     <string name="touch_sensor">Touch sensor.</string>
     <string name="fingerprint_recognized">Fingerprint recognized.</string>
 
     <!--Sign Up-->
-    <string name="signup_button">Sign Up</string>
-    <string name="signup_title">Sign Up</string>
-    <string name="signup_username_hint">Username</string>
-    <string name="signup_password_hint">Password</string>
+    <string name="signup_button">ลงทะเบียน</string>
+    <string name="signup_title">ลงทะเบียน</string>
+    <string name="signup_username_hint">ชื่อผู้ใช้งาน</string>
+    <string name="signup_password_hint">รหัสผ่าน</string>
     <string name="signup_email_hint">Email</string>
     <string name="signup_name_hint">Name</string>
     <string name="signup_surname_hint">Surname</string>
     <string name="signup_phone_hint">Phone</string>
-
-    <!--Drawer-->
-    <string name="main_open_drawer">Drawer Open</string>
-    <string name="main_close_drawer">Drawer Close</string>
 
     <!--Drawer Menus-->
     <string name="main_menu_about">About</string>
@@ -83,6 +99,8 @@
     <string name="confirm">ยืนยัน</string>
     <string name="save">บันทึก</string>
     <string name="next">ถัดไป</string>
+    <string name="accept">ยอมรับ</string>
+    <string name="not_accept">ไม่ยอมรับ</string>
 
     <string name="address">ที่อยู่</string>
     <string name="address_no">เลขที่อยู่</string>

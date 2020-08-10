@@ -1,17 +1,19 @@
 package com.devper.template.presentation.otp
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentOtpChannelBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.fragment_otp_channel) {
 
-    override val viewModel: OtpChannelViewModel by viewModel()
+    override val viewModel: OtpChannelViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -36,10 +38,14 @@ class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.frag
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })
+    }
+
+    override fun onCodeError(code: String) {
+        viewModel.popBackStack()
     }
 
 }

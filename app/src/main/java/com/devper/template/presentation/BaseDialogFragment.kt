@@ -1,4 +1,4 @@
-package com.devper.template.core.platform.widget
+package com.devper.template.presentation
 
 import android.os.Bundle
 import android.view.Gravity
@@ -11,13 +11,13 @@ import androidx.fragment.app.DialogFragment
 import com.devper.template.R
 import com.devper.template.databinding.DialogConfirmBinding
 
-class ConfirmDialog (private val component: DslAlertComponent): DialogFragment() {
+class BaseDialogFragment(private val component: DslAlertComponent) : DialogFragment() {
 
     private lateinit var binding: DialogConfirmBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_confirm, container, false)
-        binding.lifecycleOwner = activity
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -50,6 +50,8 @@ class ConfirmDialog (private val component: DslAlertComponent): DialogFragment()
             component.actionClickCancel.invoke()
             dismiss()
         }
+        isCancelable = component.isAllowCancel
+        dialog?.setCanceledOnTouchOutside(component.isAllowCancel)
     }
 
     class Builder {
@@ -86,7 +88,7 @@ class ConfirmDialog (private val component: DslAlertComponent): DialogFragment()
             return this
         }
 
-        fun withConfirm(action: () -> Unit): Builder {
+        fun withConfirmAction(action: () -> Unit): Builder {
             component = component.copy(actionClickConfirm = action)
             return this
         }
@@ -96,7 +98,7 @@ class ConfirmDialog (private val component: DslAlertComponent): DialogFragment()
             return this
         }
 
-        fun build(): ConfirmDialog = ConfirmDialog(component)
+        fun build(): BaseDialogFragment = BaseDialogFragment(component)
     }
 
 
@@ -107,7 +109,7 @@ class ConfirmDialog (private val component: DslAlertComponent): DialogFragment()
         val isAllowCancel: Boolean = true,
         val buttonOkText: String = "",
         val buttonCancelText: String = "",
-        var actionClickConfirm:() -> Unit = {},
-        val actionClickCancel:() -> Unit = {}
+        var actionClickConfirm: () -> Unit = {},
+        val actionClickCancel: () -> Unit = {}
     )
 }

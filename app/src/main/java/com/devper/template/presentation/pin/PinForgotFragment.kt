@@ -1,17 +1,19 @@
-package com.devper.template.presentation.password
+package com.devper.template.presentation.pin
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
-import com.devper.template.databinding.FragmentPasswordFormBinding
+import com.devper.template.databinding.FragmentPinForgotBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class PasswordFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.fragment_password_form) {
+@AndroidEntryPoint
+class PinForgotFragment : BaseFragment<FragmentPinForgotBinding>(R.layout.fragment_pin_forgot) {
 
-    override val viewModel: PasswordViewModel by viewModel()
+    override val viewModel: PinForgotViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -22,23 +24,25 @@ class PasswordFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.frag
     override fun onArguments(it: Bundle?) {
         val param = it?.getString(EXTRA_PARAM)
         param?.let {
-            viewModel.actionToken = it
+            viewModel.setUsername(it)
         }
     }
 
     override fun observeLiveData() {
-        viewModel.resultSetPassword.observe(viewLifecycleOwner, Observer {
+        viewModel.resultsLogin.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    viewModel.nextPage()
+                    mainViewModel.setAccessToken(it.data)
+                    handlerLogin()
+                    viewModel.nextToOtpSetPin()
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })

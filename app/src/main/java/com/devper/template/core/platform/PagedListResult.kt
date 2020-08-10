@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 
 class PagedListResult<T>(
-    val result: LiveData<PagedList<T>> = MutableLiveData(),
+    val result: LiveData<PagedList<Any>> = MutableLiveData(),
     val isInitialLoading: LiveData<Boolean> = MutableLiveData(),
     val networkState: LiveData<NetworkState> = MutableLiveData()
 )

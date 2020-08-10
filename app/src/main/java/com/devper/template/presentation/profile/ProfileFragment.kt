@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import coil.api.load
 import com.devper.template.R
@@ -11,11 +12,12 @@ import com.devper.template.core.platform.picker.ImagePickerConfig
 import com.devper.template.core.platform.picker.PickerCallback
 import com.devper.template.databinding.FragmentProfileBinding
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
-    override val viewModel: ProfileViewModel by viewModel()
+    override val viewModel: ProfileViewModel by viewModels()
 
     private lateinit var picker: ImagePickerConfig
 

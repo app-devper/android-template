@@ -1,37 +1,48 @@
 package com.devper.template.presentation.login
 
+import androidx.core.os.bundleOf
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.LoginPinParam
 import com.devper.template.domain.usecase.auth.LoginPinUseCase
 import com.devper.template.presentation.BaseViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class LoginPinViewModel(
+class LoginPinViewModel @ViewModelInject constructor(
     private val loginPinUseCase: LoginPinUseCase
 ) : BaseViewModel() {
 
+    val username = MutableLiveData<String>()
+
     var resultLoginPin: SingleLiveEvent<ResultState<String>> = SingleLiveEvent()
 
-    fun loginPin(username: String, pin: String) {
-        loginPinUseCase.execute(LoginPinParam(username, pin)) {
-            onStart { resultLoginPin.value = ResultState.Loading() }
-            onComplete { resultLoginPin.value = ResultState.Success(it) }
-            onError { resultLoginPin.value = ResultState.Error(it) }
+    fun loginPin(pin: String) {
+        viewModelScope.launch {
+            loginPinUseCase(LoginPinParam(username.value ?: "", pin)).collect {
+                resultLoginPin.value = it
+            }
         }
+    }
+
+    fun setUsername(it: String) {
+        username.value = it
     }
 
     fun nextHome() {
         onNavigate(R.id.pin_code_to_home, null)
     }
 
-    fun nextToLogin() {
-        onNavigate(R.id.pin_code_to_login, null)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        loginPinUseCase.unsubscribe()
+    fun nextToForgotPin() {
+        val bundle = bundleOf(
+            EXTRA_PARAM to username.value
+        )
+        onNavigate(R.id.pin_code_to_forgot_pin, bundle)
     }
 
 }

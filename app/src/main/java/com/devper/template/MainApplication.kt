@@ -6,16 +6,16 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.devper.template.core.platform.fcm.LocalMessagingHelper
-import com.devper.template.di.appModule
-import com.devper.template.di.domainsModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import com.devper.template.core.platform.session.CountDownSession
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
+@HiltAndroidApp
 class MainApplication : Application(), LifecycleObserver {
 
     private lateinit var localMessagingHelper: LocalMessagingHelper
+    @Inject lateinit var countDownSession: CountDownSession
 
     override fun onCreate() {
         super.onCreate()
@@ -24,12 +24,12 @@ class MainApplication : Application(), LifecycleObserver {
         }
         localMessagingHelper = LocalMessagingHelper(this)
 
-        startKoin {
-            androidLogger()
-            androidContext(applicationContext)
-            modules(domainsModule)
-            modules(appModule)
-        }
+//        startKoin {
+//            androidLogger()
+//            androidContext(applicationContext)
+//            modules(domainsModule)
+//            modules(appModule)
+//        }
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
@@ -37,12 +37,14 @@ class MainApplication : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackgrounded() {
         Timber.d("App in background")
+        countDownSession.isForeground = false
         localMessagingHelper.setApplicationForeground(false)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForegrounded() {
         Timber.d("App in foreground")
+        countDownSession.isForeground = true
         localMessagingHelper.setApplicationForeground(true)
     }
 

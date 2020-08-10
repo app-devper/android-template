@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pin_code_round_view"
                 android:layout_centerInParent="true"
-                android:onClick="@{()->viewModel.nextToLogin() }"
+                android:onClick="@{()->viewModel.nextToForgotPin() }"
                 android:text="@string/pin_code_forgot_pin"
                 app:underline="@{true}" />
 

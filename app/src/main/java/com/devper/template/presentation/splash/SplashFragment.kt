@@ -1,16 +1,18 @@
 package com.devper.template.presentation.splash
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSplashBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_splash) {
 
-    override val viewModel: SplashViewModel by viewModel()
+    override val viewModel: SplashViewModel by viewModels()
 
     override fun setupView() {
         hideToolbar()
@@ -26,7 +28,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                     viewModel.nextPage(it.data)
                 }
                 is ResultState.Error -> {
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })

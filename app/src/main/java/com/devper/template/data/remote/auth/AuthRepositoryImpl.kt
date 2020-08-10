@@ -2,10 +2,14 @@ package com.devper.template.data.remote.auth
 
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.data.remote.ApiService
+import com.devper.template.data.remote.user.UserMapper
 import com.devper.template.domain.model.auth.*
+import com.devper.template.domain.model.user.User
 import com.devper.template.domain.repository.AuthRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val api: ApiService,
     private val pref: AppPreference
 ) : AuthRepository {
@@ -32,7 +36,6 @@ class AuthRepositoryImpl(
 
     override suspend fun loginPin(param: LoginPinParam): String {
         val mapper = LoginMapper()
-        param.username = pref.userId
         return api.loginPin(mapper.toRequest(param)).accessToken
     }
 
@@ -48,6 +51,17 @@ class AuthRepositoryImpl(
         return api.setPin(param.actionToken, mapper.toRequest(param)).let {
             pref.setPin(param.pin)
         }
+    }
+
+    override suspend fun actionInfo(param: String): User {
+        val mapper = UserMapper()
+        return api.actionInfo(param).let {
+            mapper.toDomain(it)
+        }
+    }
+
+    override suspend fun keepAlive(): String {
+        return api.keepAlive().accessToken
     }
 
 }

@@ -1,17 +1,19 @@
 package com.devper.template.presentation.user
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.AppConfig
 import com.devper.template.R
 import com.devper.template.databinding.FragmentUserDetailBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(R.layout.fragment_user_detail) {
 
-    override val viewModel: UserDetailViewModel by viewModel()
+    override val viewModel: UserDetailViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -31,7 +33,7 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(R.layout.frag
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })

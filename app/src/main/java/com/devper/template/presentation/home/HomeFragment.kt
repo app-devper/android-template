@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.platform.widget.CountDrawable
 import com.devper.template.databinding.FragmentHomeBinding
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.BaseViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    override val viewModel: BaseViewModel by viewModel()
+    override val viewModel: BaseViewModel by viewModels()
 
     private var menuItem: MenuItem? = null
 
@@ -27,9 +29,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.viewModel = mainViewModel
     }
 
-    override fun onArguments(it: Bundle?) {
-        mainViewModel.initProfile()
-    }
+    override fun onArguments(it: Bundle?) {}
 
     override fun observeLiveData() {
         mainViewModel.badge.observe(viewLifecycleOwner, Observer {

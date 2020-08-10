@@ -1,6 +1,7 @@
 package com.devper.template.domain.repository
 
 import com.devper.template.domain.model.auth.*
+import com.devper.template.domain.model.user.User
 
 interface AuthRepository {
 
@@ -15,4 +16,9 @@ interface AuthRepository {
     suspend fun verifyPin(param: PinParam): Verify
 
     suspend fun setPin(param: SetPinParam)
+
+    suspend fun actionInfo(param: String): User
+
+    suspend fun keepAlive(): String
+
 }

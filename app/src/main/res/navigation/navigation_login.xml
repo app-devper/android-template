@@ -6,6 +6,7 @@
 
     <include app:graph="@navigation/navigation_forgot_password" />
 
+    <include app:graph="@navigation/navigation_set_password" />
 
     <fragment
         android:id="@+id/login_dest"
@@ -24,6 +25,10 @@
         <action
             android:id="@+id/login_to_forgot_password"
             app:destination="@id/navigation_forgot_password" />
+
+        <action
+            android:id="@+id/login_to_set_password"
+            app:destination="@id/navigation_set_password" />
 
     </fragment>
 
@@ -64,7 +69,7 @@
         tools:layout="@layout/fragment_pin_form">
         <action
             android:id="@+id/pin_form_to_home"
-            app:destination="@id/home_dest"
+            app:destination="@id/navigation_home"
             app:launchSingleTop="true"
             app:popUpTo="@id/navigation_login"
             app:popUpToInclusive="true" />
@@ -74,7 +79,14 @@
     <fragment
         android:id="@+id/signup_dest"
         android:name="com.devper.template.presentation.signup.SignUpFragment"
-        tools:layout="@layout/fragment_signup" />
-
+        android:label="@string/register"
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/signup_to_set_password"
+            app:destination="@id/navigation_set_password"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/signup_dest"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

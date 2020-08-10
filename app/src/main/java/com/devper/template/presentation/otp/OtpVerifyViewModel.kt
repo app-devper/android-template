@@ -1,7 +1,9 @@
 package com.devper.template.presentation.otp
 
 import androidx.core.os.bundleOf
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.AppConfig.FLOW_SET_PASSWORD
@@ -17,8 +19,10 @@ import com.devper.template.domain.model.otp.VerifyUserParam
 import com.devper.template.domain.usecase.otp.VerifyCodeUseCase
 import com.devper.template.domain.usecase.otp.VerifyUserUseCase
 import com.devper.template.presentation.BaseViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class OtpVerifyViewModel(
+class OtpVerifyViewModel @ViewModelInject constructor(
     private val verifyUserUseCase: VerifyUserUseCase,
     private val verifyCodeUseCase: VerifyCodeUseCase
 ) : BaseViewModel() {
@@ -38,10 +42,10 @@ class OtpVerifyViewModel(
     val verifyUser = MutableLiveData<VerifyUser>()
 
     fun verifyUser(param: VerifyUserParam) {
-        verifyUserUseCase.execute(param) {
-            onStart { resultVerifyUser.value = ResultState.Loading() }
-            onComplete { resultVerifyUser.value = ResultState.Success(it) }
-            onError { resultVerifyUser.value = ResultState.Error(it) }
+        viewModelScope.launch {
+            verifyUserUseCase(param).collect {
+                resultVerifyUser.value = it
+            }
         }
     }
 
@@ -76,10 +80,10 @@ class OtpVerifyViewModel(
     }
 
     fun verifyCode(param: VerifyCodeParam) {
-        verifyCodeUseCase.execute(param) {
-            onStart { resultVerifyCode.value = ResultState.Loading() }
-            onComplete { resultVerifyCode.value = ResultState.Success(it) }
-            onError { resultVerifyCode.value = ResultState.Error(it) }
+        viewModelScope.launch {
+            verifyCodeUseCase(param).collect {
+                resultVerifyCode.value = it
+            }
         }
     }
 
@@ -97,11 +101,6 @@ class OtpVerifyViewModel(
         } else if (flow == FLOW_SET_PIN) {
             onNavigate(R.id.otp_verify_to_pin_form, bundle)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        verifyUserUseCase.unsubscribe()
     }
 
 }

@@ -1,8 +1,9 @@
 package com.devper.template.data.session
 
-import com.devper.template.data.remote.movie.ConfigurationData
+interface AppSessionProvider {
+    var accessToken: String?
+}
 
-data class AppSession(
-    var configurationData: ConfigurationData? = null,
-    var accessToken: String? = null
-)
+data class AppSession constructor(
+    override var accessToken: String? = null
+) : AppSessionProvider

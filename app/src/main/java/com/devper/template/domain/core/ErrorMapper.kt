@@ -5,10 +5,8 @@ import com.devper.template.core.exception.AppException
 import com.devper.template.core.exception.InternetException
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import kotlinx.coroutines.CancellationException
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -36,9 +34,6 @@ object ErrorMapper {
             }
             is InternetException -> {
                 AppException(AppConfig.NO_INTERNET_ERROR, throwable.message ?: "")
-            }
-            is CancellationException -> {
-                AppException(AppConfig.CANCEL_ERROR, throwable.message ?: "")
             }
             is SocketTimeoutException -> {
                 AppException(AppConfig.TIME_OUT_ERROR, throwable.message ?: "")

@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:maxLines="1"
-                    android:onClick="@{()-> viewModel.nextToOtpSetPassword()}"
+                    android:onClick="@{()-> viewModel.nextToForgotPassword()}"
                     android:text="@string/login_forgot_password"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

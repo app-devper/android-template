@@ -1,15 +1,24 @@
 package com.devper.template.presentation.user
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import com.devper.template.R
 import com.devper.template.databinding.FragmentUserBinding
+import com.devper.template.domain.model.user.User
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
 
-    override val viewModel: UserViewModel by viewModel()
+    override val viewModel: UserViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -19,23 +28,29 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
             onClick = {
                 viewModel.nextToDetail(it.id)
             }
+            addLoadStateListener { loadState ->
+                if (loadState.refresh is LoadState.Loading) {
+                    showLoading()
+                } else {
+                    hideLoading()
+                }
+            }
         }
+
+        setAdapter(viewModel.getUsers())
     }
 
     override fun observeLiveData() {
-        viewModel.userList.observe(viewLifecycleOwner, Observer {
-            viewModel.adapter.submitList(it)
-        })
-        viewModel.networkState.observe(viewLifecycleOwner, Observer {
-            viewModel.adapter.setNetworkState(it)
-        })
-        viewModel.isInitialLoading.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                showLoading()
-            } else {
-                hideLoading()
+
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun setAdapter(pagingData :Flow<PagingData<User>>){
+        lifecycleScope.launchWhenCreated {
+            pagingData.collectLatest {
+                viewModel.adapter.submitData(it)
             }
-        })
+        }
     }
 
     override fun onArguments(it: Bundle?) {

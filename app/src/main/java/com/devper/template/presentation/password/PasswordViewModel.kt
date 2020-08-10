@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.devper.template.R
 import com.devper.template.core.extension.getPasswordScore
 import com.devper.template.core.platform.SingleLiveEvent
@@ -11,6 +12,8 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.SetPasswordParam
 import com.devper.template.domain.usecase.auth.SetPasswordUseCase
 import com.devper.template.presentation.BaseViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 open class PasswordViewModel(
     private val setPasswordUseCase: SetPasswordUseCase
@@ -40,11 +43,7 @@ open class PasswordViewModel(
         }
     }
 
-    val enable = password.switchMap {
-        liveData {
-            emit(it.isPass())
-        }
-    }
+    val enable = password.switchMap { liveData { emit(it.isPass()) } }
 
     val resultSetPassword = SingleLiveEvent<ResultState<Unit>>()
 
@@ -59,10 +58,10 @@ open class PasswordViewModel(
 
     fun setPassword() {
         password.value?.let { param ->
-            setPasswordUseCase.execute(param) {
-                onStart { resultSetPassword.value = ResultState.Loading() }
-                onComplete { resultSetPassword.value = ResultState.Success(it) }
-                onError { resultSetPassword.value = ResultState.Error(it) }
+            viewModelScope.launch {
+                setPasswordUseCase(param).collect {
+                    resultSetPassword.value = it
+                }
             }
         }
     }
@@ -83,8 +82,4 @@ open class PasswordViewModel(
         onNavigate(R.id.set_password_to_login, null)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        setPasswordUseCase.unsubscribe()
-    }
 }

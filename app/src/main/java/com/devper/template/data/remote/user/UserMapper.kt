@@ -19,7 +19,7 @@ class UserMapper {
     }
 
     fun toRequest(data: SignUpParam): SignUpRequest {
-        return SignUpRequest(data.username, data.password, data.email, data.firstName, data.lastName, data.phone)
+        return SignUpRequest(data.username, data.email, data.firstName, data.lastName, data.phone)
     }
 
     fun toRequest(data: UserUpdateParam): UserRequest {

@@ -1,16 +1,18 @@
 package com.devper.template.presentation.user
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentUserFormBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserFormFragment : BaseFragment<FragmentUserFormBinding>(R.layout.fragment_user_form) {
 
-    override val viewModel: UserFormViewModel by viewModel()
+    override val viewModel: UserFormViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -27,11 +29,11 @@ class UserFormFragment : BaseFragment<FragmentUserFormBinding>(R.layout.fragment
                 is ResultState.Success -> {
                     hideDialog()
                     mainViewModel.setUser(it.data)
-                    viewModel.popBackStack.invoke()
+                    viewModel.popBackStack()
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })

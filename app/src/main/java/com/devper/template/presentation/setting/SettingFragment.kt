@@ -1,15 +1,17 @@
 package com.devper.template.presentation.setting
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSettingBinding
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
 
-    override val viewModel: SettingViewModel by viewModel()
+    override val viewModel: SettingViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -23,6 +25,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         })
     }
 
-    override fun onArguments(it: Bundle?) {}
+    override fun onArguments(it: Bundle?) {
+        mainViewModel.getProfile()
+    }
 
 }

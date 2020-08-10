@@ -1,5 +1,7 @@
 package com.devper.template.domain.core
 
+import androidx.lifecycle.MutableLiveData
+
 sealed class ResultState<out T> {
 
     /**
@@ -17,6 +19,13 @@ sealed class ResultState<out T> {
      */
     data class Error(val throwable: Throwable) : ResultState<Nothing>()
 
+    override fun toString(): String {
+        return when (this) {
+            is Success<*> -> "Success[data=$data]"
+            is Error -> "Error[exception=$throwable]"
+            is Loading -> "Loading"
+        }
+    }
 }
 
 val ResultState<*>.succeeded
@@ -26,5 +35,18 @@ inline fun <reified T> ResultState<T>.success(): T? {
     return when (this) {
         is ResultState.Success -> data
         else -> null
+    }
+}
+
+fun <T> ResultState<T>.successOr(fallback: T): T {
+    return (this as? ResultState.Success<T>)?.data ?: fallback
+}
+
+val <T> ResultState<T>.data: T?
+    get() = (this as? ResultState.Success)?.data
+
+inline fun <reified T> ResultState<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
+    if (this is ResultState.Success) {
+        liveData.value = data
     }
 }

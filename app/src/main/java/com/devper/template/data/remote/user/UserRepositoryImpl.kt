@@ -1,6 +1,5 @@
 package com.devper.template.data.remote.user
 
-import com.devper.template.core.exception.AppException
 import com.devper.template.data.database.AppDatabase
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.data.remote.ApiService
@@ -9,8 +8,9 @@ import com.devper.template.domain.model.user.User
 import com.devper.template.domain.model.user.UserUpdateParam
 import com.devper.template.domain.model.user.Users
 import com.devper.template.domain.repository.UserRepository
+import javax.inject.Inject
 
-class UserRepositoryImpl(
+class UserRepositoryImpl @Inject constructor(
     private val api: ApiService,
     private val db: AppDatabase,
     private val pref: AppPreference
@@ -18,14 +18,14 @@ class UserRepositoryImpl(
 
     override suspend fun clearUser() {
         pref.clear()
-        db.user().clearUser()
+        return db.user().clearUser()
     }
 
-    override suspend fun getCurrentUser(): User {
+    override suspend fun getCurrentUser(): User? {
         val mapper = UserMapper()
         return db.user().getFirstUser()?.let {
             mapper.toDomain(it)
-        } ?: throw AppException("USER_NOT_FOUND", "USER_NOT_FOUND")
+        }
     }
 
     override suspend fun getUsers(page: Int): Users {
@@ -44,9 +44,7 @@ class UserRepositoryImpl(
 
     override suspend fun signUp(request: SignUpParam) {
         val mapper = UserMapper()
-        api.signUp(mapper.toRequest(request)).let {
-            mapper.toDomain(it)
-        }
+        return api.signUp(mapper.toRequest(request))
     }
 
     override suspend fun getProfile(): User {

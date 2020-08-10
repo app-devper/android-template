@@ -1,17 +1,19 @@
 package com.devper.template.presentation.pin
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.extension.toInvisible
 import com.devper.template.databinding.FragmentPinFormBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_pin_form) {
 
-    override val viewModel: PinChangeViewModel by viewModel()
+    override val viewModel: PinChangeViewModel by viewModels()
 
     override fun setupView() {
         showToolbar()
@@ -39,7 +41,7 @@ class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment
                 is ResultState.Error -> {
                     hideDialog()
                     binding.pinCodeRoundView.clearPin()
-                    toError(it.throwable)
+                    mainViewModel.error(it.throwable)
                 }
             }
         })

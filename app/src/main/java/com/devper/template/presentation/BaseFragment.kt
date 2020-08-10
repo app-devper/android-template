@@ -7,18 +7,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.devper.template.AppConfig.EXTRA_FLOW
+import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
+import com.devper.template.R
 import com.devper.template.core.exception.AppException
+import com.devper.template.core.platform.EventObserver
 import com.devper.template.domain.core.ErrorMapper
 import com.devper.template.presentation.main.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int) : Fragment() {
 
     lateinit var binding: Binding
     abstract val viewModel: BaseViewModel
-    val mainViewModel: MainViewModel by sharedViewModel()
+    val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
@@ -40,6 +44,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
             }
         }
         setupView()
+        observe()
         observeLiveData()
         getArgument()
     }
@@ -49,11 +54,32 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         onArguments(arguments)
     }
 
+    private fun observe() {
+        mainViewModel.errorLiveData.observe(viewLifecycleOwner, EventObserver {
+            showMessage(code = it.first, message = it.second)
+        })
+        mainViewModel.codeLiveData.observe(viewLifecycleOwner, EventObserver {
+            handleError(it)
+        })
+
+    }
+
     abstract fun setupView()
 
     abstract fun observeLiveData()
 
     abstract fun onArguments(it: Bundle?)
+
+    private fun handleError(code: String) {
+        if (code == SESSION_EXPIRED_ERROR) {
+            viewModel.onNavigate(R.id.action_to_login, null)
+        } else {
+            onCodeError(code)
+        }
+    }
+
+    open fun onCodeError(code: String) {
+    }
 
     open fun showToolbar() {
         appCompat().supportActionBar?.show()
@@ -87,17 +113,21 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         appCompat().hideLoading()
     }
 
-    open fun toError(throwable: Throwable?) {
+    fun clearLogin() {
+        appCompat().clearLogin()
+    }
+
+    fun handlerLogin() {
+        appCompat().handlerLogin()
+    }
+
+    fun toError(throwable: Throwable?) {
         val appError = ErrorMapper.toAppError(throwable)
-        appCompat().showMessageTag(appError.resultCode, appError.getDesc())
+        mainViewModel.error(appError.resultCode, appError.getDesc())
     }
 
-    open fun toError(appError: AppException) {
-        appCompat().showMessageTag(appError.resultCode, appError.getDesc())
-    }
-
-    open fun toAppError(throwable: Throwable?): AppException {
-        return ErrorMapper.toAppError(throwable)
+    fun toError(appError: AppException) {
+        mainViewModel.error(appError.resultCode, appError.getDesc())
     }
 
     fun hideBottomNavigation() {
@@ -106,6 +136,24 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
 
     fun showBottomNavigation() {
         appCompat().showBottomNavigation()
+    }
+
+    open fun isShowCancel(code: String): Boolean = false
+
+    fun showMessage(code: String = "", message: String = "") {
+        val fragment = BaseDialogFragment.Builder().run {
+            withTitle(getString(R.string.error_title))
+            withoutCancel()
+            withConfirmAction {
+                mainViewModel.codeLiveData.setEventValue(code)
+            }
+            if (isShowCancel(code)) {
+                withButtonCancelText("Cancel")
+            }
+            withDescription(if (code.isEmpty()) message else "$message [Code : $code]")
+            build()
+        }
+        fragment.show(childFragmentManager, "dialog")
     }
 
 }

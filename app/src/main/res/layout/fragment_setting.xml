@@ -200,7 +200,7 @@
                             android:background="@drawable/custom_ripple"
                             android:clickable="true"
                             android:focusable="true"
-                            android:onClick="@{()-> viewModel.nextChangePassword()}">
+                            android:onClick="@{()-> viewModel.nextToChangePassword()}">
 
                             <ImageView
                                 android:id="@+id/imgChangePassword"
@@ -252,7 +252,7 @@
                             android:background="@drawable/custom_ripple"
                             android:clickable="true"
                             android:focusable="true"
-                            android:onClick="@{()-> viewModel.nextChangePin()}"
+                            android:onClick="@{()-> viewModel.nextToChangePin()}"
                             android:paddingBottom="16dp">
 
                             <ImageView
@@ -318,7 +318,8 @@
                             android:id="@+id/layoutTermAndCondition"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/custom_ripple">
+                            android:background="@drawable/custom_ripple"
+                            android:onClick="@{()->viewModel.nextToTerm() }">
 
                             <TextView
                                 android:id="@+id/tvMenuTermAndCondition"

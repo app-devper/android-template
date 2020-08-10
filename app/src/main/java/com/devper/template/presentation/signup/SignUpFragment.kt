@@ -1,19 +1,21 @@
 package com.devper.template.presentation.signup
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSignupBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_signup) {
 
-    override val viewModel: SignUpViewModel by viewModel()
+    override val viewModel: SignUpViewModel by viewModels()
 
     override fun setupView() {
-        hideToolbar()
+        showToolbar()
         hideBottomNavigation()
         binding.viewModel = viewModel
     }
@@ -22,20 +24,19 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
         viewModel.results.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultState.Loading -> {
-                    showLoading()
+                    showDialog()
                 }
                 is ResultState.Success -> {
-                    hideLoading()
-                    viewModel.popBackStack()
+                    hideDialog()
+                    viewModel.nextToOtpSetPassword()
                 }
                 is ResultState.Error -> {
-                    hideLoading()
-                    toError(it.throwable)
+                    hideDialog()
+                    mainViewModel.error(it.throwable)
                 }
             }
         })
     }
-
 
     override fun onArguments(it: Bundle?) {}
 

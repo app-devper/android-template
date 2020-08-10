@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center"
         android:minWidth="700dp"
         android:orientation="vertical">
@@ -25,15 +24,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                tools:text="Title"/>
+                tools:text="Title" />
 
             <LinearLayout
                 android:id="@+id/layout_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_title"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -45,7 +44,7 @@
                     android:maxLines="5"
                     android:text=""
                     android:textSize="16sp"
-                    tools:text="Do you want to record departure at Central Rama III Departure Date Time: 18 Jan 2019 13:00"/>
+                    tools:text="Do you want to record departure at Central Rama III Departure Date Time: 18 Jan 2019 13:00" />
             </LinearLayout>
 
             <LinearLayout
@@ -53,27 +52,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_detail"
+                android:baselineAligned="false"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/ly_confirm"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_confirm"
-                        style="@style/Button.Primary"
-                        android:layout_width="150dp"
-                        android:layout_height="45dp"
-                        android:gravity="center"
-                        android:text="@android:string/ok"
-                        android:textAllCaps="false"
-                        android:textSize="20sp"/>
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ly_cancel"
@@ -91,7 +72,26 @@
                         android:gravity="center"
                         android:text="@android:string/cancel"
                         android:textAllCaps="false"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ly_confirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_confirm"
+                        style="@style/Button.Primary"
+                        android:layout_width="150dp"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@android:string/ok"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,60 +1,71 @@
 package com.devper.template.di
 
-import android.app.Activity
-import com.devper.template.core.platform.widget.ProgressHudDialog
+import android.content.Context
+import com.devper.template.core.platform.helper.NetworkInfoHelper
+import com.devper.template.core.platform.session.CountDownSession
 import com.devper.template.core.thread.CoroutinesDispatcher
-import com.devper.template.domain.core.thread.CoroutineThreadDispatcher
-import com.devper.template.presentation.BaseViewModel
-import com.devper.template.presentation.login.LoginPinViewModel
-import com.devper.template.presentation.login.LoginViewModel
-import com.devper.template.presentation.main.MainActivity
-import com.devper.template.presentation.main.MainViewModel
-import com.devper.template.presentation.movie.MovieDetailViewModel
-import com.devper.template.presentation.movie.MovieViewModel
-import com.devper.template.presentation.otp.OtpChannelViewModel
-import com.devper.template.presentation.otp.OtpVerifyViewModel
-import com.devper.template.presentation.password.PasswordChangeViewModel
-import com.devper.template.presentation.password.PasswordViewModel
-import com.devper.template.presentation.pin.PinChangeViewModel
-import com.devper.template.presentation.pin.PinFormViewModel
-import com.devper.template.presentation.profile.ProfileViewModel
-import com.devper.template.presentation.setting.SettingViewModel
-import com.devper.template.presentation.signup.SignUpViewModel
-import com.devper.template.presentation.splash.SplashViewModel
-import com.devper.template.presentation.user.UserDetailViewModel
-import com.devper.template.presentation.user.UserFormViewModel
-import com.devper.template.presentation.user.UserViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
+import com.devper.template.data.database.AppDatabase
+import com.devper.template.data.device.AndroidAppInfo
+import com.devper.template.data.preference.AppPreference
+import com.devper.template.data.remote.ApiService
+import com.devper.template.data.remote.HttpInterceptor
+import com.devper.template.data.remote.RemoteFactory
+import com.devper.template.data.session.AppSession
+import com.devper.template.data.session.AppSessionProvider
+import com.devper.template.domain.core.thread.Dispatcher
+import com.devper.template.domain.provider.AppInfoProvider
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
-val appModule = module {
-    single<CoroutineThreadDispatcher> { CoroutinesDispatcher() }
+@InstallIn(ApplicationComponent::class)
+@Module
+class AppModule {
 
-    scope(named<MainActivity>()) {
-        scoped { (activity: Activity) ->
-            ProgressHudDialog.init(activity, "Loading...", false)
-        }
+    @Singleton
+    @Provides
+    fun provideAppSession(): AppSessionProvider = AppSession()
+
+    @Singleton
+    @Provides
+    fun providePreference(@ApplicationContext context: Context): AppPreference = AppPreference(context)
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase = AppDatabase.create(context, false)
+
+    @Singleton
+    @Provides
+    fun provideAppInfoProvider(@ApplicationContext context: Context): AppInfoProvider = AndroidAppInfo(context)
+
+    @Singleton
+    @Provides
+    fun provideNetworkInfo(@ApplicationContext context: Context): NetworkInfoHelper = NetworkInfoHelper(context)
+
+    @Singleton
+    @Provides
+    fun provideRemoteFactory(@ApplicationContext context: Context): RemoteFactory = RemoteFactory(context)
+
+    @Singleton
+    @Provides
+    fun provideApiService(remoteFactory: RemoteFactory, interceptor: HttpInterceptor): ApiService {
+        val okHttp = remoteFactory.createOkHttpClient(interceptor)
+        return remoteFactory.createApiService(okHttp, "https://common-api-app.herokuapp.com/")
     }
 
-    viewModel { MainViewModel(get()) }
-    viewModel { BaseViewModel() }
-    viewModel { SplashViewModel(get()) }
-    viewModel { LoginViewModel(get(), get()) }
-    viewModel { SignUpViewModel(get()) }
-    viewModel { ProfileViewModel() }
-    viewModel { MovieViewModel(get(), get()) }
-    viewModel { MovieDetailViewModel(get()) }
-    viewModel { OtpChannelViewModel(get()) }
-    viewModel { OtpVerifyViewModel(get(), get()) }
-    viewModel { PinFormViewModel(get()) }
-    viewModel { LoginPinViewModel(get()) }
-    viewModel { PasswordViewModel(get()) }
-    viewModel { PasswordChangeViewModel(get(), get()) }
-    viewModel { PinChangeViewModel(get()) }
-    viewModel { SettingViewModel() }
-    viewModel { UserViewModel(get()) }
-    viewModel { UserDetailViewModel(get()) }
-    viewModel { UserFormViewModel(get(), get()) }
+    @Singleton
+    @Provides
+    fun provideHttpInterceptor(session: AppSessionProvider, networkInfoHelper: NetworkInfoHelper): HttpInterceptor = HttpInterceptor(session, networkInfoHelper)
+
+    @Singleton
+    @Provides
+    fun provideDispatcher(): Dispatcher = CoroutinesDispatcher()
+
+    @Singleton
+    @Provides
+    fun provideCountDownSession(): CountDownSession = CountDownSession(30 * 1000L)
 
 }

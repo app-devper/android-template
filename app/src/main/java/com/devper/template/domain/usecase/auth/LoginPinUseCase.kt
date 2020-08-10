@@ -1,15 +1,23 @@
 package com.devper.template.domain.usecase.auth
 
-import com.devper.template.domain.core.thread.CoroutineThreadDispatcher
+import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.core.thread.Dispatcher
 import com.devper.template.domain.model.auth.LoginPinParam
 import com.devper.template.domain.repository.AuthRepository
-import com.devper.template.domain.usecase.UseCase
+import com.devper.template.domain.usecase.FlowUseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class LoginPinUseCase(
-    dispatcher: CoroutineThreadDispatcher,
+class LoginPinUseCase @Inject constructor(
+    dispatcher: Dispatcher,
     private val repo: AuthRepository
-) : UseCase<LoginPinParam, String>(dispatcher) {
-    override suspend fun executeOnBackground(param: LoginPinParam): String {
-        return repo.loginPin(param)
+) : FlowUseCase<LoginPinParam, String>(dispatcher.io()) {
+
+    override fun execute(parameters: LoginPinParam): Flow<ResultState<String>> {
+        return flow {
+            emit(ResultState.Loading())
+            emit(ResultState.Success(repo.loginPin(parameters)))
+        }
     }
 }

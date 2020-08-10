@@ -1,16 +1,20 @@
 package com.devper.template.presentation.password
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.PasswordParam
 import com.devper.template.domain.model.auth.Verify
 import com.devper.template.domain.usecase.auth.SetPasswordUseCase
 import com.devper.template.domain.usecase.auth.VerifyPasswordUseCase
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class PasswordChangeViewModel(
-    setPasswordUseCase: SetPasswordUseCase,
-    private val verifyPasswordUseCase: VerifyPasswordUseCase
+class PasswordChangeViewModel @ViewModelInject constructor(
+    private val verifyPasswordUseCase: VerifyPasswordUseCase,
+    setPasswordUseCase: SetPasswordUseCase
 ) : PasswordViewModel(setPasswordUseCase) {
 
     var currentPassword = MutableLiveData<String>("password")
@@ -22,16 +26,12 @@ class PasswordChangeViewModel(
     }
 
     private fun verifyPassword(param: PasswordParam) {
-        verifyPasswordUseCase.execute(param) {
-            onStart { resultVerifyPassword.value = ResultState.Loading() }
-            onComplete { resultVerifyPassword.value = ResultState.Success(it) }
-            onError { resultVerifyPassword.value = ResultState.Error(it) }
+        viewModelScope.launch {
+            verifyPasswordUseCase(param).collect {
+                resultVerifyPassword.value = it
+            }
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        verifyPasswordUseCase.unsubscribe()
-    }
 }
 
