@@ -4,7 +4,6 @@ import com.devper.template.data.remote.ApiService
 import com.devper.template.domain.model.otp.*
 import com.devper.template.domain.repository.OtpRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class OtpRepositoryImpl @Inject constructor(
     private val api: ApiService

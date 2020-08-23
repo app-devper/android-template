@@ -10,6 +10,7 @@
         <item name="android:windowBackground">@color/colorGreyBright</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowEnableSplitTouch">false</item>
+        <item name="fontFamily">@font/font_prompt</item>
     </style>
 
     <style name="ProgressHUD" parent="@android:style/Theme.Dialog">

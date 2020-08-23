@@ -1,12 +1,10 @@
 package com.devper.template.presentation
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.devper.template.R
 import com.devper.template.databinding.DialogConfirmBinding
@@ -16,7 +14,7 @@ class BaseDialogFragment(private val component: DslAlertComponent) : DialogFragm
     private lateinit var binding: DialogConfirmBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_confirm, container, false)
+        binding = DialogConfirmBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -31,8 +29,7 @@ class BaseDialogFragment(private val component: DslAlertComponent) : DialogFragm
         binding.tvMessage.text = component.description
 
         if (component.buttonCancelText.isEmpty()) {
-            binding.lyCancel.gravity = Gravity.END
-            binding.lyCancel.visibility = View.GONE
+            binding.btnCancel.visibility = View.GONE
         } else {
             binding.btnCancel.text = component.buttonCancelText
         }
@@ -52,6 +49,7 @@ class BaseDialogFragment(private val component: DslAlertComponent) : DialogFragm
         }
         isCancelable = component.isAllowCancel
         dialog?.setCanceledOnTouchOutside(component.isAllowCancel)
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
 
     class Builder {

@@ -12,8 +12,8 @@ import com.devper.template.domain.model.user.UserUpdateParam
 import com.devper.template.domain.usecase.user.UpdateProfileUseCase
 import com.devper.template.domain.usecase.user.UpdateUserUseCase
 import com.devper.template.presentation.BaseViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class UserFormViewModel @ViewModelInject constructor(
     private val updateProfileUseCase: UpdateProfileUseCase,
@@ -44,21 +44,17 @@ class UserFormViewModel @ViewModelInject constructor(
 
     private fun updateProfile() {
         userParam.value?.let { param ->
-            viewModelScope.launch {
-                updateProfileUseCase(param).collect {
-                    userResult.value = it
-                }
-            }
+            updateProfileUseCase(param)
+                .onEach { userResult.value = it }
+                .launchIn(viewModelScope)
         }
     }
 
     private fun updateUser() {
         userParam.value?.let { param ->
-            viewModelScope.launch {
-                updateUserUseCase(param).collect {
-                    userResult.value = it
-                }
-            }
+            updateUserUseCase(param)
+                .onEach { userResult.value = it }
+                .launchIn(viewModelScope)
         }
     }
 }

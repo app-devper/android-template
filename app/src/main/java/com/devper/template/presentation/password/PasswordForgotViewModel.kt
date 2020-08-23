@@ -19,4 +19,8 @@ open class PasswordForgotViewModel : BaseViewModel() {
         )
         onNavigate(R.id.forgot_password_to_otp_channel, bundle)
     }
+
+    fun setUsername(it: String) {
+        username.value = it
+    }
 }

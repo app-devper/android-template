@@ -7,7 +7,6 @@ import com.devper.template.domain.model.auth.*
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.repository.AuthRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class AuthRepositoryImpl @Inject constructor(
     private val api: ApiService,
@@ -49,7 +48,9 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun setPin(param: SetPinParam) {
         val mapper = LoginMapper()
         return api.setPin(param.actionToken, mapper.toRequest(param)).let {
-            pref.setPin(param.pin)
+            if (pref.isSetPin) {
+                pref.pin = param.pin
+            }
         }
     }
 

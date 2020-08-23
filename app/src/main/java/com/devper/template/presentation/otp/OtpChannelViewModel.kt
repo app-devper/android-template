@@ -14,6 +14,8 @@ import com.devper.template.domain.model.otp.VerifyUserParam
 import com.devper.template.domain.usecase.otp.GetChannelUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class OtpChannelViewModel @ViewModelInject constructor(
@@ -27,11 +29,9 @@ class OtpChannelViewModel @ViewModelInject constructor(
         get() = results.value?.success()?.userRefId ?: ""
 
     fun getChannel(param: String?) {
-        viewModelScope.launch {
-            getChannelUseCase(param).collect {
-                results.value = it
-            }
-        }
+        getChannelUseCase(param)
+            .onEach { results.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun setOtpChannel(otpChannel: OtpChannel) {

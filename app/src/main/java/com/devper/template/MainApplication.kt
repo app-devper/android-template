@@ -24,13 +24,6 @@ class MainApplication : Application(), LifecycleObserver {
         }
         localMessagingHelper = LocalMessagingHelper(this)
 
-//        startKoin {
-//            androidLogger()
-//            androidContext(applicationContext)
-//            modules(domainsModule)
-//            modules(appModule)
-//        }
-
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 

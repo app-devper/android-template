@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.devper.template.core.platform.helper
+package com.devper.template.data.remote
 
 import android.content.Context
 import android.net.ConnectivityManager

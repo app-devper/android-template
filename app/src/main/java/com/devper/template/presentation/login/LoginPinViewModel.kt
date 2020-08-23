@@ -11,8 +11,8 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.LoginPinParam
 import com.devper.template.domain.usecase.auth.LoginPinUseCase
 import com.devper.template.presentation.BaseViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class LoginPinViewModel @ViewModelInject constructor(
     private val loginPinUseCase: LoginPinUseCase
@@ -23,11 +23,9 @@ class LoginPinViewModel @ViewModelInject constructor(
     var resultLoginPin: SingleLiveEvent<ResultState<String>> = SingleLiveEvent()
 
     fun loginPin(pin: String) {
-        viewModelScope.launch {
-            loginPinUseCase(LoginPinParam(username.value ?: "", pin)).collect {
-                resultLoginPin.value = it
-            }
-        }
+        loginPinUseCase(LoginPinParam(username.value ?: "", pin))
+            .onEach { resultLoginPin.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun setUsername(it: String) {

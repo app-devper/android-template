@@ -20,6 +20,9 @@
     <string name="login_no_user">ยังไม่มีชื่อผู้ใช้งาน</string>
     <string name="login_register">ลงทะเบียนขอสิทธิ์เข้าใช้งาน</string>
 
+    <string name="login_pin_max_attempt">ท่านกรอกรหัส PIN ไม่ถูกต้องเกินจำนวนครั้งที่กำหนด กลับสู่ขั้นตอน ลืมรหัส PIN</string>
+    <string name="login_pin_to_forgot_pin">กลับสู่ขั้นตอน ลืมรหัส PIN</string>
+
     <string name="register">ลงทะเบียนเข้าใช้งาน</string>
 
     <string name="forgot_password">ลืมรหัสผ่าน</string>
@@ -52,6 +55,7 @@
     <!--Drawer Menus-->
     <string name="main_menu_about">About</string>
     <string name="main_menu_home">Home</string>
+    <string name="main_menu_notification">รายการแจ้งเตือน</string>
     <string name="main_menu_product">Product</string>
     <string name="main_menu_scan">Scan</string>
     <string name="main_menu_logout">Logout</string>

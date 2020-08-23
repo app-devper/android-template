@@ -15,9 +15,11 @@ import com.devper.template.domain.model.auth.LoginParam
 import com.devper.template.domain.usecase.auth.LoginUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class PinForgotViewModel @ViewModelInject constructor (
+class PinForgotViewModel @ViewModelInject constructor(
     private val loginUseCase: LoginUseCase
 ) : BaseViewModel() {
 
@@ -28,11 +30,9 @@ class PinForgotViewModel @ViewModelInject constructor (
 
     fun login() {
         val param = LoginParam(username.value ?: "", password.value ?: "")
-        viewModelScope.launch {
-            loginUseCase(param).collect {
-                resultsLogin.value = it
-            }
-        }
+        loginUseCase(param)
+            .onEach { resultsLogin.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun setUsername(it: String) {

@@ -1,7 +1,5 @@
 package com.devper.template.data.remote
 
-import com.devper.template.core.exception.InternetException
-import com.devper.template.core.platform.helper.NetworkInfoHelper
 import com.devper.template.data.session.AppSessionProvider
 import okhttp3.Interceptor
 import okhttp3.Response

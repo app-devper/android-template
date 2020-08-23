@@ -2,7 +2,6 @@ package com.devper.template.presentation.user
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -37,15 +36,13 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
             }
         }
 
-        setAdapter(viewModel.getUsers())
+
     }
 
     override fun observeLiveData() {
-
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun setAdapter(pagingData :Flow<PagingData<User>>){
+    private fun setAdapter(pagingData :Flow<PagingData<User>>){
         lifecycleScope.launchWhenCreated {
             pagingData.collectLatest {
                 viewModel.adapter.submitData(it)
@@ -54,6 +51,6 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
     }
 
     override fun onArguments(it: Bundle?) {
-        viewModel.getUsers()
+        setAdapter(viewModel.getUsers())
     }
 }

@@ -2,15 +2,18 @@ package com.devper.template.presentation.password
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
+import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentPasswordForgotBinding
 import com.devper.template.presentation.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PasswordForgotFragment : BaseFragment<FragmentPasswordForgotBinding>(R.layout.fragment_password_forgot) {
 
+    @Inject
+    lateinit var perf: AppPreference
     override val viewModel: PasswordForgotViewModel by viewModels()
 
     override fun setupView() {
@@ -20,10 +23,7 @@ class PasswordForgotFragment : BaseFragment<FragmentPasswordForgotBinding>(R.lay
     }
 
     override fun onArguments(it: Bundle?) {
-        val param = it?.getString(EXTRA_PARAM)
-        param?.let {
-            viewModel.username.value = it
-        }
+        viewModel.setUsername(perf.userId)
     }
 
     override fun observeLiveData() {

@@ -5,15 +5,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
+import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentPinForgotBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PinForgotFragment : BaseFragment<FragmentPinForgotBinding>(R.layout.fragment_pin_forgot) {
 
     override val viewModel: PinForgotViewModel by viewModels()
+
+    @Inject
+    lateinit var perf: AppPreference
 
     override fun setupView() {
         showToolbar()
@@ -22,10 +27,7 @@ class PinForgotFragment : BaseFragment<FragmentPinForgotBinding>(R.layout.fragme
     }
 
     override fun onArguments(it: Bundle?) {
-        val param = it?.getString(EXTRA_PARAM)
-        param?.let {
-            viewModel.setUsername(it)
-        }
+        viewModel.setUsername(perf.userId)
     }
 
     override fun observeLiveData() {
@@ -37,7 +39,6 @@ class PinForgotFragment : BaseFragment<FragmentPinForgotBinding>(R.layout.fragme
                 is ResultState.Success -> {
                     hideDialog()
                     mainViewModel.setAccessToken(it.data)
-                    handlerLogin()
                     viewModel.nextToOtpSetPin()
                 }
                 is ResultState.Error -> {

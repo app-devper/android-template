@@ -5,7 +5,6 @@ import com.devper.template.data.remote.ApiService
 import com.devper.template.domain.provider.AppInfoProvider
 import com.devper.template.domain.repository.DeviceRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class RegisterRepositoryImpl @Inject constructor(
     private val api: ApiService,

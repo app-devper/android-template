@@ -7,12 +7,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.platform.widget.CountDrawable
 import com.devper.template.databinding.FragmentHomeBinding
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.BaseViewModel
+import com.google.firebase.iid.FirebaseInstanceId
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,17 +29,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.viewModel = mainViewModel
     }
 
-    override fun onArguments(it: Bundle?) {}
+    override fun onArguments(it: Bundle?) {
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.token?.let { token ->
+                    mainViewModel.subscription(token)
+                }
+            }
+        }
+        mainViewModel.getUnread()
+    }
 
     override fun observeLiveData() {
-        mainViewModel.badge.observe(viewLifecycleOwner, Observer {
+        mainViewModel.badge.observe(viewLifecycleOwner, {
             menuItem?.setCount(requireContext(), it)
         })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.onNavigate(item.itemId, null)
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu, menu)
-        menuItem = menu.findItem(R.id.home_dest)
+        menuItem = menu.findItem(R.id.notification_dest)
         val badge = mainViewModel.badge.value
         menuItem?.setCount(requireContext(), badge ?: "0")
     }

@@ -12,10 +12,12 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.usecase.user.SignUpUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SignUpViewModel @ViewModelInject constructor (
+class SignUpViewModel @ViewModelInject constructor(
     private val signUpUseCase: SignUpUseCase
 ) : BaseViewModel() {
 
@@ -29,11 +31,7 @@ class SignUpViewModel @ViewModelInject constructor (
             if (user.username.isEmpty()) {
                 return
             }
-            viewModelScope.launch {
-                signUpUseCase(user).collect {
-                    results.value = it
-                }
-            }
+            signUpUseCase(user).onEach { results.value = it }.launchIn(viewModelScope)
         }
     }
 
@@ -43,10 +41,6 @@ class SignUpViewModel @ViewModelInject constructor (
             AppConfig.EXTRA_FLOW to AppConfig.FLOW_SET_PASSWORD
         )
         onNavigate(R.id.signup_to_set_password, bundle)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
 }

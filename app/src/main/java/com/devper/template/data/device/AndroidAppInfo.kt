@@ -1,7 +1,6 @@
 package com.devper.template.data.device
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Context
 import android.content.Context.TELEPHONY_SERVICE
 import android.os.Build

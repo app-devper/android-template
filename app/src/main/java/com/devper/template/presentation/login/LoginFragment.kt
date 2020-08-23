@@ -57,7 +57,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 is ResultState.Success -> {
                     hideDialog()
                     mainViewModel.setAccessToken(it.data)
-                    handlerLogin()
                     viewModel.nextToOtpSetPin()
                 }
                 is ResultState.Error -> {
@@ -112,6 +111,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     override fun onError() {
 
     }
-
 
 }

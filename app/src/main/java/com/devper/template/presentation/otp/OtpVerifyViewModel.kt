@@ -20,6 +20,8 @@ import com.devper.template.domain.usecase.otp.VerifyCodeUseCase
 import com.devper.template.domain.usecase.otp.VerifyUserUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class OtpVerifyViewModel @ViewModelInject constructor(
@@ -42,11 +44,9 @@ class OtpVerifyViewModel @ViewModelInject constructor(
     val verifyUser = MutableLiveData<VerifyUser>()
 
     fun verifyUser(param: VerifyUserParam) {
-        viewModelScope.launch {
-            verifyUserUseCase(param).collect {
-                resultVerifyUser.value = it
-            }
-        }
+        verifyUserUseCase(param)
+            .onEach { resultVerifyUser.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun setOtp(value: KeyboardButtonEnum) {
@@ -80,11 +80,9 @@ class OtpVerifyViewModel @ViewModelInject constructor(
     }
 
     fun verifyCode(param: VerifyCodeParam) {
-        viewModelScope.launch {
-            verifyCodeUseCase(param).collect {
-                resultVerifyCode.value = it
-            }
-        }
+        verifyCodeUseCase(param)
+            .onEach { resultVerifyCode.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun clearCode() {

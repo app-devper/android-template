@@ -6,7 +6,7 @@ interface OtpRepository {
 
     suspend fun getChannel(param: String?): OtpChannel
 
-    suspend fun verifyUser(param:VerifyUserParam): VerifyUser
+    suspend fun verifyUser(param: VerifyUserParam): VerifyUser
 
     suspend fun verifyCode(param: VerifyCodeParam): VerifyCode
 

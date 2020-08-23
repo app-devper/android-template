@@ -1,4 +1,4 @@
-package com.devper.template.presentation.main
+package com.devper.template.presentation
 
 import android.os.Bundle
 import androidx.hilt.lifecycle.ViewModelInject
@@ -6,19 +6,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devper.template.R
 import com.devper.template.core.platform.MutableLiveEvent
 import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ErrorMapper
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.model.notification.SubscriptionParam
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.auth.KeepAliveUseCase
+import com.devper.template.domain.usecase.notification.GetUnreadUseCase
+import com.devper.template.domain.usecase.notification.SubscriptionUseCase
 import com.devper.template.domain.usecase.user.GetProfileUseCase
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainViewModel @ViewModelInject constructor(
     private val getProfileUseCase: GetProfileUseCase,
-    private val keepAliveUseCase: KeepAliveUseCase
+    private val keepAliveUseCase: KeepAliveUseCase,
+    private val subscriptionUseCase: SubscriptionUseCase,
+    private val getUnreadUseCase: GetUnreadUseCase,
 ) : ViewModel() {
     private var results = SingleLiveEvent<ResultState<User>>()
     private var _user = MutableLiveData<User>()
@@ -34,25 +40,42 @@ class MainViewModel @ViewModelInject constructor(
     val accessTokenLiveData: LiveData<String> = _accessToken
 
     val resultLogin = SingleLiveEvent<ResultState<String>>()
+    val resultSubscription = SingleLiveEvent<ResultState<Unit>>()
 
     val errorLiveData = MutableLiveEvent<Pair<String, String>>()
 
     val codeLiveData = MutableLiveEvent<String>()
 
+    private val _message = SingleLiveEvent<Bundle>()
+    val messageLiveData: LiveData<Bundle> = _message
+
     fun getProfile() {
-        viewModelScope.launch {
-            getProfileUseCase(Unit).collect {
-                results.value= it
-            }
-        }
+        getProfileUseCase(Unit).onEach {
+            results.value = it
+        }.launchIn(viewModelScope)
     }
 
     fun keepAlive() {
-        viewModelScope.launch {
-            keepAliveUseCase(Unit).collect{
-                resultLogin.value = it
-            }
+        keepAliveUseCase(Unit).onEach {
+            resultLogin.value = it
+        }.launchIn(viewModelScope)
+    }
+
+    fun subscription(deviceToken: String) {
+        if (resultSubscription.value != null) {
+            return
         }
+        subscriptionUseCase(SubscriptionParam(deviceToken, "MOBILE")).onEach {
+            resultSubscription.value = it
+        }.launchIn(viewModelScope)
+    }
+
+    fun getUnread() {
+        getUnreadUseCase(Unit).onEach {
+            if (it is ResultState.Success) {
+                badge.value = it.data.toString()
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun getUser(): User? {
@@ -76,12 +99,20 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     fun error(code: String, msg: String) {
-        errorLiveData.setEventValue(Pair(code, msg))
+        if (code == "CM-401-112") {
+            navigate(R.id.action_to_pin_max_attempt)
+        } else {
+            errorLiveData.setEventValue(Pair(code, msg))
+        }
     }
 
     fun error(throwable: Throwable) {
         val appError = ErrorMapper.toAppError(throwable)
-        errorLiveData.setEventValue(Pair(appError.resultCode, appError.getDesc()))
+        error(appError.resultCode, appError.getDesc())
+    }
+
+    fun setMessage(bundle: Bundle?) {
+        _message.value = bundle
     }
 
     fun navigate(id: Int, bundle: Bundle? = null) {

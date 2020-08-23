@@ -11,10 +11,10 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.SetPinParam
 import com.devper.template.domain.usecase.auth.SetPinUseCase
 import com.devper.template.presentation.BaseViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
-class PinFormViewModel @ViewModelInject constructor (
+class PinFormViewModel @ViewModelInject constructor(
     private val setPinUseCase: SetPinUseCase
 ) : BaseViewModel() {
 
@@ -28,11 +28,9 @@ class PinFormViewModel @ViewModelInject constructor (
     var resultSetPin = SingleLiveEvent<ResultState<Unit>>()
 
     fun setPin(pin: String) {
-        viewModelScope.launch {
-            setPinUseCase(SetPinParam(actionToken, pin)).collect {
-                resultSetPin.value = it
-            }
-        }
+        setPinUseCase(SetPinParam(actionToken, pin))
+            .onEach { resultSetPin.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun nextPage() {
@@ -42,6 +40,5 @@ class PinFormViewModel @ViewModelInject constructor (
             onNavigate(R.id.pin_form_to_home, null)
         }
     }
-
 
 }

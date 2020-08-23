@@ -18,10 +18,10 @@ class LoginUseCase @Inject constructor(
 ) : FlowUseCase<LoginParam, String>(dispatcher.io()) {
     override fun execute(parameters: LoginParam): Flow<ResultState<String>> {
         return flow {
-            emit(ResultState.Loading())
             if (parameters.username.isEmpty() || parameters.password.isEmpty()) {
                 throw AppException(LOGIN_ERROR, "")
             }
+            emit(ResultState.Loading())
             parameters.password = parameters.password.md5()
             emit(ResultState.Success(repo.login(parameters)))
         }

@@ -11,6 +11,10 @@
 
     <include app:graph="@navigation/navigation_forgot_pin" />
 
+    <action
+        android:id="@+id/action_to_pin_max_attempt"
+        app:destination="@id/pin_max_attempt_dest" />
+
     <fragment
         android:id="@+id/splash_dest"
         android:name="com.devper.template.presentation.splash.SplashFragment"
@@ -29,6 +33,21 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/splash_dest"
             app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/pin_max_attempt_dest"
+        android:name="com.devper.template.presentation.pin.PinMaxAttemptFragment"
+        android:label="@string/login_title"
+        tools:layout="@layout/fragment_pin_max_attempt" >
+
+        <action
+            android:id="@+id/pin_max_to_forgot_pin"
+            app:destination="@id/navigation_forgot_pin"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/pin_max_attempt_dest"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 

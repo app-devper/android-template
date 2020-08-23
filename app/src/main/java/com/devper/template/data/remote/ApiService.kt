@@ -3,6 +3,9 @@ package com.devper.template.data.remote
 import com.devper.template.data.remote.auth.*
 import com.devper.template.data.remote.device.RegisterData
 import com.devper.template.data.remote.device.RegisterRequest
+import com.devper.template.data.remote.notification.NotificationsData
+import com.devper.template.data.remote.notification.SubscriptionRequest
+import com.devper.template.data.remote.notification.UnreadData
 import com.devper.template.data.remote.otp.*
 import com.devper.template.data.remote.user.SignUpRequest
 import com.devper.template.data.remote.user.UserData
@@ -71,4 +74,13 @@ interface ApiService {
 
     @GET("api/otp/code/{refCode}")
     suspend fun getCode(@Path("refCode") refCode: String): String
+
+    @POST("api/notification/subscription")
+    suspend fun subscription(@Body request: SubscriptionRequest)
+
+    @GET("api/notification")
+    suspend fun getNotifications(@Query("page") page: Int): NotificationsData
+
+    @GET("api/notification/unread")
+    suspend fun getUnread(): UnreadData
 }

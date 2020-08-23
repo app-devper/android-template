@@ -13,6 +13,8 @@ import com.devper.template.domain.model.auth.SetPasswordParam
 import com.devper.template.domain.usecase.auth.SetPasswordUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 open class PasswordViewModel(
@@ -58,11 +60,9 @@ open class PasswordViewModel(
 
     fun setPassword() {
         password.value?.let { param ->
-            viewModelScope.launch {
-                setPasswordUseCase(param).collect {
-                    resultSetPassword.value = it
-                }
-            }
+            setPasswordUseCase(param)
+                .onEach { resultSetPassword.value = it }
+                .launchIn(viewModelScope)
         }
     }
 

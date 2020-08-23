@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgUser"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@android:color/darker_gray"
@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/popularityTextView"
+                    android:id="@+id/tvPopularity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -60,12 +60,12 @@
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/imageView"
+                android:layout_alignBottom="@id/imgUser"
                 android:background="@color/translucent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView
-                    android:id="@+id/titleTextView"
+                    android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"

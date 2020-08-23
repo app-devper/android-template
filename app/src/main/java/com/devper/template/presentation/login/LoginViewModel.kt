@@ -17,6 +17,8 @@ import com.devper.template.domain.usecase.auth.LoginUseCase
 import com.devper.template.domain.usecase.user.ClearUserUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class LoginViewModel @ViewModelInject constructor(
@@ -32,11 +34,9 @@ class LoginViewModel @ViewModelInject constructor(
 
     fun login() {
         val param = LoginParam(username.value ?: "", password.value ?: "")
-        viewModelScope.launch {
-            loginUseCase(param).collect {
-                resultsLogin.value = it
-            }
-        }
+        loginUseCase(param)
+            .onEach { resultsLogin.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun fbLogin() {
@@ -52,9 +52,7 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun clearUser() {
-        viewModelScope.launch {
-            clearUserUseCase(Unit).collect {}
-        }
+        clearUserUseCase(Unit).launchIn(viewModelScope)
     }
 
     fun nextToOtpSetPin() {

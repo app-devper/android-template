@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pin_code_keyboard_button_ripple"
     android:layout_width="match_parent"
@@ -23,7 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
         android:visibility="gone"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/pin_ic_fingerprint"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
 
 </RelativeLayout>

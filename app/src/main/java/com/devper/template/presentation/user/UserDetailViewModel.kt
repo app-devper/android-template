@@ -14,8 +14,8 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.user.GetUserUseCase
 import com.devper.template.presentation.BaseViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class UserDetailViewModel @ViewModelInject constructor(
     private val getUserUseCase: GetUserUseCase
@@ -26,11 +26,9 @@ class UserDetailViewModel @ViewModelInject constructor(
     val userResult = SingleLiveEvent<ResultState<User>>()
 
     fun getUser(id: String) {
-        viewModelScope.launch {
-            getUserUseCase(id).collect {
-                userResult.value = it
-            }
-        }
+        getUserUseCase(id)
+            .onEach { userResult.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun setUser(user: User) {

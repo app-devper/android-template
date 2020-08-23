@@ -109,7 +109,6 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/imgSelectMenu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
@@ -118,7 +117,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="ContentDescription" />
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -148,7 +146,8 @@
                             android:background="@drawable/custom_ripple"
                             android:clickable="true"
                             android:focusable="true"
-                            android:onClick="@{()-> viewModel.nextToUpdateProfile()}">
+                            android:onClick="@{()-> viewModel.nextToUpdateProfile()}"
+                            android:paddingBottom="16dp">
 
                             <ImageView
                                 android:id="@+id/imgEditUserInfo"
@@ -173,7 +172,6 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
-                                android:id="@+id/imgSelectMenu2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
@@ -182,14 +180,6 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/tvMenuEditUserInfo"
                                 tools:ignore="ContentDescription" />
-
-                            <View
-                                android:id="@+id/divider"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="16dp"
-                                android:background="@color/colorGreyLighter"
-                                app:layout_constraintTop_toBottomOf="@+id/tvMenuEditUserInfo" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -200,7 +190,14 @@
                             android:background="@drawable/custom_ripple"
                             android:clickable="true"
                             android:focusable="true"
-                            android:onClick="@{()-> viewModel.nextToChangePassword()}">
+                            android:onClick="@{()-> viewModel.nextToChangePassword()}"
+                            android:paddingBottom="16dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorGreyLighter"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/imgChangePassword"
@@ -225,7 +222,6 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
-                                android:id="@+id/imgSelectMenu3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
@@ -234,14 +230,6 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/tvMenuChangePassword"
                                 tools:ignore="ContentDescription" />
-
-                            <View
-                                android:id="@+id/divider2"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="16dp"
-                                android:background="@color/colorGreyLighter"
-                                app:layout_constraintTop_toBottomOf="@+id/tvMenuChangePassword" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -254,6 +242,12 @@
                             android:focusable="true"
                             android:onClick="@{()-> viewModel.nextToChangePin()}"
                             android:paddingBottom="16dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorGreyLighter"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/imgChangePin"
@@ -278,7 +272,6 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
-                                android:id="@+id/imgSelectMenu4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
@@ -290,10 +283,59 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutBiometric"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_ripple"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="@{()-> viewModel.nextToBiometric()}"
+                            android:paddingBottom="16dp">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorGreyLighter"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imgBiometric"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="16dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvBiometric"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tvBiometric"
+                                app:srcCompat="@drawable/pin_ic_fingerprint"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:id="@+id/tvBiometric"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:text="@string/fingerprint_recognized"
+                                android:textColor="@color/colorBlack"
+                                app:layout_constraintStart_toEndOf="@+id/imgBiometric"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvBiometricStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvBiometric"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tvBiometric"
+                                tools:text="ปิด" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvMenuAbout"

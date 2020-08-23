@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
@@ -16,7 +15,6 @@ import com.devper.template.R
 import com.devper.template.core.exception.AppException
 import com.devper.template.core.platform.EventObserver
 import com.devper.template.domain.core.ErrorMapper
-import com.devper.template.presentation.main.*
 
 abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int) : Fragment() {
 
@@ -61,7 +59,6 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         mainViewModel.codeLiveData.observe(viewLifecycleOwner, EventObserver {
             handleError(it)
         })
-
     }
 
     abstract fun setupView()
@@ -140,6 +137,12 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
 
     open fun isShowCancel(code: String): Boolean = false
 
+    fun applyDisplayHomeAsUpEnabled(asUpEnable: Boolean) {
+        appCompat().supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(asUpEnable)
+        }
+    }
+
     fun showMessage(code: String = "", message: String = "") {
         val fragment = BaseDialogFragment.Builder().run {
             withTitle(getString(R.string.error_title))
@@ -148,9 +151,9 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
                 mainViewModel.codeLiveData.setEventValue(code)
             }
             if (isShowCancel(code)) {
-                withButtonCancelText("Cancel")
+                withButtonCancelText(getString(R.string.cancel))
             }
-            withDescription(if (code.isEmpty()) message else "$message [Code : $code]")
+            withDescription(if (code.isEmpty()) message else "$message \n[Code : $code]")
             build()
         }
         fragment.show(childFragmentManager, "dialog")

@@ -12,8 +12,8 @@ import com.devper.template.domain.model.auth.PinParam
 import com.devper.template.domain.model.auth.Verify
 import com.devper.template.domain.usecase.auth.VerifyPinUseCase
 import com.devper.template.presentation.BaseViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class PinChangeViewModel @ViewModelInject constructor(
     private val verifyPinUseCase: VerifyPinUseCase
@@ -22,11 +22,9 @@ class PinChangeViewModel @ViewModelInject constructor(
     var resultVerify = SingleLiveEvent<ResultState<Verify>>()
 
     fun verifyPin(pin: String) {
-        viewModelScope.launch {
-            verifyPinUseCase(PinParam(pin)).collect {
-                resultVerify.value = it
-            }
-        }
+        verifyPinUseCase(PinParam(pin))
+            .onEach { resultVerify.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun nextPage(actionToken: String) {

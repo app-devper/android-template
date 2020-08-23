@@ -1,13 +1,12 @@
-package com.devper.template.presentation.main
+package com.devper.template.presentation
 
 import android.content.Intent
 import android.os.CountDownTimer
-import android.os.Handler
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -24,8 +23,9 @@ import com.devper.template.core.platform.widget.ProgressHudDialog
 import com.devper.template.data.session.AppSessionProvider
 import com.devper.template.databinding.ActivityHomeBinding
 import com.devper.template.domain.core.ResultState
-import com.devper.template.presentation.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,25 +71,26 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
 
         messagingHandler = MessagingHandler(this, lifecycle)
-        messagingHandler.subscribeToTopic("all")
+        messagingHandler.apply {
+            subscribeToTopic("all")
+            onMessage = {
+                mainViewModel.setMessage(it)
+            }
+        }
 
         setBadge()
     }
 
     override fun observeLiveData() {
-        messagingHandler.messageLiveData.observe(this, Observer {
-            setBadge()
-        })
+//        mainViewModel.messageLiveData.observe(this, {
+//            setBadge()
+//        })
 
-        messagingHandler.tokenLiveData.observe(this, Observer {
-            //pref.fbToken = it
-        })
-
-        mainViewModel.navigateLiveData.observe(this, Observer {
+        mainViewModel.navigateLiveData.observe(this, {
             navController.navigate(it.first, it.second)
         })
 
-        mainViewModel.profileLiveDate.observe(this, Observer {
+        mainViewModel.profileLiveDate.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                 }
@@ -102,13 +103,12 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
         })
 
-        mainViewModel.resultLogin.observe(this, Observer {
+        mainViewModel.resultLogin.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                 }
                 is ResultState.Success -> {
                     mainViewModel.setAccessToken(it.data)
-                    countDownSession.start()
                 }
                 is ResultState.Error -> {
                     mainViewModel.error(it.throwable)
@@ -116,12 +116,15 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
         })
 
-        mainViewModel.userLiveData.observe(this, Observer {
-
+        mainViewModel.userLiveData.observe(this, {
         })
 
-        mainViewModel.accessTokenLiveData.observe(this, Observer { accessToken ->
+        mainViewModel.resultSubscription.observe(this, {
+        })
+
+        mainViewModel.accessTokenLiveData.observe(this, { accessToken ->
             session.accessToken = accessToken
+            countDownSession.start()
         })
     }
 
@@ -135,7 +138,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun hasBack(id: Int): Boolean {
-        return id !in listOf(R.id.pin_code_dest, R.id.home_dest, R.id.profile_dest, R.id.setting_dest)
+        return id !in listOf(R.id.pin_code_dest, R.id.home_dest, R.id.profile_dest, R.id.setting_dest, R.id.pin_max_attempt_dest)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -199,7 +202,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun handlerTimeOut() {
         timer?.cancel()
         if (isLogin()) {
-            timer = object : CountDownTimer(60000L, 1000L) {
+            timer = object : CountDownTimer(300000L, 1000L) {
                 override fun onFinish() {
                     mainViewModel.error(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out))
                     clearLogin()
@@ -219,7 +222,10 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 }
                 isWaitForSecondBackClick = true
                 Toast.makeText(this, R.string.back_again_exit, Toast.LENGTH_SHORT).show()
-                Handler().postDelayed({ isWaitForSecondBackClick = false }, 2000)
+                lifecycleScope.launch {
+                    delay(2000)
+                    isWaitForSecondBackClick = false
+                }
             }
             else -> super.onBackPressed()
         }

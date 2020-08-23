@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.devper.template.R
+import com.devper.template.core.platform.biometric.BiometricController
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentLoginPinBinding
 import com.devper.template.domain.core.ResultState
@@ -12,10 +13,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment_login_pin) {
+class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment_login_pin), BiometricController.Callback {
 
-    @Inject lateinit var perf: AppPreference
+    @Inject
+    lateinit var perf: AppPreference
     override val viewModel: LoginPinViewModel by viewModels()
+    private lateinit var biometric: BiometricController
 
     override fun setupView() {
         showToolbar()
@@ -24,8 +27,22 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
         binding.pinCodeRoundView.onSuccess = {
             viewModel.loginPin(it)
         }
-        binding.pinCodeKeyboardView.onClick = {
-            binding.pinCodeRoundView.setPin(it)
+        binding.pinCodeKeyboardView.apply {
+            onClick = {
+                binding.pinCodeRoundView.setPin(it)
+            }
+            onOther = {
+                authenticate()
+            }
+        }
+
+        biometric = BiometricController(requireActivity(), this)
+        authenticate()
+    }
+
+    private fun authenticate() {
+        if (perf.isSetPin) {
+            biometric.authenticate()
         }
     }
 
@@ -43,7 +60,6 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
                 is ResultState.Success -> {
                     hideDialog()
                     mainViewModel.setAccessToken(it.data)
-                    handlerLogin()
                     viewModel.nextHome()
                 }
                 is ResultState.Error -> {
@@ -55,17 +71,12 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
         })
     }
 
-    override fun onCodeError(code: String) {
-        if (code == "CM-401-112") {
-            viewModel.nextToForgotPin()
-        }
+    override fun onAuthenticated() {
+        viewModel.loginPin(perf.pin)
     }
 
-    override fun isShowCancel(code: String): Boolean {
-        if (code == "CM-401-112") {
-            return true
-        }
-        return super.isShowCancel(code)
+    override fun onError() {
+
     }
 
 }

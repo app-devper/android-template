@@ -2,7 +2,6 @@ package com.devper.template.data.preference
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.devper.template.core.extension.md5
 
 class AppPreference constructor(context: Context) {
 
@@ -14,11 +13,18 @@ class AppPreference constructor(context: Context) {
     val userKey: String
         get() = preferences.getString(PREF_USER_KEY, "") ?: ""
 
-    fun setPin(pin: String) {
-        val editor = preferences.edit()
-        editor.putString(PREF_USER_PIN, pin.md5())
-        editor.apply()
-    }
+    var pin: String
+        get() = preferences.getString(PREF_USER_PIN, "") ?: ""
+        set(value) {
+            val editor = preferences.edit()
+            editor.putString(PREF_USER_PIN, value)
+            editor.apply()
+        }
+
+    val isSetPin: Boolean
+        get() {
+            return pin.isNotEmpty() && userId.isNotEmpty()
+        }
 
     fun setUserKey(id: String, key: String) {
         val editor = preferences.edit()
@@ -27,7 +33,6 @@ class AppPreference constructor(context: Context) {
         editor.apply()
     }
 
-
     fun clear() {
         val editor = preferences.edit()
         editor.putString(PREF_USER_ID, "")
@@ -35,11 +40,6 @@ class AppPreference constructor(context: Context) {
         editor.putString(PREF_USER_PIN, "")
         editor.apply()
     }
-
-    val isSetPin: Boolean
-        get() {
-            return !preferences.getString(PREF_USER_PIN, "").isNullOrEmpty() && userId.isNotEmpty()
-        }
 
     init {
         preferences = context.getSharedPreferences(PREF_APP, Context.MODE_PRIVATE)

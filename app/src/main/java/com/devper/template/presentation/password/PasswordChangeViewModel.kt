@@ -10,6 +10,8 @@ import com.devper.template.domain.model.auth.Verify
 import com.devper.template.domain.usecase.auth.SetPasswordUseCase
 import com.devper.template.domain.usecase.auth.VerifyPasswordUseCase
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class PasswordChangeViewModel @ViewModelInject constructor(
@@ -26,11 +28,9 @@ class PasswordChangeViewModel @ViewModelInject constructor(
     }
 
     private fun verifyPassword(param: PasswordParam) {
-        viewModelScope.launch {
-            verifyPasswordUseCase(param).collect {
-                resultVerifyPassword.value = it
-            }
-        }
+        verifyPasswordUseCase(param)
+            .onEach { resultVerifyPassword.value = it }
+            .launchIn(viewModelScope)
     }
 
 }

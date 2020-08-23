@@ -2,7 +2,7 @@ package com.devper.template.domain.core
 
 import com.devper.template.AppConfig
 import com.devper.template.core.exception.AppException
-import com.devper.template.core.exception.InternetException
+import com.devper.template.data.remote.InternetException
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
@@ -27,7 +27,7 @@ object ErrorMapper {
                 }
                 try {
                     val response = Gson().fromJson(result, ErrorResponse::class.java)
-                    AppException(response.resCode, response.resMessage)
+                    AppException(response.resCode, response.resMessage, response.resMessage)
                 } catch (e: Exception) {
                     AppException(code, message ?: e.message ?: "")
                 }

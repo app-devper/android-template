@@ -7,8 +7,8 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.auth.GetActionInfoUseCase
 import com.devper.template.domain.usecase.auth.SetPasswordUseCase
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 open class PasswordSetViewModel @ViewModelInject constructor(
     private val getActionInfoUseCase: GetActionInfoUseCase,
@@ -18,10 +18,8 @@ open class PasswordSetViewModel @ViewModelInject constructor(
     val resultAction = SingleLiveEvent<ResultState<User>>()
 
     fun getActionInfo() {
-        viewModelScope.launch {
-            getActionInfoUseCase(actionToken).collect {
-                resultAction.value = it
-            }
-        }
+        getActionInfoUseCase(actionToken)
+            .onEach { resultAction.value = it }
+            .launchIn(viewModelScope)
     }
 }

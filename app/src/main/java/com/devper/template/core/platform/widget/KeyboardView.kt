@@ -15,6 +15,8 @@ class KeyboardView @JvmOverloads constructor(
 
     var onClick: (item: KeyboardButtonEnum) -> Unit = {}
 
+    var onOther: () -> Unit = {}
+
     private var mButtons: MutableList<KeyboardButtonView> = mutableListOf()
 
     private fun initializeView(attrs: AttributeSet?, defStyleAttr: Int) {
@@ -34,6 +36,7 @@ class KeyboardView @JvmOverloads constructor(
         mButtons.add(view.findViewById<View>(R.id.pin_code_button_7) as KeyboardButtonView)
         mButtons.add(view.findViewById<View>(R.id.pin_code_button_8) as KeyboardButtonView)
         mButtons.add(view.findViewById<View>(R.id.pin_code_button_9) as KeyboardButtonView)
+        mButtons.add(view.findViewById<View>(R.id.pin_code_button_10) as KeyboardButtonView)
         mButtons.add(view.findViewById<View>(R.id.pin_code_button_clear) as KeyboardButtonView)
         for (button in mButtons) {
             button.setOnClickListener(this)
@@ -41,7 +44,6 @@ class KeyboardView @JvmOverloads constructor(
     }
 
     override fun onClick(v: View) {
-
         when (v.id) {
             R.id.pin_code_button_0 -> {
                 onClick(KeyboardButtonEnum.BUTTON_0)
@@ -72,6 +74,9 @@ class KeyboardView @JvmOverloads constructor(
             }
             R.id.pin_code_button_9 -> {
                 onClick(KeyboardButtonEnum.BUTTON_9)
+            }
+            R.id.pin_code_button_10 -> {
+                onOther()
             }
             R.id.pin_code_button_clear -> {
                 onClick(KeyboardButtonEnum.BUTTON_CLEAR)

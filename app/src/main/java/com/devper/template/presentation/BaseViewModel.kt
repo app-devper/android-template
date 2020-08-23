@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.devper.template.domain.model.user.User
 
 open class BaseViewModel : ViewModel() {
 

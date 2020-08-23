@@ -20,6 +20,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/notification_dest"
+        android:name="com.devper.template.presentation.notification.NotificationFragment"
+        android:label="@string/main_menu_notification"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
         android:id="@+id/setting_dest"
         android:name="com.devper.template.presentation.setting.SettingFragment"
         android:label="@string/main_menu_setting"

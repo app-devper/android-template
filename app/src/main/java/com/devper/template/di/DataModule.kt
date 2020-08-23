@@ -2,12 +2,10 @@ package com.devper.template.di
 
 import com.devper.template.data.remote.auth.AuthRepositoryImpl
 import com.devper.template.data.remote.device.RegisterRepositoryImpl
+import com.devper.template.data.remote.notification.NotificationRepositoryImpl
 import com.devper.template.data.remote.otp.OtpRepositoryImpl
 import com.devper.template.data.remote.user.UserRepositoryImpl
-import com.devper.template.domain.repository.AuthRepository
-import com.devper.template.domain.repository.DeviceRepository
-import com.devper.template.domain.repository.OtpRepository
-import com.devper.template.domain.repository.UserRepository
+import com.devper.template.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,5 +26,8 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindOtpRepository(repositoryImpl: OtpRepositoryImpl): OtpRepository
+
+    @Binds
+    abstract fun bindNotificationRepository(repositoryImpl: NotificationRepositoryImpl): NotificationRepository
 
 }

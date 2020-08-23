@@ -14,7 +14,7 @@ class OtpChannelAdapter : ListAdapter<Channel, OtpChannelAdapter.ChannelViewHold
 
     var onClick: (verifyChannel: Channel) -> Unit = {}
 
-    class ChannelViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class ChannelViewHolder(view: View) : RecyclerView.ViewHolder(view){}
 
     private var channelSelected = 0
 

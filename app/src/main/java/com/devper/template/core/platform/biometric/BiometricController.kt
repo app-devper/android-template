@@ -16,7 +16,7 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
         biometricPrompt = BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Log.i(TAG, "onAuthenticationError: $errString")
+                Log.i(TAG, "onAuthenticationError: $errorCode $errString")
                 if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                     // user clicked negative button
                 } else {

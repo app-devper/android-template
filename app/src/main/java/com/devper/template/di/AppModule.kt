@@ -1,7 +1,7 @@
 package com.devper.template.di
 
 import android.content.Context
-import com.devper.template.core.platform.helper.NetworkInfoHelper
+import com.devper.template.data.remote.NetworkInfoHelper
 import com.devper.template.core.platform.session.CountDownSession
 import com.devper.template.core.thread.CoroutinesDispatcher
 import com.devper.template.data.database.AppDatabase
@@ -43,7 +43,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideNetworkInfo(@ApplicationContext context: Context): NetworkInfoHelper = NetworkInfoHelper(context)
+    fun provideNetworkInfo(@ApplicationContext context: Context): NetworkInfoHelper =
+        NetworkInfoHelper(context)
 
     @Singleton
     @Provides
@@ -66,6 +67,6 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideCountDownSession(): CountDownSession = CountDownSession(30 * 1000L)
+    fun provideCountDownSession(): CountDownSession = CountDownSession(600 * 1000L)
 
 }

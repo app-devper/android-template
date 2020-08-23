@@ -11,6 +11,8 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.usecase.device.RegisterDeviceUseCase
 import com.devper.template.presentation.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class SplashViewModel @ViewModelInject constructor(
@@ -21,18 +23,12 @@ class SplashViewModel @ViewModelInject constructor(
     val resultLiveData: LiveData<ResultState<String>> = _result
 
     fun registerDevice() {
-        viewModelScope.launch {
-            registerDeviceUseCase(Unit).collect {
-                _result.value = it
-            }
-        }
+        registerDeviceUseCase(Unit).onEach { _result.value = it }.launchIn(viewModelScope)
     }
 
     fun nextPage(it: String) {
         if (it.isNotEmpty()) {
-            val bundle = bundleOf(
-                EXTRA_PARAM to it
-            )
+            val bundle = bundleOf(EXTRA_PARAM to it)
             onNavigate(R.id.splash_to_pin_code, bundle)
         } else {
             onNavigate(R.id.splash_to_login, null)
