@@ -26,17 +26,17 @@ class MainViewModel @ViewModelInject constructor(
     private val subscriptionUseCase: SubscriptionUseCase,
     private val getUnreadUseCase: GetUnreadUseCase,
 ) : ViewModel() {
-    private var results = SingleLiveEvent<ResultState<User>>()
-    private var _user = MutableLiveData<User>()
-    val userLiveData: LiveData<User> = _user
+
+    private val results = SingleLiveEvent<ResultState<User>>()
     val profileLiveDate: LiveData<ResultState<User>> = results
 
-    private var _navigate = SingleLiveEvent<Pair<Int, Bundle?>>()
+    private val _user = MutableLiveData<User>()
+    val userLiveData: LiveData<User> = _user
+
+    private val _navigate = SingleLiveEvent<Pair<Int, Bundle?>>()
     val navigateLiveData: LiveData<Pair<Int, Bundle?>> = _navigate
 
-    var badge = MutableLiveData<String>()
-
-    private var _accessToken = MutableLiveData<String>()
+    private val _accessToken = MutableLiveData<String>()
     val accessTokenLiveData: LiveData<String> = _accessToken
 
     val resultLogin = SingleLiveEvent<ResultState<String>>()
@@ -46,10 +46,15 @@ class MainViewModel @ViewModelInject constructor(
 
     val codeLiveData = MutableLiveEvent<String>()
 
+    val badge = MutableLiveData<String>()
+
     private val _message = SingleLiveEvent<Bundle>()
     val messageLiveData: LiveData<Bundle> = _message
 
     fun getProfile() {
+        if (results.value != null) {
+            return
+        }
         getProfileUseCase(Unit).onEach {
             results.value = it
         }.launchIn(viewModelScope)

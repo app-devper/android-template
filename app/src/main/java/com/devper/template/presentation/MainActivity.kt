@@ -82,10 +82,6 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     override fun observeLiveData() {
-//        mainViewModel.messageLiveData.observe(this, {
-//            setBadge()
-//        })
-
         mainViewModel.navigateLiveData.observe(this, {
             navController.navigate(it.first, it.second)
         })
@@ -207,7 +203,6 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     mainViewModel.error(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out))
                     clearLogin()
                 }
-
                 override fun onTick(millisUntilFinished: Long) {}
             }.start()
         }

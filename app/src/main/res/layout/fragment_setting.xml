@@ -291,7 +291,9 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:onClick="@{()-> viewModel.nextToBiometric()}"
-                            android:paddingBottom="16dp">
+                            android:paddingBottom="16dp"
+                            android:visibility="gone"
+                            tools:visibility="visible">
 
                             <View
                                 android:layout_width="match_parent"

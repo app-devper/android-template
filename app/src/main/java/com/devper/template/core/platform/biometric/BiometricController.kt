@@ -1,9 +1,11 @@
 package com.devper.template.core.platform.biometric
 
 import android.util.Log
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import com.devper.template.R
+import timber.log.Timber
 import java.util.concurrent.Executors
 
 class BiometricController(var activity: FragmentActivity, callback: Callback) {
@@ -11,12 +13,13 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
     private val executor = Executors.newSingleThreadExecutor()
     private var biometricPrompt: BiometricPrompt
     private var promptInfo: BiometricPrompt.PromptInfo
+    private var isAuthenticate = false
 
     init {
         biometricPrompt = BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Log.i(TAG, "onAuthenticationError: $errorCode $errString")
+                Timber.i("onAuthenticationError: $errorCode $errString")
                 if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                     // user clicked negative button
                 } else {
@@ -26,13 +29,13 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                Log.i(TAG, "onAuthenticationSucceeded")
+                Timber.i("onAuthenticationSucceeded")
                 callback.onAuthenticated()
             }
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                Log.i(TAG, "onAuthenticationFailed")
+                Timber.i("onAuthenticationFailed")
                 callback.onError()
             }
         })
@@ -57,6 +60,8 @@ class BiometricController(var activity: FragmentActivity, callback: Callback) {
     fun setPromptInfo(prompt: BiometricPrompt.PromptInfo) {
         promptInfo = prompt
     }
+
+    fun isAuthenticate() = isAuthenticate
 
     fun authenticate() {
         biometricPrompt.authenticate(promptInfo)

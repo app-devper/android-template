@@ -7,6 +7,7 @@ import com.devper.template.data.remote.notification.NotificationsData
 import com.devper.template.data.remote.notification.SubscriptionRequest
 import com.devper.template.data.remote.notification.UnreadData
 import com.devper.template.data.remote.otp.*
+import com.devper.template.data.remote.termcondition.TermConditionData
 import com.devper.template.data.remote.user.SignUpRequest
 import com.devper.template.data.remote.user.UserData
 import com.devper.template.data.remote.user.UserRequest
@@ -83,4 +84,7 @@ interface ApiService {
 
     @GET("api/notification/unread")
     suspend fun getUnread(): UnreadData
+
+    @GET("api/term-condition")
+    suspend fun getTermCondition(): TermConditionData
 }

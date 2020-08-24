@@ -4,6 +4,7 @@ import com.devper.template.data.remote.auth.AuthRepositoryImpl
 import com.devper.template.data.remote.device.RegisterRepositoryImpl
 import com.devper.template.data.remote.notification.NotificationRepositoryImpl
 import com.devper.template.data.remote.otp.OtpRepositoryImpl
+import com.devper.template.data.remote.termcondition.TermConditionRepositoryImpl
 import com.devper.template.data.remote.user.UserRepositoryImpl
 import com.devper.template.domain.repository.*
 import dagger.Binds
@@ -29,5 +30,8 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindNotificationRepository(repositoryImpl: NotificationRepositoryImpl): NotificationRepository
+
+    @Binds
+    abstract fun bindTermConditionRepository(repositoryImpl: TermConditionRepositoryImpl): TermConditionRepository
 
 }
