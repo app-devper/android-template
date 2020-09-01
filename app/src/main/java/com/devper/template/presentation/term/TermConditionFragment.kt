@@ -6,6 +6,7 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentTermConditionBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.term.viewmodel.TermConditionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,12 +27,11 @@ class TermConditionFragment : BaseFragment<FragmentTermConditionBinding>(R.layou
                     showLoading()
                 }
                 is ResultState.Success -> {
-                    viewModel.setTermCondition(it.data)
                     hideLoading()
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

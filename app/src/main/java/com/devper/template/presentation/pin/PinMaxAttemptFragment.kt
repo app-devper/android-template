@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPinMaxAttemptBinding
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.pin.viewmodel.PinMaxAttemptViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -9,6 +9,7 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentNotificationBinding
 import com.devper.template.domain.model.notification.Notification
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.notification.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest

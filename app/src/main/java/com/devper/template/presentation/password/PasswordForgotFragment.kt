@@ -6,6 +6,7 @@ import com.devper.template.R
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentPasswordForgotBinding
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.password.viewmodel.PasswordForgotViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

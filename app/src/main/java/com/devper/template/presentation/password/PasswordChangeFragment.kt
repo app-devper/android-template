@@ -2,11 +2,11 @@ package com.devper.template.presentation.password
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPasswordChangeBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.password.viewmodel.PasswordChangeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class PasswordChangeFragment : BaseFragment<FragmentPasswordChangeBinding>(R.lay
     }
 
     override fun observeLiveData() {
-        viewModel.resultVerifyPassword.observe(viewLifecycleOwner, Observer {
+        viewModel.resultVerifyPassword.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
@@ -37,7 +37,7 @@ class PasswordChangeFragment : BaseFragment<FragmentPasswordChangeBinding>(R.lay
             }
         })
 
-        viewModel.resultSetPassword.observe(viewLifecycleOwner, Observer {
+        viewModel.resultSetPassword.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()

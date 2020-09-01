@@ -48,9 +48,9 @@ class CountDrawable(context: Context) : Drawable() {
         val centerY = radius - 5
         if (mCount.length <= 2) {
             // Draw badge circle.
-            canvas.drawCircle(centerX, centerY, (radius + 5.5).toInt().toFloat(), mBadgePaint)
-        } else {
             canvas.drawCircle(centerX, centerY, (radius + 6.5).toInt().toFloat(), mBadgePaint)
+        } else {
+            canvas.drawCircle(centerX, centerY, (radius + 7.5).toInt().toFloat(), mBadgePaint)
         }
         // Draw badge count text inside the circle.
         mTextPaint.getTextBounds(mCount, 0, mCount.length, mTxtRect)

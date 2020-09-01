@@ -84,12 +84,14 @@
     <string name="edit_user_info_title">ข้อมูลส่วนตัว</string>
     <string name="edit_user_info_subtitle">กรุณากรอกข้อมูลให้เป็นปัจจุบัน</string>
 
-    <string name="person_first_name">ชื่อ</string>
-    <string name="person_last_name">นามสกุล</string>
-    <string name="person_full_name">ชื่อ-นามสกุล</string>
-    <string name="person_citizen_id">เลขประจำตัวประชาชน</string>
-    <string name="person_birthday">วัน เดือน ปีเกิด</string>
-    <string name="person_age">อายุ</string>
+    <string name="user_info">ข้อมูลส่วนตัว</string>
+    <string name="user_first_name">ชื่อ</string>
+    <string name="user_last_name">นามสกุล</string>
+    <string name="user_full_name">ชื่อ-นามสกุล</string>
+    <string name="user_citizen_id">เลขประจำตัวประชาชน</string>
+    <string name="user_birthday">วัน เดือน ปีเกิด</string>
+    <string name="user_age">อายุ</string>
+    <string name="user_status">สถานะ</string>
 
     <string name="contact_info">ข้อมูลการติดต่อ</string>
     <string name="contact_phone">เบอร์โทรศัพท์บ้าน</string>

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.login.LoginPinViewModel" />
+            type="com.devper.template.presentation.login.viewmodel.LoginPinViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
 
             <TextView
                 android:id="@+id/pin_code_forgot_textview"
-                style="@style/TextStyle.Link"
+                style="@style/Text.Link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pin_code_round_view"

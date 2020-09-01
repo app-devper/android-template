@@ -14,6 +14,7 @@ import com.devper.template.core.smartlogin.util.SmartLoginException
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.login.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,7 +62,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

@@ -8,6 +8,7 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentPinFormBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.pin.viewmodel.PinFormViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -47,7 +48,7 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

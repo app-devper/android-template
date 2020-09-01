@@ -9,8 +9,8 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentUserBinding
 import com.devper.template.domain.model.user.User
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.user.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 

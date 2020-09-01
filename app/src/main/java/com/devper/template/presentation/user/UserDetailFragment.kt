@@ -8,6 +8,7 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentUserDetailBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.user.viewmodel.UserDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +34,7 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(R.layout.frag
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

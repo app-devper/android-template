@@ -9,6 +9,7 @@ import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentLoginPinBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.login.viewmodel.LoginPinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -65,7 +66,7 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
                 is ResultState.Error -> {
                     hideDialog()
                     binding.pinCodeRoundView.clearPin()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

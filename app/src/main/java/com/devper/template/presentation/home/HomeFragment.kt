@@ -12,7 +12,6 @@ import com.devper.template.core.platform.widget.CountDrawable
 import com.devper.template.databinding.FragmentHomeBinding
 import com.devper.template.presentation.BaseFragment
 import com.devper.template.presentation.BaseViewModel
-import com.google.firebase.iid.FirebaseInstanceId
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,23 +25,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         showToolbar()
         showBottomNavigation()
         setHasOptionsMenu(true)
-        binding.viewModel = mainViewModel
     }
 
     override fun onArguments(it: Bundle?) {
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
-            if (it.isSuccessful) {
-                it.result?.token?.let { token ->
-                    mainViewModel.subscription(token)
-                }
-            }
-        }
-        mainViewModel.getUnread()
     }
 
     override fun observeLiveData() {
-        mainViewModel.badge.observe(viewLifecycleOwner, {
-            menuItem?.setCount(requireContext(), it)
+        mainViewModel.badgeLiveData.observe(viewLifecycleOwner, {
+            setCount()
         })
     }
 
@@ -54,8 +44,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu, menu)
         menuItem = menu.findItem(R.id.notification_dest)
-        val badge = mainViewModel.badge.value
-        menuItem?.setCount(requireContext(), badge ?: "0")
+        setCount()
+        getUnread()
+    }
+
+    private fun setCount() {
+        menuItem?.setCount(requireContext(), badge)
     }
 
     private fun MenuItem.setCount(context: Context, count: String) {
@@ -71,5 +65,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         badge.setCount(count)
         icon.mutate()
         icon.setDrawableByLayerId(R.id.ic_group_count, badge)
+        icon.invalidateSelf()
     }
 }

@@ -3,12 +3,12 @@ package com.devper.template.presentation.setting
 import android.os.Bundle
 import androidx.biometric.BiometricManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.extension.toVisible
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentSettingBinding
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.setting.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject

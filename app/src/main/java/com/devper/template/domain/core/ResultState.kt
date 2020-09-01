@@ -1,6 +1,8 @@
 package com.devper.template.domain.core
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 
 sealed class ResultState<out T> {
 
@@ -48,5 +50,13 @@ val <T> ResultState<T>.data: T?
 inline fun <reified T> ResultState<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
     if (this is ResultState.Success) {
         liveData.value = data
+    }
+}
+
+inline fun <reified T> LiveData<ResultState<T>>.asLiveData(): LiveData<T> {
+    return liveData {
+        this@asLiveData.value?.success()?.let {
+            emit(it)
+        }
     }
 }

@@ -22,7 +22,9 @@ import com.devper.template.core.platform.session.CountDownSession
 import com.devper.template.core.platform.widget.ProgressHudDialog
 import com.devper.template.data.session.AppSessionProvider
 import com.devper.template.databinding.ActivityHomeBinding
+import com.devper.template.domain.core.ErrorMapper
 import com.devper.template.domain.core.ResultState
+import com.google.firebase.iid.FirebaseInstanceId
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -88,26 +90,22 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         mainViewModel.profileLiveDate.observe(this, {
             when (it) {
-                is ResultState.Loading -> {
-                }
                 is ResultState.Success -> {
                     mainViewModel.setUser(it.data)
                 }
                 is ResultState.Error -> {
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })
 
         mainViewModel.resultLogin.observe(this, {
             when (it) {
-                is ResultState.Loading -> {
-                }
                 is ResultState.Success -> {
                     mainViewModel.setAccessToken(it.data)
                 }
                 is ResultState.Error -> {
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })
@@ -121,12 +119,13 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         mainViewModel.accessTokenLiveData.observe(this, { accessToken ->
             session.accessToken = accessToken
             countDownSession.start()
+            subscription()
         })
     }
 
     private fun setBadge() {
         val badgeCount = BadgeHelper(this).badgeCount.toString()
-        mainViewModel.badge.postValue(badgeCount)
+        mainViewModel.badgeLiveData.postValue(badgeCount)
     }
 
     private fun isHome(id: Int): Boolean {
@@ -200,12 +199,24 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         if (isLogin()) {
             timer = object : CountDownTimer(300000L, 1000L) {
                 override fun onFinish() {
-                    mainViewModel.error(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out))
-                    clearLogin()
+                    sessionExpired()
                 }
-                override fun onTick(millisUntilFinished: Long) {}
+
+                override fun onTick(millisUntilFinished: Long) {
+
+                }
             }.start()
         }
+    }
+
+    fun sessionExpired() {
+        mainViewModel.error(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out))
+        clearLogin()
+    }
+
+    fun toError(throwable: Throwable?) {
+        val appError = ErrorMapper.toAppError(throwable)
+        mainViewModel.error(appError.resultCode, appError.getDesc())
     }
 
     override fun onBackPressed() {
@@ -238,6 +249,16 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         progress.let {
             if (it.isShowing) {
                 it.dismiss()
+            }
+        }
+    }
+
+    private fun subscription() {
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.token?.let { token ->
+                    mainViewModel.subscription(token)
+                }
             }
         }
     }

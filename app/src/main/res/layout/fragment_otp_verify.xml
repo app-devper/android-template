@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.otp.OtpVerifyViewModel" />
+            type="com.devper.template.presentation.otp.viewmodel.OtpVerifyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            style="@style/TextStyle.Title"
+            style="@style/Text.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tvChannelLabel"
-            style="@style/TextStyle.Sub"
+            style="@style/Text.Sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/tvChannel"
-            style="@style/TextStyle"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tvReference"
-                style="@style/TextStyle"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
@@ -93,7 +93,7 @@
 
             <TextView
                 android:id="@+id/tvExpire"
-                style="@style/TextStyle"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.verifyUser.displayExpiredDate}"
@@ -119,7 +119,7 @@
 
         <TextView
             android:id="@+id/tvCode"
-            style="@style/TextStyle"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.verifyUser.code}"
@@ -130,7 +130,7 @@
 
         <TextView
             android:id="@+id/tvRequestOtp"
-            style="@style/TextStyle.Link"
+            style="@style/Text.Link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"

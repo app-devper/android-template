@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="item"
+            type="com.devper.template.domain.model.notification.Notification" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@{item.displayCreatedDate}"
                 app:layout_constraintStart_toStartOf="@+id/tvTitle"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="12 มิ.ย. 2562  12:30น." />
@@ -48,6 +51,7 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="14dp"
+                android:text="@{item.title}"
                 android:singleLine="true"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toStartOf="@+id/imgForward"
@@ -74,6 +78,7 @@
                 android:layout_marginEnd="14dp"
                 android:singleLine="true"
                 android:textColor="@color/colorBlack"
+                android:text="@{item.body}"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/imgForward"
                 app:layout_constraintStart_toStartOf="@+id/tvTitle"

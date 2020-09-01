@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.signup.SignUpViewModel" />
+            type="com.devper.template.presentation.signup.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            style="@style/TextStyle.Title"
+            style="@style/Text.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/tvSubTitle"
-            style="@style/TextStyle.Sub"
+            style="@style/Text.Sub"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -55,7 +55,7 @@
 
                 <TextView
                     android:id="@+id/tv_title"
-                    style="@style/TextStyle"
+                    style="@style/Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"

@@ -22,5 +22,7 @@ data class UserData(
     @SerializedName("phone")
     val phone: String?,
     @SerializedName("imageUrl")
-    val imageUrl: String?
+    val imageUrl: String?,
+    @SerializedName("status")
+    val status: String?
 )

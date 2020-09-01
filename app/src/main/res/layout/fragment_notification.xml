@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.notification.NotificationViewModel" />
+            type="com.devper.template.presentation.notification.viewmodel.NotificationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

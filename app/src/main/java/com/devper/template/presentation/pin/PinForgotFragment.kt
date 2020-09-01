@@ -2,13 +2,12 @@ package com.devper.template.presentation.pin
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentPinForgotBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.pin.viewmodel.PinForgotViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,7 +30,7 @@ class PinForgotFragment : BaseFragment<FragmentPinForgotBinding>(R.layout.fragme
     }
 
     override fun observeLiveData() {
-        viewModel.resultsLogin.observe(viewLifecycleOwner, Observer {
+        viewModel.resultsLogin.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
@@ -43,7 +42,7 @@ class PinForgotFragment : BaseFragment<FragmentPinForgotBinding>(R.layout.fragme
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

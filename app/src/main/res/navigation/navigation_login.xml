@@ -4,8 +4,6 @@
     android:id="@+id/navigation_login"
     app:startDestination="@id/login_dest">
 
-    <include app:graph="@navigation/navigation_forgot_password" />
-
     <include app:graph="@navigation/navigation_set_password" />
 
     <fragment

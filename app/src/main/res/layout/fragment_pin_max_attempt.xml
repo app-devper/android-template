@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.pin.PinMaxAttemptViewModel" />
+            type="com.devper.template.presentation.pin.viewmodel.PinMaxAttemptViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

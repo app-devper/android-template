@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
 import com.devper.template.R
-import com.devper.template.core.exception.AppException
 import com.devper.template.core.platform.EventObserver
 import com.devper.template.domain.core.ErrorMapper
 
@@ -20,7 +19,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
 
     lateinit var binding: Binding
     abstract val viewModel: BaseViewModel
-    val mainViewModel: MainViewModel by activityViewModels()
+    protected val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
@@ -118,13 +117,15 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         appCompat().handlerLogin()
     }
 
-    fun toError(throwable: Throwable?) {
-        val appError = ErrorMapper.toAppError(throwable)
-        mainViewModel.error(appError.resultCode, appError.getDesc())
+    fun getUnread() {
+        mainViewModel.getUnread()
     }
 
-    fun toError(appError: AppException) {
-        mainViewModel.error(appError.resultCode, appError.getDesc())
+    val badge: String
+        get() = mainViewModel.badge
+
+    fun toError(throwable: Throwable?) {
+        appCompat().toError(throwable)
     }
 
     fun hideBottomNavigation() {

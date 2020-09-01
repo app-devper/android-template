@@ -2,12 +2,12 @@ package com.devper.template.presentation.password
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPasswordFormBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.password.viewmodel.PasswordSetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +30,7 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
     }
 
     override fun observeLiveData() {
-        viewModel.resultAction.observe(viewLifecycleOwner, Observer {
+        viewModel.resultAction.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
@@ -41,12 +41,12 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })
 
-        viewModel.resultSetPassword.observe(viewLifecycleOwner, Observer {
+        viewModel.resultSetPassword.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
@@ -57,7 +57,7 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

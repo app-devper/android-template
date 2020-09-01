@@ -2,7 +2,6 @@ package com.devper.template.presentation.pin
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.AppConfig
 import com.devper.template.R
 import com.devper.template.core.extension.toInvisible
@@ -10,6 +9,7 @@ import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentPinFormBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.pin.viewmodel.PinChangeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment
     }
 
     override fun observeLiveData() {
-        viewModel.resultVerify.observe(viewLifecycleOwner, Observer {
+        viewModel.resultVerify.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
@@ -46,7 +46,7 @@ class PinChangeFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment
                 is ResultState.Error -> {
                     hideDialog()
                     binding.pinCodeRoundView.clearPin()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

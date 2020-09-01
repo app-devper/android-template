@@ -8,7 +8,17 @@ import com.devper.template.domain.model.user.Users
 class UserMapper {
 
     fun toDomain(data: UserData): User {
-        return User(data.id, data.role, data.username, data.email, data.firstName, data.lastName, data.phone, data.imageUrl)
+        return User(
+            data.id,
+            data.role,
+            data.username,
+            data.email,
+            data.firstName,
+            data.lastName,
+            data.phone,
+            data.imageUrl,
+            data.status
+        )
     }
 
     fun toDomain(data: UsersData): Users {

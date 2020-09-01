@@ -7,6 +7,7 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentSignupBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.signup.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +33,7 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

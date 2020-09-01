@@ -8,6 +8,7 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentOtpChannelBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.otp.viewmodel.OtpChannelViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,7 +39,7 @@ class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.frag
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

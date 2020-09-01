@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.devper.template.data.remote.user.UserData
 
 @Database(
-    entities = [UserData::class], version = 3, exportSchema = false
+    entities = [UserData::class], version = 4, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 

@@ -9,6 +9,7 @@ import com.devper.template.databinding.FragmentOtpVerifyBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.otp.VerifyUserParam
 import com.devper.template.presentation.BaseFragment
+import com.devper.template.presentation.otp.viewmodel.OtpVerifyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -47,7 +48,7 @@ class OtpVerifyFragment : BaseFragment<FragmentOtpVerifyBinding>(R.layout.fragme
                     viewModel.setVerifyUser(it.data)
                 }
                 is ResultState.Error -> {
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })
@@ -64,7 +65,7 @@ class OtpVerifyFragment : BaseFragment<FragmentOtpVerifyBinding>(R.layout.fragme
                 is ResultState.Error -> {
                     hideDialog()
                     viewModel.clearCode()
-                    mainViewModel.error(it.throwable)
+                    toError(it.throwable)
                 }
             }
         })

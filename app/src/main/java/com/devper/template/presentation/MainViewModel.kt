@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.devper.template.R
 import com.devper.template.core.platform.MutableLiveEvent
 import com.devper.template.core.platform.SingleLiveEvent
-import com.devper.template.domain.core.ErrorMapper
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.notification.SubscriptionParam
 import com.devper.template.domain.model.user.User
@@ -27,8 +26,8 @@ class MainViewModel @ViewModelInject constructor(
     private val getUnreadUseCase: GetUnreadUseCase,
 ) : ViewModel() {
 
-    private val results = SingleLiveEvent<ResultState<User>>()
-    val profileLiveDate: LiveData<ResultState<User>> = results
+    private val _profile = SingleLiveEvent<ResultState<User>>()
+    val profileLiveDate: LiveData<ResultState<User>> = _profile
 
     private val _user = MutableLiveData<User>()
     val userLiveData: LiveData<User> = _user
@@ -46,17 +45,19 @@ class MainViewModel @ViewModelInject constructor(
 
     val codeLiveData = MutableLiveEvent<String>()
 
-    val badge = MutableLiveData<String>()
+    val badgeLiveData = MutableLiveData<String>()
+    val badge: String
+        get() = badgeLiveData.value ?: ""
 
     private val _message = SingleLiveEvent<Bundle>()
     val messageLiveData: LiveData<Bundle> = _message
 
     fun getProfile() {
-        if (results.value != null) {
+        if (_profile.value != null) {
             return
         }
         getProfileUseCase(Unit).onEach {
-            results.value = it
+            _profile.value = it
         }.launchIn(viewModelScope)
     }
 
@@ -78,7 +79,7 @@ class MainViewModel @ViewModelInject constructor(
     fun getUnread() {
         getUnreadUseCase(Unit).onEach {
             if (it is ResultState.Success) {
-                badge.value = it.data.toString()
+                badgeLiveData.value = it.data.toString()
             }
         }.launchIn(viewModelScope)
     }
@@ -109,11 +110,6 @@ class MainViewModel @ViewModelInject constructor(
         } else {
             errorLiveData.setEventValue(Pair(code, msg))
         }
-    }
-
-    fun error(throwable: Throwable) {
-        val appError = ErrorMapper.toAppError(throwable)
-        error(appError.resultCode, appError.getDesc())
     }
 
     fun setMessage(bundle: Bundle?) {

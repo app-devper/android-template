@@ -13,7 +13,8 @@ data class User(
     val firstName: String?,
     val lastName: String?,
     val phone: String?,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val status: String?,
 ) : Parcelable {
     val fullName: String
         get() = "$firstName $lastName"

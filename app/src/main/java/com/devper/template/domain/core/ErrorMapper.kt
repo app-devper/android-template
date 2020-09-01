@@ -51,6 +51,7 @@ object ErrorMapper {
                 AppException(AppConfig.INVALID_DATA_ERROR, throwable.message ?: "")
             }
             else -> {
+                throwable?.printStackTrace()
                 AppException(AppConfig.OTHER_ERROR, throwable?.message ?: "")
             }
         }

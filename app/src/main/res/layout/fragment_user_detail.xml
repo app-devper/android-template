@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.user.UserDetailViewModel" />
+            type="com.devper.template.presentation.user.viewmodel.UserDetailViewModel" />
 
     </data>
 
@@ -23,119 +23,31 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/margin_movie_horizontal"
-                android:paddingTop="@dimen/margin_movie_vertical"
-                android:paddingRight="@dimen/margin_movie_horizontal"
-                android:paddingBottom="@dimen/margin_movie_vertical">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/container"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_movie_poster_detail"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/posterImage"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/height_movie_poster_detail"
-                        android:layout_weight="1"
-                        android:background="@android:color/darker_gray"
-                        android:scaleType="centerCrop"
-                        tools:ignore="ContentDescription" />
+                    <include
+                        layout="@layout/include_user_info"
+                        app:user="@{viewModel.user}" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/movie_genres_header"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/genresTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@{viewModel.user.username}"
-                            tools:text="Action" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/movie_duration_header"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/durationTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@{viewModel.user.phone}"
-                            tools:text="124 minutes" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/movie_language_header"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/languageTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.user.email}"
-                            tools:text="English" />
-                    </LinearLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/overviewHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/container"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/movie_overview_header"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/container" />
-
-                <TextView
-                    android:id="@+id/overviewTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/overviewHeader"
-                    android:layout_marginBottom="8dp"
-                    android:ellipsize="end"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/overviewHeader"
-                    tools:text="Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond. Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond." />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bookButton"
                     style="@style/Button.Primary"
-                    android:onClick="@{()-> viewModel.nextToUpdate()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/overviewTextView"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/movie_book_the_movie"
+                    android:layout_margin="16dp"
+                    android:onClick="@{()-> viewModel.nextToUpdate()}"
+                    android:text="@string/edit_user_info"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/overviewTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/container"
                     app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

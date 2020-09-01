@@ -11,6 +11,12 @@
 
     <include app:graph="@navigation/navigation_forgot_pin" />
 
+    <include app:graph="@navigation/navigation_forgot_password" />
+
+    <action
+        android:id="@+id/action_to_forgot_password"
+        app:destination="@id/navigation_forgot_password" />
+
     <action
         android:id="@+id/action_to_pin_max_attempt"
         app:destination="@id/pin_max_attempt_dest" />
