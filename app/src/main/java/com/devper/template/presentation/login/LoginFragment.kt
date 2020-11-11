@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.R
 import com.devper.template.core.extension.makeLinks
 import com.devper.template.core.platform.biometric.BiometricController
@@ -13,8 +12,8 @@ import com.devper.template.core.smartlogin.users.SmartUser
 import com.devper.template.core.smartlogin.util.SmartLoginException
 import com.devper.template.databinding.FragmentLoginBinding
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.core.toError
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.login.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,8 +27,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     override val viewModel: LoginViewModel by viewModels()
 
     override fun setupView() {
-        hideToolbar()
-        hideBottomNavigation()
         binding.viewModel = viewModel
         binding.tvSignup.makeLinks(Pair(getString(R.string.signup_button), View.OnClickListener {
             viewModel.nextToSignUp()
@@ -50,24 +47,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     override fun observeLiveData() {
-        viewModel.resultsLogin.observe(viewLifecycleOwner, Observer {
+        viewModel.resultsLogin.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    mainViewModel.setAccessToken(it.data)
-                    viewModel.nextToOtpSetPin()
+                    activity?.finish()
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable)
+                    toError(it.throwable.toError())
                 }
             }
         })
 
-        viewModel.login.observe(viewLifecycleOwner, Observer {
+        viewModel.login.observe(viewLifecycleOwner, {
             if (it != LoginType.Custom) {
                 smartLogin = SmartLoginFactory.build(it).apply {
                     login(config)
@@ -76,7 +72,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         })
     }
 
-    override fun onCodeError(code: String) {
+    override fun onDismissError(code: String) {
         if (code == "CM-401-114") {
             viewModel.nextToSetPassword()
         }

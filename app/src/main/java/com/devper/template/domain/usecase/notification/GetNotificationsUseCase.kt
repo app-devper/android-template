@@ -4,9 +4,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
-import com.devper.template.domain.core.thread.Dispatcher
+import com.devper.template.core.thread.Dispatcher
 import com.devper.template.domain.model.notification.Notification
-import com.devper.template.domain.repository.NotificationRepository
+import com.devper.template.data.remote.notification.NotificationRepository
 import com.devper.template.domain.usecase.PagingUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class GetNotificationsUseCase @Inject constructor(
         }
     }
 
-    override fun execute(parameters: Int): Flow<PagingData<Notification>> {
+    override fun execute(params: Int): Flow<PagingData<Notification>> {
         return Pager(PagingConfig(10), 1) {
             NotificationPagingSource(repo)
         }.flow

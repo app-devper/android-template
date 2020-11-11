@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.term.viewmodel.TermConditionViewModel" />
+            type="com.devper.template.presentation.term.TermConditionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

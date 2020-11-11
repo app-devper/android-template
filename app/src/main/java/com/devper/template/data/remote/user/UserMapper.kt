@@ -17,7 +17,8 @@ class UserMapper {
             data.lastName,
             data.phone,
             data.imageUrl,
-            data.status
+            data.status,
+            data.pin
         )
     }
 

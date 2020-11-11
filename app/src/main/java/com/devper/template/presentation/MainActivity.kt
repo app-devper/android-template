@@ -14,17 +14,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
 import com.devper.template.R
+import com.devper.template.core.exception.AppException
 import com.devper.template.core.extension.toGone
 import com.devper.template.core.extension.toVisible
 import com.devper.template.core.platform.fcm.BadgeHelper
 import com.devper.template.core.platform.fcm.MessagingHandler
 import com.devper.template.core.platform.session.CountDownSession
 import com.devper.template.core.platform.widget.ProgressHudDialog
-import com.devper.template.data.session.AppSessionProvider
 import com.devper.template.databinding.ActivityHomeBinding
-import com.devper.template.domain.core.ErrorMapper
 import com.devper.template.domain.core.ResultState
-import com.google.firebase.iid.FirebaseInstanceId
+import com.devper.template.domain.core.toError
+import com.devper.template.presentation.login.LoginActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,9 +37,6 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private lateinit var navController: NavController
     private lateinit var host: NavHostFragment
     private lateinit var messagingHandler: MessagingHandler
-
-    @Inject
-    lateinit var session: AppSessionProvider
 
     @Inject
     lateinit var countDownSession: CountDownSession
@@ -65,7 +63,17 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             currentId = destination.id
             binding.toolbar.title = destination.label
-            applyDisplayHomeAsUpEnabled(hasBack(destination.id))
+            applyDisplayHomeAsUpEnabled(haveBack(currentId))
+            if (isHome(currentId)) {
+                showBottomNavigation()
+            } else {
+                hideBottomNavigation()
+            }
+            if (haveToolbar(currentId)) {
+                supportActionBar?.show()
+            } else {
+                supportActionBar?.hide()
+            }
         }
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
@@ -79,61 +87,81 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 mainViewModel.setMessage(it)
             }
         }
+    }
 
-        setBadge()
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.getLogin()
     }
 
     override fun observeLiveData() {
-        mainViewModel.navigateLiveData.observe(this, {
-            navController.navigate(it.first, it.second)
-        })
-
-        mainViewModel.profileLiveDate.observe(this, {
+        mainViewModel.profileLiveData.observe(this, {
             when (it) {
-                is ResultState.Success -> {
-                    mainViewModel.setUser(it.data)
-                }
                 is ResultState.Error -> {
-                    toError(it.throwable)
+                    toError(it.throwable.toError())
                 }
             }
         })
 
-        mainViewModel.resultLogin.observe(this, {
-            when (it) {
-                is ResultState.Success -> {
-                    mainViewModel.setAccessToken(it.data)
-                }
-                is ResultState.Error -> {
-                    toError(it.throwable)
-                }
+        mainViewModel.isLoginData.observe(this, {
+            if (mainViewModel.isLogin()) {
+                mainViewModel.getProfile()
+                mainViewModel.subscription()
+                mainViewModel.getUnread()
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         })
 
-        mainViewModel.userLiveData.observe(this, {
+        mainViewModel.badgeLiveData.observe(this, {
+            val badgeCount = BadgeHelper(this)
+            badgeCount.badgeCount = it
+            when {
+                it <= 0 -> removeBadge(binding.bottomNavigation, R.id.notification_dest)
+                else -> showBadge(binding.bottomNavigation, R.id.notification_dest, it)
+            }
         })
-
-        mainViewModel.resultSubscription.observe(this, {
-        })
-
-        mainViewModel.accessTokenLiveData.observe(this, { accessToken ->
-            session.accessToken = accessToken
-            countDownSession.start()
-            subscription()
-        })
-    }
-
-    private fun setBadge() {
-        val badgeCount = BadgeHelper(this).badgeCount.toString()
-        mainViewModel.badgeLiveData.postValue(badgeCount)
     }
 
     private fun isHome(id: Int): Boolean {
-        return id in listOf(R.id.home_dest, R.id.profile_dest, R.id.setting_dest)
+        return id in listOf(
+            R.id.home_dest,
+            R.id.profile_dest,
+            R.id.setting_dest,
+            R.id.notification_dest,
+        )
     }
 
-    private fun hasBack(id: Int): Boolean {
-        return id !in listOf(R.id.pin_code_dest, R.id.home_dest, R.id.profile_dest, R.id.setting_dest, R.id.pin_max_attempt_dest)
+    private fun haveBack(id: Int): Boolean {
+        return id !in listOf(
+            R.id.login_pin_dest,
+            R.id.home_dest,
+            R.id.profile_dest,
+            R.id.setting_dest,
+            R.id.notification_dest,
+            R.id.pin_max_attempt_dest,
+            R.id.verify_pin_dest,
+            R.id.suspend_account_dest,
+            R.id.set_pin_dest,
+        )
+    }
+
+    private fun haveToolbar(id: Int): Boolean {
+        return id !in listOf(
+            R.id.splash_dest,
+            R.id.login_dest,
+            R.id.pin_max_attempt_dest,
+            R.id.suspend_account_dest
+        )
+    }
+
+    private fun canBack(id: Int): Boolean {
+        return id !in listOf(
+            R.id.pin_max_attempt_dest,
+            R.id.verify_pin_dest,
+            R.id.suspend_account_dest,
+            R.id.set_pin_dest,
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -166,23 +194,18 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
-    fun hideBottomNavigation() {
+    private fun hideBottomNavigation() {
         binding.bottomNavigation.toGone()
     }
 
-    fun showBottomNavigation() {
+    private fun showBottomNavigation() {
         binding.bottomNavigation.toVisible()
     }
 
     fun clearLogin() {
-        mainViewModel.clearAccessToken()
+        mainViewModel.clearUser()
         countDownSession.clear()
         timer?.cancel()
-    }
-
-    fun handlerLogin() {
-        handlerTimeOut()
-        countDownSession.start()
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -202,9 +225,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     sessionExpired()
                 }
 
-                override fun onTick(millisUntilFinished: Long) {
-
-                }
+                override fun onTick(millisUntilFinished: Long) {}
             }.start()
         }
     }
@@ -214,9 +235,8 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         clearLogin()
     }
 
-    fun toError(throwable: Throwable?) {
-        val appError = ErrorMapper.toAppError(throwable)
-        mainViewModel.error(appError.resultCode, appError.getDesc())
+    fun toError(throwable: AppException) {
+        mainViewModel.error(throwable.resultCode, throwable.getDesc())
     }
 
     override fun onBackPressed() {
@@ -233,7 +253,11 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     isWaitForSecondBackClick = false
                 }
             }
-            else -> super.onBackPressed()
+            else -> {
+                if (canBack(currentId)) {
+                    super.onBackPressed()
+                }
+            }
         }
     }
 
@@ -253,14 +277,14 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
-    private fun subscription() {
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
-            if (it.isSuccessful) {
-                it.result?.token?.let { token ->
-                    mainViewModel.subscription(token)
-                }
-            }
-        }
+    private fun showBadge(bottomNavigationView: BottomNavigationView, id: Int, value: Int) {
+        val badgeView = bottomNavigationView.getOrCreateBadge(id)
+        badgeView.number = value
+        badgeView.maxCharacterCount = 3
+    }
+
+    private fun removeBadge(bottomNavigationView: BottomNavigationView, id: Int) {
+        bottomNavigationView.removeBadge(id)
     }
 
     companion object {

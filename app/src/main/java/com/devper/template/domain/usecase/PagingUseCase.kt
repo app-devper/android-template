@@ -9,5 +9,5 @@ abstract class PagingUseCase<in P, R>(private val coroutineDispatcher: Coroutine
     operator fun invoke(params: P): Flow<R> = execute(params)
         .flowOn(coroutineDispatcher)
 
-    protected abstract fun execute(parameters: P): Flow<R>
+    protected abstract fun execute(params: P): Flow<R>
 }

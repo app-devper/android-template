@@ -15,7 +15,7 @@ class HttpInterceptor @Inject constructor (
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        if (!networkInfoHelper.isOnline) {
+        if (!networkInfoHelper.isNetWorkAvailable) {
             throw InternetException("No internet connection")
         } else {
             val originalRequest = chain.request()

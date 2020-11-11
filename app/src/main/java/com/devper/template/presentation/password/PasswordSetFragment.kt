@@ -6,8 +6,8 @@ import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPasswordFormBinding
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.core.toError
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.password.viewmodel.PasswordSetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,8 +16,6 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
     override val viewModel: PasswordSetViewModel by viewModels()
 
     override fun setupView() {
-        showToolbar()
-        hideBottomNavigation()
         binding.viewModel = viewModel
     }
 
@@ -41,7 +39,7 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    toError(it.throwable)
+                    toError(it.throwable.toError())
                 }
             }
         })
@@ -57,7 +55,7 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable)
+                    toError(it.throwable.toError())
                 }
             }
         })

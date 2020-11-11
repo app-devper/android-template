@@ -6,18 +6,32 @@
     android:id="@+id/navigation_home"
     app:startDestination="@id/home_dest">
 
+    <include app:graph="@navigation/navigation_set_pin" />
+
     <action
         android:id="@+id/action_to_login"
-        app:destination="@id/pin_code_dest"
+        app:destination="@id/login_pin_dest"
         app:launchSingleTop="true"
         app:popUpTo="@id/navigation_home"
         app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_verify_pin"
+        app:destination="@id/verify_pin_dest" />
+
+    <action
+        android:id="@+id/action_to_set_pin"
+        app:destination="@id/navigation_set_pin" />
 
     <fragment
         android:id="@+id/home_dest"
         android:name="com.devper.template.presentation.home.HomeFragment"
         android:label="@string/main_menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/home_to_verify_pin"
+            app:destination="@id/verify_pin_dest" />
+    </fragment>
 
     <fragment
         android:id="@+id/notification_dest"
@@ -65,13 +79,13 @@
 
     <fragment
         android:id="@+id/user_form_dest"
-        android:name="com.devper.template.presentation.user.UserFormFragment"
+        android:name="com.devper.template.presentation.userupdate.UserFormFragment"
         android:label="@string/setting_menu_edit_user_info"
         tools:layout="@layout/fragment_user_form" />
 
     <fragment
         android:id="@+id/user_detail_dest"
-        android:name="com.devper.template.presentation.user.UserDetailFragment"
+        android:name="com.devper.template.presentation.userdetail.UserDetailFragment"
         android:label="@string/user_detail_title"
         tools:layout="@layout/fragment_user_detail">
         <action
@@ -81,13 +95,13 @@
 
     <fragment
         android:id="@+id/user_update_dest"
-        android:name="com.devper.template.presentation.user.UserUpdateFragment"
+        android:name="com.devper.template.presentation.userupdate.UserUpdateFragment"
         android:label="@string/setting_menu_edit_user_info"
         tools:layout="@layout/fragment_user_form" />
 
     <fragment
         android:id="@+id/change_password_dest"
-        android:name="com.devper.template.presentation.password.PasswordChangeFragment"
+        android:name="com.devper.template.presentation.passwordchange.PasswordChangeFragment"
         android:label="@string/change_password"
         tools:layout="@layout/fragment_password_change">
 
@@ -95,7 +109,7 @@
 
     <fragment
         android:id="@+id/change_pin_dest"
-        android:name="com.devper.template.presentation.pin.PinChangeFragment"
+        android:name="com.devper.template.presentation.pinchange.PinVerifyFragment"
         android:label="@string/setting_menu_change_pin"
         tools:layout="@layout/fragment_pin_form">
 
@@ -106,6 +120,13 @@
             app:popUpTo="@id/change_pin_dest"
             app:popUpToInclusive="true" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/verify_pin_dest"
+        android:name="com.devper.template.presentation.pinchange.PinVerifyFragment"
+        android:label="@string/verify_pin_title"
+        tools:layout="@layout/fragment_pin_form">
     </fragment>
 
     <fragment

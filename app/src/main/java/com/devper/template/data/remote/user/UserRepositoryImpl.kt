@@ -1,23 +1,19 @@
 package com.devper.template.data.remote.user
 
 import com.devper.template.data.database.AppDatabase
-import com.devper.template.data.preference.AppPreference
 import com.devper.template.data.remote.ApiService
 import com.devper.template.domain.model.user.SignUpParam
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.model.user.UserUpdateParam
 import com.devper.template.domain.model.user.Users
-import com.devper.template.domain.repository.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val api: ApiService,
     private val db: AppDatabase,
-    private val pref: AppPreference
 ) : UserRepository {
 
     override suspend fun clearUser() {
-        pref.clear()
         return db.user().clearUser()
     }
 

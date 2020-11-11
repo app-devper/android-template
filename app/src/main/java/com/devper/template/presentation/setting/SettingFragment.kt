@@ -5,31 +5,19 @@ import androidx.biometric.BiometricManager
 import androidx.fragment.app.viewModels
 import com.devper.template.R
 import com.devper.template.core.extension.toVisible
-import com.devper.template.data.preference.AppPreference
 import com.devper.template.databinding.FragmentSettingBinding
+import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.setting.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
 
-    @Inject
-    lateinit var perf: AppPreference
-
     override val viewModel: SettingViewModel by viewModels()
 
     override fun setupView() {
-        showToolbar()
-        showBottomNavigation()
         binding.viewModel = viewModel
-        if (perf.isSetPin) {
-            binding.tvBiometricStatus.text = "ปิด"
-        } else {
-            binding.tvBiometricStatus.text = "เปิด"
-        }
 
         val biometricManager = BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate()) {
@@ -47,13 +35,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     }
 
     override fun observeLiveData() {
-        mainViewModel.userLiveData.observe(viewLifecycleOwner, {
-            binding.user = it
+        mainViewModel.profileLiveData.observe(viewLifecycleOwner, {
+            when (it) {
+                is ResultState.Success -> {
+                    binding.user = it.data
+                }
+            }
         })
     }
 
     override fun onArguments(it: Bundle?) {
-        mainViewModel.getProfile()
     }
 
 }

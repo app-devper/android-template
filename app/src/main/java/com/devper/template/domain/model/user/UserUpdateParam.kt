@@ -1,8 +1,8 @@
 package com.devper.template.domain.model.user
 
 data class UserUpdateParam(
-    var id: String= "",
-    var username: String= "",
+    var id: String = "",
+    var username: String = "",
     var firstName: String = "",
     var lastName: String = "",
     var phone: String = "",

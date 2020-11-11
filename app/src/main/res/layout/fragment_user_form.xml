@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.user.viewmodel.UserFormViewModel" />
+            type="com.devper.template.presentation.userupdate.UserFormViewModel" />
 
     </data>
 

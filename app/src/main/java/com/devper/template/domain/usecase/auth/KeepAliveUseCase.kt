@@ -1,22 +1,19 @@
 package com.devper.template.domain.usecase.auth
 
-import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.core.thread.Dispatcher
-import com.devper.template.domain.repository.AuthRepository
-import com.devper.template.domain.usecase.FlowUseCase
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.devper.template.data.remote.auth.AuthRepository
+import com.devper.template.data.session.AppSessionProvider
+import com.devper.template.core.thread.Dispatcher
+import com.devper.template.domain.usecase.UseCase
 import javax.inject.Inject
 
 class KeepAliveUseCase @Inject constructor(
     dispatcher: Dispatcher,
-    private val repo: AuthRepository
-) : FlowUseCase<Unit, String>(dispatcher.io()) {
+    private val repo: AuthRepository,
+    private val session: AppSessionProvider,
+) : UseCase<Unit, Unit>(dispatcher.io()) {
 
-    override fun execute(parameters: Unit): Flow<ResultState<String>> {
-        return flow {
-            emit(ResultState.Loading())
-            emit(ResultState.Success(repo.keepAlive()))
-        }
+    override suspend fun execute(params: Unit) {
+        val accessToken = repo.keepAlive()
+        session.accessToken = accessToken
     }
 }

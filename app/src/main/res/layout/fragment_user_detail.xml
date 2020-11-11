@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.user.viewmodel.UserDetailViewModel" />
+            type="com.devper.template.presentation.userdetail.UserDetailViewModel" />
 
     </data>
 

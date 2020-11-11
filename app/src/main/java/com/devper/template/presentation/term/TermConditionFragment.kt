@@ -5,8 +5,8 @@ import androidx.fragment.app.viewModels
 import com.devper.template.R
 import com.devper.template.databinding.FragmentTermConditionBinding
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.core.toError
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.term.viewmodel.TermConditionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,8 +15,6 @@ class TermConditionFragment : BaseFragment<FragmentTermConditionBinding>(R.layou
     override val viewModel: TermConditionViewModel by viewModels()
 
     override fun setupView() {
-        showToolbar()
-        hideBottomNavigation()
         binding.viewModel = viewModel
     }
 
@@ -31,7 +29,7 @@ class TermConditionFragment : BaseFragment<FragmentTermConditionBinding>(R.layou
                 }
                 is ResultState.Error -> {
                     hideLoading()
-                    toError(it.throwable)
+                    toError(it.throwable.toError())
                 }
             }
         })

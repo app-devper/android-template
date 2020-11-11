@@ -1,9 +1,9 @@
 package com.devper.template.domain.usecase.otp
 
 import com.devper.template.domain.core.ResultState
-import com.devper.template.domain.core.thread.Dispatcher
+import com.devper.template.core.thread.Dispatcher
 import com.devper.template.domain.model.otp.*
-import com.devper.template.domain.repository.OtpRepository
+import com.devper.template.data.remote.otp.OtpRepository
 import com.devper.template.domain.usecase.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,10 +14,10 @@ class VerifyCodeUseCase @Inject constructor(
     private val repo: OtpRepository
 ) : FlowUseCase<VerifyCodeParam, VerifyCode>(dispatcher.io()) {
 
-    override fun execute(parameters: VerifyCodeParam): Flow<ResultState<VerifyCode>> {
+    override fun execute(params: VerifyCodeParam): Flow<ResultState<VerifyCode>> {
         return flow {
             emit(ResultState.Loading())
-            emit(ResultState.Success(repo.verifyCode(parameters)))
+            emit(ResultState.Success(repo.verifyCode(params)))
         }
     }
 }

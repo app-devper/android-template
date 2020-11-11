@@ -2,13 +2,12 @@ package com.devper.template.presentation.pin
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentPinFormBinding
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.core.toError
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.pin.viewmodel.PinFormViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -18,8 +17,6 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
     override val viewModel: PinFormViewModel by viewModels()
 
     override fun setupView() {
-        showToolbar()
-        hideBottomNavigation()
         binding.pinCodeRoundView.onSuccess = {
             viewModel.setPin(it)
         }
@@ -37,7 +34,7 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
     }
 
     override fun observeLiveData() {
-        viewModel.resultSetPin.observe(viewLifecycleOwner, Observer {
+        viewModel.resultSetPin.observe(viewLifecycleOwner, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
@@ -48,7 +45,7 @@ class PinFormFragment : BaseFragment<FragmentPinFormBinding>(R.layout.fragment_p
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable)
+                    toError(it.throwable.toError())
                 }
             }
         })

@@ -9,7 +9,6 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentUserBinding
 import com.devper.template.domain.model.user.User
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.user.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,8 +19,6 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
     override val viewModel: UserViewModel by viewModels()
 
     override fun setupView() {
-        showToolbar()
-        hideBottomNavigation()
         binding.viewModel = viewModel
         viewModel.adapter.apply {
             onClick = {
@@ -35,8 +32,6 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
                 }
             }
         }
-
-
     }
 
     override fun observeLiveData() {

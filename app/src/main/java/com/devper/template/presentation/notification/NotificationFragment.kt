@@ -9,7 +9,6 @@ import com.devper.template.R
 import com.devper.template.databinding.FragmentNotificationBinding
 import com.devper.template.domain.model.notification.Notification
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.notification.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,12 +19,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
     override val viewModel: NotificationViewModel by viewModels()
 
     override fun setupView() {
-        showToolbar()
-        hideBottomNavigation()
         binding.viewModel = viewModel
         viewModel.adapter.apply {
             onClick = {
-
+                mainViewModel.getUnread()
             }
             addLoadStateListener { loadState ->
                 if (loadState.refresh is LoadState.Loading) {
@@ -43,7 +40,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
         })
     }
 
-    private fun setAdapter(pagingData :Flow<PagingData<Notification>>){
+    private fun setAdapter(pagingData: Flow<PagingData<Notification>>) {
         lifecycleScope.launchWhenCreated {
             pagingData.collectLatest {
                 viewModel.adapter.submitData(it)

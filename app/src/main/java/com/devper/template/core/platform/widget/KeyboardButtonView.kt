@@ -26,11 +26,11 @@ class KeyboardButtonView @JvmOverloads constructor(
             val inflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = inflater.inflate(R.layout.view_keyboard_button, this) as KeyboardButtonView
             if (text != null) {
-                val textView = view.findViewById<TextView>(R.id.keyboard_button_textview)
+                val textView = view.findViewById<TextView>(R.id.tv_keyboard_button)
                 textView.text = text
             }
             if (image != null) {
-                val imageView = view.findViewById<AppCompatImageView>(R.id.keyboard_button_imageview)
+                val imageView = view.findViewById<AppCompatImageView>(R.id.img_keyboard_button)
                 imageView.setImageDrawable(image)
                 imageView.visibility = View.VISIBLE
             }

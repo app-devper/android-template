@@ -6,7 +6,6 @@ import android.content.Context.TELEPHONY_SERVICE
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
-import com.devper.template.domain.provider.AppInfoProvider
 import java.util.*
 
 class AndroidAppInfo(private val application: Context) : AppInfoProvider {

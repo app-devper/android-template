@@ -3,6 +3,7 @@ package com.devper.template.domain.core
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import com.devper.template.core.exception.AppException
 
 sealed class ResultState<out T> {
 
@@ -42,6 +43,10 @@ inline fun <reified T> ResultState<T>.success(): T? {
 
 fun <T> ResultState<T>.successOr(fallback: T): T {
     return (this as? ResultState.Success<T>)?.data ?: fallback
+}
+
+fun Throwable.toError(): AppException {
+    return ErrorMapper.toAppError(this)
 }
 
 val <T> ResultState<T>.data: T?

@@ -1,5 +1,6 @@
 package com.devper.template.core.platform.helper
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
@@ -11,52 +12,27 @@ object LocaleHelper {
     private const val SELECTED_LANGUAGE = "selected_language"
 
     fun onAttach(context: Context): Context {
-        val lang =
-            getPersistedData(
-                context,
-                Locale.getDefault().language
-            )
-        return setLocale(
-            context,
-            lang
-        )
+        val lang = getPersistedData(context, Locale.getDefault().language)
+        return setLocale(context, lang)
     }
 
+    @SuppressLint("LogNotTimber")
     fun onAttach(context: Context, defaultLanguage: String): Context {
-        val lang =
-            getPersistedData(
-                context,
-                defaultLanguage
-            )
+        val lang = getPersistedData(context, defaultLanguage)
         Log.i("LocaleHelper", "onAttach: $lang")
-        return setLocale(
-            context,
-            lang
-        )
+        return setLocale(context, lang)
     }
 
     fun getLanguage(context: Context): String {
-        return getPersistedData(
-            context,
-            Locale.getDefault().language
-        )
+        return getPersistedData(context, Locale.getDefault().language)
     }
 
     fun setLocale(context: Context, language: String): Context {
-        persist(
-            context,
-            language
-        )
+        persist(context, language)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            updateResources(
-                context,
-                language
-            )
+            updateResources(context, language)
         } else {
-            updateResourcesLegacy(
-                context,
-                language
-            )
+            updateResourcesLegacy(context, language)
         }
     }
 

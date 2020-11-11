@@ -21,8 +21,8 @@ abstract class BaseActivity<Binding : ViewDataBinding>(private val layoutId: Int
         binding = DataBindingUtil.setContentView(this, layoutId)
         binding.lifecycleOwner = this
 
-        setupView()
         observeLiveData()
+        setupView()
     }
 
     abstract fun setupView()

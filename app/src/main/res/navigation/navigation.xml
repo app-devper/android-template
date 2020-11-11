@@ -21,6 +21,10 @@
         android:id="@+id/action_to_pin_max_attempt"
         app:destination="@id/pin_max_attempt_dest" />
 
+    <action
+        android:id="@+id/action_to_suspend_account"
+        app:destination="@id/suspend_account_dest" />
+
     <fragment
         android:id="@+id/splash_dest"
         android:name="com.devper.template.presentation.splash.SplashFragment"
@@ -28,7 +32,7 @@
 
         <action
             android:id="@+id/splash_to_pin_code"
-            app:destination="@id/pin_code_dest"
+            app:destination="@id/login_pin_dest"
             app:launchSingleTop="true"
             app:popUpTo="@id/splash_dest"
             app:popUpToInclusive="true" />
@@ -44,7 +48,7 @@
 
     <fragment
         android:id="@+id/pin_max_attempt_dest"
-        android:name="com.devper.template.presentation.pin.PinMaxAttemptFragment"
+        android:name="com.devper.template.presentation.loginpin.LoginMaxAttemptFragment"
         android:label="@string/login_title"
         tools:layout="@layout/fragment_pin_max_attempt" >
 
@@ -54,24 +58,45 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/pin_max_attempt_dest"
             app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/suspend_account_dest"
+        android:name="com.devper.template.presentation.login.LoginSuspendFragment"
+        android:label="@string/login_title"
+        tools:layout="@layout/fragment_suspend_account" >
+
+        <action
+            android:id="@+id/suspend_account_to_forgot_password"
+            app:destination="@id/navigation_forgot_password"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/suspend_account_dest"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 
     <fragment
-        android:id="@+id/pin_code_dest"
-        android:name="com.devper.template.presentation.login.LoginPinFragment"
+        android:id="@+id/login_pin_dest"
+        android:name="com.devper.template.presentation.loginpin.LoginPinFragment"
         android:label="@string/login_title"
         tools:layout="@layout/fragment_login_pin">
 
         <action
-            android:id="@+id/pin_code_to_home"
+            android:id="@+id/login_pin_to_home"
             app:destination="@id/navigation_home"
             app:launchSingleTop="true"
-            app:popUpTo="@id/pin_code_dest"
+            app:popUpTo="@id/login_pin_dest"
             app:popUpToInclusive="true" />
 
         <action
-            android:id="@+id/pin_code_to_forgot_pin"
+            android:id="@+id/login_pin_to_login"
+            app:destination="@id/navigation_login"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/login_pin_dest"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/login_pin_to_forgot_pin"
             app:destination="@id/navigation_forgot_pin" />
 
     </fragment>

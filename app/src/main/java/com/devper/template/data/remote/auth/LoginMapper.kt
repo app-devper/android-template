@@ -1,11 +1,13 @@
 package com.devper.template.data.remote.auth
 
+import com.devper.template.core.extension.md5
 import com.devper.template.domain.model.auth.*
 
 class LoginMapper {
 
     fun toRequest(data: LoginParam): LoginRequest {
-        return LoginRequest(data.username, data.password, data.channel)
+        val password = data.password?.md5()
+        return LoginRequest(data.username, password, data.channel)
     }
 
     fun toRequest(data: PasswordParam): PasswordRequest {

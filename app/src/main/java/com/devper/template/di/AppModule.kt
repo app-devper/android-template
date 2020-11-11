@@ -12,8 +12,9 @@ import com.devper.template.data.remote.HttpInterceptor
 import com.devper.template.data.remote.RemoteFactory
 import com.devper.template.data.session.AppSession
 import com.devper.template.data.session.AppSessionProvider
-import com.devper.template.domain.core.thread.Dispatcher
-import com.devper.template.domain.provider.AppInfoProvider
+import com.devper.template.core.thread.Dispatcher
+import com.devper.template.data.device.AppInfoProvider
+import com.devper.template.data.preference.PreferenceStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePreference(@ApplicationContext context: Context): AppPreference = AppPreference(context)
+    fun providePreference(@ApplicationContext context: Context): PreferenceStorage = AppPreference(context)
 
     @Singleton
     @Provides
@@ -43,8 +44,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideNetworkInfo(@ApplicationContext context: Context): NetworkInfoHelper =
-        NetworkInfoHelper(context)
+    fun provideNetworkInfo(@ApplicationContext context: Context): NetworkInfoHelper = NetworkInfoHelper(context)
 
     @Singleton
     @Provides

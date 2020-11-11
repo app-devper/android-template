@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.login.viewmodel.LoginPinViewModel" />
+            type="com.devper.template.presentation.loginpin.LoginPinViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +47,17 @@
                 android:layout_centerInParent="true"
                 android:onClick="@{()->viewModel.nextToForgotPin() }"
                 android:text="@string/pin_code_forgot_pin"
+                app:underline="@{true}" />
+
+            <TextView
+                android:id="@+id/tvLogout"
+                style="@style/Text.Link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pin_code_forgot_textview"
+                android:layout_centerInParent="true"
+                android:onClick="@{()->viewModel.nextToLogin() }"
+                android:text="@string/pin_code_clear"
                 app:underline="@{true}" />
 
         </RelativeLayout>

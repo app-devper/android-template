@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
 import com.devper.template.R
+import com.devper.template.core.exception.AppException
 import com.devper.template.core.platform.EventObserver
-import com.devper.template.domain.core.ErrorMapper
 
 abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int) : Fragment() {
 
@@ -31,7 +31,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         super.onActivityCreated(savedInstanceState)
         viewModel.apply {
             onNavigate = { id, bundle ->
-                mainViewModel.navigate(id, bundle)
+                findNavController().navigate(id, bundle)
             }
             retry = {
                 getArgument()
@@ -67,22 +67,17 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
     abstract fun onArguments(it: Bundle?)
 
     private fun handleError(code: String) {
-        if (code == SESSION_EXPIRED_ERROR) {
-            viewModel.onNavigate(R.id.action_to_login, null)
-        } else {
-            onCodeError(code)
+        when (code) {
+            SESSION_EXPIRED_ERROR -> {
+                viewModel.onNavigate(R.id.action_to_login, null)
+            }
+            else -> {
+                onDismissError(code)
+            }
         }
     }
 
-    open fun onCodeError(code: String) {
-    }
-
-    open fun showToolbar() {
-        appCompat().supportActionBar?.show()
-    }
-
-    open fun hideToolbar() {
-        appCompat().supportActionBar?.hide()
+    open fun onDismissError(code: String) {
     }
 
     open fun showLoading() {
@@ -93,53 +88,51 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         viewModel.isLoading.value = View.GONE
     }
 
-    open fun setTitle(title: String) {
-        appCompat().supportActionBar?.title = title
-    }
-
-    open fun appCompat(): MainActivity {
-        return activity as MainActivity
+    open fun appCompat(): MainActivity? {
+        return if (activity is MainActivity) {
+            activity as MainActivity
+        } else {
+            null
+        }
     }
 
     open fun showDialog() {
-        appCompat().showLoading()
+        appCompat()?.showLoading()
     }
 
     open fun hideDialog() {
-        appCompat().hideLoading()
+        appCompat()?.hideLoading()
     }
 
     fun clearLogin() {
-        appCompat().clearLogin()
-    }
-
-    fun handlerLogin() {
-        appCompat().handlerLogin()
+        appCompat()?.clearLogin()
     }
 
     fun getUnread() {
         mainViewModel.getUnread()
     }
 
-    val badge: String
+    val badge: Int
         get() = mainViewModel.badge
 
-    fun toError(throwable: Throwable?) {
-        appCompat().toError(throwable)
-    }
-
-    fun hideBottomNavigation() {
-        appCompat().hideBottomNavigation()
-    }
-
-    fun showBottomNavigation() {
-        appCompat().showBottomNavigation()
+    fun toError(throwable: AppException) {
+        when (throwable.resultCode) {
+            "CM-401-112" -> {
+                viewModel.onNavigate(R.id.action_to_pin_max_attempt, null)
+            }
+            "CM-401-105" -> {
+                viewModel.onNavigate(R.id.action_to_suspend_account, null)
+            }
+            else -> {
+                mainViewModel.error(throwable.resultCode, throwable.getDesc())
+            }
+        }
     }
 
     open fun isShowCancel(code: String): Boolean = false
 
     fun applyDisplayHomeAsUpEnabled(asUpEnable: Boolean) {
-        appCompat().supportActionBar?.apply {
+        appCompat()?.supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(asUpEnable)
         }
     }
@@ -154,7 +147,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
             if (isShowCancel(code)) {
                 withButtonCancelText(getString(R.string.cancel))
             }
-            withDescription(if (code.isEmpty()) message else "$message \n[Code : $code]")
+            withDescription(if (code.isEmpty()) message else "$message [Code : $code]")
             build()
         }
         fragment.show(childFragmentManager, "dialog")

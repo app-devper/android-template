@@ -1,17 +1,15 @@
 package  com.devper.template.core.platform.location
 
 import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.location.Location
 import android.os.*
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.devper.template.BuildConfig
-
 import com.google.android.gms.location.*
+import timber.log.Timber
 
 class LocationService : Service() {
 
@@ -79,13 +77,15 @@ class LocationService : Service() {
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 super.onLocationResult(locationResult)
-                onNewLocation(locationResult!!.lastLocation)
+                locationResult?.let {
+                    onNewLocation(it.lastLocation)
+                }
             }
         }
     }
 
     override fun onCreate() {
-        Log.i(TAG, "Service onCreate")
+        Timber.i("Service onCreate")
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         createLocationRequest()
@@ -94,7 +94,7 @@ class LocationService : Service() {
         val handlerThread = HandlerThread(TAG)
         handlerThread.start()
         mServiceHandler = Handler(handlerThread.looper)
-        mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         // Android O requires a Notification Channel.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -106,7 +106,7 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log.i(TAG, "Service started")
+        Timber.i("Service started")
         val startedFromNotification = intent.getBooleanExtra(EXTRA_STARTED_FROM_NOTIFICATION, false)
 
         // We got here because the user decided to remove location updates from the notification.
@@ -124,23 +124,23 @@ class LocationService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        Log.i(TAG, "in onBind()")
+        Timber.i("in onBind()")
         stopForeground(true)
         mChangingConfiguration = false
         return mBinder
     }
 
     override fun onRebind(intent: Intent) {
-        Log.i(TAG, "in onRebind()")
+        Timber.i("in onRebind()")
         stopForeground(true)
         mChangingConfiguration = false
         super.onRebind(intent)
     }
 
     override fun onUnbind(intent: Intent): Boolean {
-        Log.i(TAG, "Last client unbound from service")
+        Timber.i("Last client unbound from service")
         if (!mChangingConfiguration && LocationHelper.requestingLocationUpdates(this)) {
-            Log.i(TAG, "Starting foreground service")
+            Timber.i("Starting foreground service")
             startForeground(NOTIFICATION_ID, notification)
         }
         return true // Ensures onRebind() is called when a client re-binds.
@@ -154,26 +154,26 @@ class LocationService : Service() {
         locationRequest?.let {
             mLocationRequest = it
         }
-        Log.i(TAG, "Requesting location updates")
+        Timber.i("Requesting location updates")
         LocationHelper.setRequestingLocationUpdates(this, true)
         startService(Intent(applicationContext, LocationService::class.java))
         try {
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
         } catch (unlikely: SecurityException) {
             LocationHelper.setRequestingLocationUpdates(this, false)
-            Log.e(TAG, "Lost location permission. Could not request updates. $unlikely")
+            Timber.e("Lost location permission. Could not request updates. $unlikely")
         }
     }
 
     private fun removeLocationUpdates() {
-        Log.i(TAG, "Removing location updates")
+        Timber.i("Removing location updates")
         try {
             mFusedLocationClient.removeLocationUpdates(mLocationCallback)
             LocationHelper.setRequestingLocationUpdates(this, false)
             stopSelf()
         } catch (unlikely: SecurityException) {
             LocationHelper.setRequestingLocationUpdates(this, true)
-            Log.e(TAG, "Lost location permission. Could not remove updates. $unlikely")
+            Timber.e("Lost location permission. Could not remove updates. $unlikely")
         }
     }
 
@@ -183,20 +183,17 @@ class LocationService : Service() {
                 if (task.isSuccessful && task.result != null) {
                     mLocation = task.result
                 } else {
-                    Log.w(TAG, "Failed to get location.")
+                    Timber.w("Failed to get location.")
                 }
             }
         } catch (unlikely: SecurityException) {
-            Log.e(TAG, "Lost location permission.$unlikely")
+            Timber.e("Lost location permission.$unlikely")
         }
     }
 
     private fun onNewLocation(location: Location) {
-        Log.i(TAG, "New location: $location")
-
+        Timber.i("New location: $location")
         mLocation = location
-
-        // Notify anyone listening for broadcasts about the new location.
         val intent = Intent(ACTION_BROADCAST)
         intent.putExtra(EXTRA_LOCATION, location)
         LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)

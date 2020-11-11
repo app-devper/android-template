@@ -23,7 +23,7 @@ class MaskWatcher(private val editText: EditText, private val mask: String) : Te
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
     }
 
-    fun format(text: Editable?) {
+    private fun format(text: Editable?) {
         if (text.isNullOrEmpty()) return
         text.apply {
             // reset input filters

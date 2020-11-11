@@ -15,6 +15,7 @@ data class User(
     val phone: String?,
     val imageUrl: String?,
     val status: String?,
+    val pin: String? = null,
 ) : Parcelable {
     val fullName: String
         get() = "$firstName $lastName"

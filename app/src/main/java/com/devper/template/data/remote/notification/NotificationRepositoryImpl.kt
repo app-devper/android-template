@@ -3,7 +3,6 @@ package com.devper.template.data.remote.notification
 import com.devper.template.data.remote.ApiService
 import com.devper.template.domain.model.notification.Notifications
 import com.devper.template.domain.model.notification.SubscriptionParam
-import com.devper.template.domain.repository.NotificationRepository
 import javax.inject.Inject
 
 class NotificationRepositoryImpl @Inject constructor(

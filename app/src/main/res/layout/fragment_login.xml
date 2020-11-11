@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.devper.template.presentation.login.viewmodel.LoginViewModel" />
+            type="com.devper.template.presentation.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

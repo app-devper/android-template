@@ -65,10 +65,10 @@ class CountDrawable(context: Context) : Drawable() {
     /*
     Sets the count (i.e notifications) to display.
      */
-    fun setCount(count: String) {
-        mCount = count
+    fun setCount(count: Int) {
+        mCount = count.toString()
         // Only draw a badge if there are notifications.
-        mWillDraw = !count.equals("0", ignoreCase = true)
+        mWillDraw = count > 0
         invalidateSelf()
     }
 

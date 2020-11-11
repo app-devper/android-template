@@ -5,13 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import coil.api.load
+import coil.load
 import com.devper.template.R
 import com.devper.template.core.platform.picker.ImagePickerConfig
 import com.devper.template.core.platform.picker.PickerCallback
 import com.devper.template.databinding.FragmentProfileBinding
+import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.profile.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,8 +22,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private lateinit var picker: ImagePickerConfig
 
     override fun setupView() {
-        showToolbar()
-        showBottomNavigation()
         picker = ImagePickerConfig(requireActivity(), object : PickerCallback {
             override fun onSuccess(imagePath: Uri?) {
                 loadProfile(imagePath.toString())
@@ -40,16 +38,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             }
         }
         //clearCache(requireContext())
-
     }
 
     override fun onArguments(it: Bundle?) {
-        mainViewModel.getProfile()
     }
 
     override fun observeLiveData() {
-        mainViewModel.userLiveData.observe(viewLifecycleOwner, {
-            binding.user = it
+        mainViewModel.profileLiveData.observe(viewLifecycleOwner, {
+            when (it) {
+                is ResultState.Success -> {
+                    binding.user = it.data
+                }
+            }
         })
     }
 

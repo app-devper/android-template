@@ -5,8 +5,8 @@ import androidx.fragment.app.viewModels
 import com.devper.template.R
 import com.devper.template.databinding.FragmentSplashBinding
 import com.devper.template.domain.core.ResultState
+import com.devper.template.domain.core.toError
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.splash.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,8 +15,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     override val viewModel: SplashViewModel by viewModels()
 
     override fun setupView() {
-        hideToolbar()
-        hideBottomNavigation()
     }
 
     override fun observeLiveData() {
@@ -25,10 +23,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                 is ResultState.Loading -> {
                 }
                 is ResultState.Success -> {
-                    viewModel.nextPage(it.data)
+                    viewModel.checkLogin()
                 }
                 is ResultState.Error -> {
-                   toError(it.throwable)
+                   toError(it.throwable.toError())
                 }
             }
         })

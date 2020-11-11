@@ -3,6 +3,7 @@ package com.devper.template
 object AppConfig {
 
     const val LOGIN_ERROR = "LOGIN_ERROR"
+    const val USER_INVALID_ERROR = "USER_INVALID_ERROR"
 
     const val DATA_ERROR = "DATA_ERROR"
     const val PARSE_JSON_ERROR = "PARSE_JSON_ERROR"
@@ -24,6 +25,7 @@ object AppConfig {
     const val FLOW_CHANGE_PASSWORD = "change_password"
     const val FLOW_CHANGE_PIN = "change_pin"
     const val FLOW_SET_BIO = "set_bio"
+    const val FLOW_VERIFY_PIN= "verify_pin"
     const val FLOW_UPDATE_PROFILE = "update_profile"
     const val FLOW_UPDATE_USER = "update_user"
 }
