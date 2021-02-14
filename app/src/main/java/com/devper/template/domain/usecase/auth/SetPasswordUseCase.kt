@@ -4,9 +4,9 @@ import com.devper.template.AppConfig.LOGIN_ERROR
 import com.devper.template.core.exception.AppException
 import com.devper.template.core.extension.md5
 import com.devper.template.domain.core.ResultState
-import com.devper.template.core.thread.Dispatcher
+import com.devper.template.domain.core.thread.Dispatcher
 import com.devper.template.domain.model.auth.SetPasswordParam
-import com.devper.template.data.remote.auth.AuthRepository
+import com.devper.template.domain.repository.AuthRepository
 import com.devper.template.domain.usecase.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
     <data>
 
@@ -17,7 +15,9 @@
             type="com.devper.template.presentation.setting.SettingViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -476,7 +476,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="24dp"
-                    android:onClick="@{()-> viewModel.nextToLogin()}"
+                    android:onClick="@{()-> viewModel.nextToLogout()}"
                     app:cardCornerRadius="6dp"
                     app:cardElevation="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -517,6 +517,12 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/layoutLoading"
+            layout="@layout/include_progress_loading"
+            app:viewModel="@{viewModel}"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

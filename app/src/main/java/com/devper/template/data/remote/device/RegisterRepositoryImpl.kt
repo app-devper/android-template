@@ -1,7 +1,8 @@
 package com.devper.template.data.remote.device
 
 import com.devper.template.data.remote.ApiService
-import com.devper.template.data.device.AppInfoProvider
+import com.devper.template.domain.provider.AppInfoProvider
+import com.devper.template.domain.repository.DeviceRepository
 import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(

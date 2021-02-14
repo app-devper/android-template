@@ -1,8 +1,10 @@
 package com.devper.template.presentation
 
 import android.os.Bundle
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.devper.template.core.platform.MutableLiveEvent
 import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
@@ -13,28 +15,32 @@ import com.devper.template.domain.usecase.auth.HaveLogInUseCase
 import com.devper.template.domain.usecase.auth.KeepAliveUseCase
 import com.devper.template.domain.usecase.notification.GetUnreadUseCase
 import com.devper.template.domain.usecase.notification.SubscriptionUseCase
+import com.devper.template.domain.usecase.preference.HavePinUseCase
 import com.devper.template.domain.usecase.user.GetProfileUseCase
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val keepAliveUseCase: KeepAliveUseCase,
     private val subscriptionUseCase: SubscriptionUseCase,
     private val getUnreadUseCase: GetUnreadUseCase,
-    private val haveLogInUseCase: HaveLogInUseCase
+    private val haveLogInUseCase: HaveLogInUseCase,
+    private val havePinUseCase: HavePinUseCase,
 ) : ViewModel() {
 
     private val _profile = MutableLiveData<ResultState<User>>()
     val profileLiveData: LiveData<ResultState<User>> = _profile
 
-    val errorLiveData = MutableLiveEvent<Pair<String, String>>()
+    val errorLiveData = MutableLiveEvent<Pair<String, String>?>()
 
-    val codeLiveData = MutableLiveEvent<String>()
-
-    val isLoginData = MutableLiveData<Boolean>()
+    val loginLiveData = MutableLiveData<Boolean>()
 
     val badgeLiveData = MutableLiveData<Int>()
     val badge: Int
@@ -42,6 +48,14 @@ class MainViewModel @ViewModelInject constructor(
 
     private val _message = SingleLiveEvent<Bundle>()
     val messageLiveData: LiveData<Bundle> = _message
+
+    var resultPin = SingleLiveEvent<Boolean>()
+
+    fun havePin() {
+        viewModelScope.launch {
+            resultPin.value = havePinUseCase(Unit).success()
+        }
+    }
 
     fun getProfile() {
         getProfileUseCase(Unit).onEach {
@@ -55,9 +69,9 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getLogin() {
+    fun initLogin() {
         viewModelScope.launch {
-            isLoginData.value = haveLogInUseCase(Unit).success()
+            loginLiveData.value = haveLogInUseCase(Unit).success()
         }
     }
 
@@ -68,10 +82,11 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     fun subscription() {
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if (it.isSuccessful) {
-                it.result?.token?.let { token ->
+                it.result?.let { token ->
                     subscription(token)
+                    Timber.d("Instance token: $token")
                 }
             }
         }
@@ -90,10 +105,11 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     fun clearUser() {
+        loginLiveData.value = false
         _profile.value = null
     }
 
-    fun isLogin() = isLoginData.value ?: false
+    fun isLogin() = loginLiveData.value ?: false
 
     fun error(code: String, msg: String) {
         errorLiveData.setEventValue(Pair(code, msg))

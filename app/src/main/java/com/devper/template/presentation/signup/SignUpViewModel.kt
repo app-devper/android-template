@@ -1,7 +1,6 @@
 package com.devper.template.presentation.signup
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devper.template.AppConfig
@@ -11,10 +10,13 @@ import com.devper.template.domain.model.user.SignUpParam
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.usecase.user.SignUpUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class SignUpViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase
 ) : BaseViewModel() {
 

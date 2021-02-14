@@ -23,6 +23,92 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.ActionBar.Transparent" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.TransparentActionBar" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBar.Transparent</item>
+    </style>
+
+    <style name="AppTheme.ProgressBar" parent="AppTheme.TransparentActionBar">
+        <item name="colorAccent">@color/colorBlueDark</item>
+        <item name="android:textColorPrimary">@color/colorBlueDark</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppTheme.ProgressBar.White" parent="AppTheme.ProgressBar">
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+    </style>
+
+    <style name="Text.Primary" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBlue</item>
+    </style>
+
+    <style name="Text.Primary.Bold" parent="Text.Primary">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.ฺBlack.Primary" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="Text.Black.Sub" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="Text.GreyDarker.Sub" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorGreyDarker</item>
+    </style>
+
+    <style name="Text.Red.Sub" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorRed</item>
+    </style>
+
+    <style name="Text.Black.Sub.Bold" parent="Text.Black.Sub">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Grey.Sub" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+    <style name="Text.Grey.Sub.Bold" parent="Text.Grey.Sub">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.White.Sub" parent="Text.Grey.Sub">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
     <style name="Text">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>

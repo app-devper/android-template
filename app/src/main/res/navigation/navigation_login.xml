@@ -18,7 +18,10 @@
 
         <action
             android:id="@+id/login_to_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_login"
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/login_to_forgot_password"
@@ -34,7 +37,7 @@
         android:id="@+id/signup_dest"
         android:name="com.devper.template.presentation.signup.SignUpFragment"
         android:label="@string/register"
-        tools:layout="@layout/fragment_signup" >
+        tools:layout="@layout/fragment_signup">
         <action
             android:id="@+id/signup_to_set_password"
             app:destination="@id/navigation_set_password"

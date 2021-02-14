@@ -19,7 +19,7 @@ class UserFormFragment : BaseFragment<FragmentUserFormBinding>(R.layout.fragment
     }
 
     override fun observeLiveData() {
-        viewModel.resultUser.observe(viewLifecycleOwner, {
+        viewModel.resultUser.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()

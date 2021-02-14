@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
     <data>
 
@@ -12,56 +10,75 @@
             name="user"
             type="com.devper.template.domain.model.user.User" />
 
+        <variable
+            name="viewModel"
+            type="com.devper.template.presentation.profile.ProfileViewModel" />
+
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="@dimen/toolbar_profile_width"
-            android:layout_height="wrap_content">
-
-            <com.devper.template.core.platform.widget.RoundedImageView
-                android:id="@+id/img_profile"
-                android:layout_width="@dimen/toolbar_profile_width"
-                android:layout_height="@dimen/toolbar_profile_width"
-                android:layout_marginTop="@dimen/activity_padding"
-                android:layout_marginBottom="@dimen/activity_padding"
-                android:scaleType="centerInside"
-                android:src="@drawable/main_ic_logo" />
-
-            <ImageView
-                android:id="@+id/img_plus"
-                android:layout_width="@dimen/ic_plus_width"
-                android:layout_height="@dimen/ic_plus_width"
-                android:layout_alignBottom="@id/img_profile"
-                android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/profile_ic_add"
-                tools:ignore="ContentDescription" />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{user.fullName}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/profile_title"
-            tools:text="@string/profile_title" />
-
-        <TextView
-            android:id="@+id/profile_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_40dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:paddingLeft="@dimen/dimen_20dp"
-            android:paddingRight="@dimen/dimen_20dp"
-            android:text="@{user.email}"
-            android:textSize="@dimen/profile_desc"
-            tools:text="@string/profile_desc" />
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="@dimen/toolbar_profile_width"
+                android:layout_height="wrap_content">
+
+                <com.devper.template.core.platform.widget.RoundedImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="@dimen/toolbar_profile_width"
+                    android:layout_height="@dimen/toolbar_profile_width"
+                    android:layout_marginTop="@dimen/activity_padding"
+                    android:layout_marginBottom="@dimen/activity_padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/main_ic_logo" />
+
+                <ImageView
+                    android:id="@+id/img_plus"
+                    android:layout_width="@dimen/ic_plus_width"
+                    android:layout_height="@dimen/ic_plus_width"
+                    android:layout_alignBottom="@id/img_profile"
+                    android:layout_alignParentEnd="true"
+                    app:srcCompat="@drawable/profile_ic_add"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{user.fullName}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/profile_title"
+                tools:text="@string/profile_title" />
+
+            <TextView
+                android:id="@+id/profile_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_40dp"
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/dimen_20dp"
+                android:paddingRight="@dimen/dimen_20dp"
+                android:text="@{user.email}"
+                android:textSize="@dimen/profile_desc"
+                tools:text="@string/profile_desc" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/loading"
+            layout="@layout/include_progress_loading"
+            app:viewModel="@{viewModel}"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

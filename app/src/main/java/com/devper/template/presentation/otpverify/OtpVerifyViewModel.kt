@@ -1,7 +1,6 @@
 package com.devper.template.presentation.otpverify
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devper.template.AppConfig.EXTRA_FLOW
@@ -19,10 +18,13 @@ import com.devper.template.domain.model.otp.VerifyUserParam
 import com.devper.template.domain.usecase.otp.VerifyCodeUseCase
 import com.devper.template.domain.usecase.otp.VerifyUserUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class OtpVerifyViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OtpVerifyViewModel @Inject constructor(
     private val verifyUserUseCase: VerifyUserUseCase,
     private val verifyCodeUseCase: VerifyCodeUseCase
 ) : BaseViewModel() {
@@ -77,7 +79,7 @@ class OtpVerifyViewModel @ViewModelInject constructor(
         verifyCode(param)
     }
 
-    fun verifyCode(param: VerifyCodeParam) {
+    private fun verifyCode(param: VerifyCodeParam) {
         verifyCodeUseCase(param)
             .onEach { resultVerifyCode.value = it }
             .launchIn(viewModelScope)

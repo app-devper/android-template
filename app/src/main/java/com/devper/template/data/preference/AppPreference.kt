@@ -4,14 +4,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.devper.template.domain.provider.PreferenceProvider
 
-class AppPreference constructor(context: Context) : PreferenceStorage {
+class AppPreference constructor(context: Context) : PreferenceProvider {
 
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
-    private val preferences: SharedPreferences
+    private val preferences: SharedPreferences = EncryptedSharedPreferences.create(
+        context,
+        PREF_APP,
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
     override var userId: String
         get() = preferences.getString(PREF_USER_ID, "") ?: ""
@@ -40,16 +47,6 @@ class AppPreference constructor(context: Context) : PreferenceStorage {
         editor.putString(PREF_USER_KEY, "")
         editor.putString(PREF_USER_PIN, "")
         editor.apply()
-    }
-
-    init {
-        preferences = EncryptedSharedPreferences.create(
-            context,
-            PREF_APP,
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
     }
 
     companion object {

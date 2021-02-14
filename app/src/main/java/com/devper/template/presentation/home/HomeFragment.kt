@@ -1,13 +1,10 @@
 package com.devper.template.presentation.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import com.devper.template.R
 import com.devper.template.databinding.FragmentHomeBinding
-import com.devper.template.domain.core.ResultState
 import com.devper.template.presentation.BaseFragment
-import com.devper.template.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,20 +16,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun onArguments(it: Bundle?) {
-        viewModel.havePin()
+        if (!mainViewModel.isLogin()) {
+            viewModel.onNavigate(R.id.action_to_login_pin, null)
+        }
     }
 
     override fun observeLiveData() {
-        mainViewModel.profileLiveData.observe(viewLifecycleOwner, {
-            when (it) {
-                is ResultState.Success -> {
-                }
-            }
-        })
-
-        viewModel.resultPin.observe(viewLifecycleOwner, {
+        mainViewModel.resultPin.observe(this, {
             if (!it) {
-                viewModel.nextToPage(mainViewModel.getUser())
+                viewModel.onNavigate(R.id.action_to_pin_verify, null)
             }
         })
     }

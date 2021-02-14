@@ -1,7 +1,7 @@
 package com.devper.template.domain.usecase.auth
 
-import com.devper.template.core.thread.Dispatcher
-import com.devper.template.data.session.AppSessionProvider
+import com.devper.template.domain.core.thread.Dispatcher
+import com.devper.template.domain.provider.AppSessionProvider
 import com.devper.template.domain.usecase.UseCase
 import javax.inject.Inject
 

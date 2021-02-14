@@ -1,7 +1,6 @@
 package com.devper.template.presentation.user
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -10,9 +9,12 @@ import com.devper.template.R
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.user.GetUsersUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class UserViewModel @ViewModelInject constructor(
+@HiltViewModel
+class UserViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase
 ) : BaseViewModel() {
 

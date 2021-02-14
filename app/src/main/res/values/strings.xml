@@ -114,6 +114,10 @@
     <string name="next">ถัดไป</string>
     <string name="accept">ยอมรับ</string>
     <string name="not_accept">ไม่ยอมรับ</string>
+    <string name="please_select">กรุณาเลือก</string>
+    <string name="loading_text">กำลังดำเนินการ…</string>
+
+    <string name="error_empty">กรุณาระบุข้อมูล</string>
 
     <string name="address">ที่อยู่</string>
     <string name="address_no">เลขที่อยู่</string>

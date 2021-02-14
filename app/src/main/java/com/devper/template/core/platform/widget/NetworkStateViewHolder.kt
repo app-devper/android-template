@@ -38,8 +38,7 @@ class NetworkStateViewHolder(
     companion object {
 
         fun create(parent: ViewGroup, retryCallback: () -> Unit): NetworkStateViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_network_state, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_network_state, parent, false)
             return NetworkStateViewHolder(view, retryCallback)
         }
 

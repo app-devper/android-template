@@ -1,6 +1,5 @@
 package com.devper.template.presentation.term
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
@@ -10,10 +9,13 @@ import com.devper.template.domain.core.success
 import com.devper.template.domain.model.termcondition.TermCondition
 import com.devper.template.domain.usecase.termcondition.GetTermConditionUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class TermConditionViewModel @ViewModelInject constructor(
+@HiltViewModel
+class TermConditionViewModel @Inject constructor(
     private val getTermConditionUseCase: GetTermConditionUseCase
 ) : BaseViewModel() {
 

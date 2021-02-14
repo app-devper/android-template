@@ -4,6 +4,7 @@ import com.devper.template.data.remote.ApiService
 import com.devper.template.data.remote.user.UserMapper
 import com.devper.template.domain.model.auth.*
 import com.devper.template.domain.model.user.User
+import com.devper.template.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

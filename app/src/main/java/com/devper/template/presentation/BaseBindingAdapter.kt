@@ -8,7 +8,7 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.devper.template.core.extension.underline
 
 object BaseBindingAdapter {

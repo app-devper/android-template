@@ -12,17 +12,17 @@ import com.devper.template.data.remote.HttpInterceptor
 import com.devper.template.data.remote.RemoteFactory
 import com.devper.template.data.session.AppSession
 import com.devper.template.data.session.AppSessionProvider
-import com.devper.template.core.thread.Dispatcher
-import com.devper.template.data.device.AppInfoProvider
-import com.devper.template.data.preference.PreferenceStorage
+import com.devper.template.domain.core.thread.Dispatcher
+import com.devper.template.domain.provider.AppInfoProvider
+import com.devper.template.domain.provider.PreferenceProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
 
@@ -32,7 +32,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePreference(@ApplicationContext context: Context): PreferenceStorage = AppPreference(context)
+    fun providePreference(@ApplicationContext context: Context): PreferenceProvider = AppPreference(context)
 
     @Singleton
     @Provides

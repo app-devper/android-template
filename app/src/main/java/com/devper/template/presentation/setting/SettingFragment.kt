@@ -35,16 +35,24 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     }
 
     override fun observeLiveData() {
-        mainViewModel.profileLiveData.observe(viewLifecycleOwner, {
+        mainViewModel.profileLiveData.observe(this, {
             when (it) {
+                is ResultState.Loading -> {
+                    showLoading()
+                }
                 is ResultState.Success -> {
                     binding.user = it.data
+                    hideLoading()
                 }
+                is ResultState.Error -> {}
             }
         })
     }
 
     override fun onArguments(it: Bundle?) {
+        if(!mainViewModel.isLogin()){
+            viewModel.onNavigate(R.id.action_to_login_pin, null)
+        }
     }
 
 }

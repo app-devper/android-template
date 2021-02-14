@@ -6,6 +6,7 @@ import com.devper.template.domain.model.user.SignUpParam
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.model.user.UserUpdateParam
 import com.devper.template.domain.model.user.Users
+import com.devper.template.domain.repository.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(

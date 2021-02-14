@@ -1,7 +1,6 @@
 package com.devper.template.presentation.splash
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,11 +11,14 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.usecase.device.RegisterDeviceUseCase
 import com.devper.template.domain.usecase.preference.GetUserIdUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SplashViewModel @Inject constructor(
     private val registerDeviceUseCase: RegisterDeviceUseCase,
     private val getUserIdUseCase: GetUserIdUseCase
 ) : BaseViewModel() {
@@ -46,7 +48,7 @@ class SplashViewModel @ViewModelInject constructor(
     private fun nextPage(it: String) {
         if (it.isNotEmpty()) {
             val bundle = bundleOf(EXTRA_PARAM to it)
-            onNavigate(R.id.splash_to_pin_code, bundle)
+            onNavigate(R.id.splash_to_home, bundle)
         } else {
             onNavigate(R.id.splash_to_login, null)
         }

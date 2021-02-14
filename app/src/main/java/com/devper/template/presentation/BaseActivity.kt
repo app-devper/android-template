@@ -6,11 +6,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.devper.template.R
 import com.devper.template.core.platform.helper.LocaleHelper
 
 abstract class BaseActivity<Binding : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity() {
 
     lateinit var binding: Binding
+    private var dialog: BaseDialogFragment? = null
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(LocaleHelper.onAttach(base, LocaleHelper.getLanguage(base)))
@@ -40,6 +42,24 @@ abstract class BaseActivity<Binding : ViewDataBinding>(private val layoutId: Int
             android.R.id.home -> onBackPressed()
         }
         return true
+    }
+
+    fun showMessage(code: String = "", message: String = "",) {
+        dialog?.let {
+            if (it.isVisible) {
+                return
+            }
+        }
+        dialog = BaseDialogFragment.Builder().run {
+            withTitle(getString(R.string.error_title))
+            withoutCancel()
+            withConfirmAction {
+
+            }
+            withDescription(if (code.isEmpty()) message else "$message [Code : $code]")
+            build()
+        }
+        dialog?.show(supportFragmentManager, "dialog")
     }
 
 }

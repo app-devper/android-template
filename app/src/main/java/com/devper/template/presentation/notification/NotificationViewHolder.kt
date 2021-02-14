@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devper.template.databinding.ItemNotificationBinding
 import com.devper.template.domain.model.notification.Notification
 
-class NotificationViewHolder(private val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
+class NotificationViewHolder(val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
 
     var onClick: (notification: Notification) -> Unit = {}
 
@@ -17,11 +17,9 @@ class NotificationViewHolder(private val binding: ItemNotificationBinding) : Rec
     }
 
     companion object {
-        fun create(parent: ViewGroup, onClick: (notification: Notification) -> Unit): NotificationViewHolder {
+        fun create(parent: ViewGroup): NotificationViewHolder {
             val binding = ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return NotificationViewHolder(binding).apply {
-                this.onClick = onClick
-            }
+            return NotificationViewHolder(binding)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.devper.template.presentation.userupdate
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devper.template.AppConfig.FLOW_UPDATE_PROFILE
@@ -12,10 +11,13 @@ import com.devper.template.domain.model.user.UserUpdateParam
 import com.devper.template.domain.usecase.user.UpdateProfileUseCase
 import com.devper.template.domain.usecase.user.UpdateUserUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class UserFormViewModel @ViewModelInject constructor(
+@HiltViewModel
+class UserFormViewModel @Inject constructor(
     private val updateProfileUseCase: UpdateProfileUseCase,
     private val updateUserUseCase: UpdateUserUseCase
 ) : BaseViewModel() {

@@ -1,16 +1,18 @@
 package com.devper.template.presentation.password
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.auth.GetActionInfoUseCase
 import com.devper.template.domain.usecase.auth.SetPasswordUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-open class PasswordSetViewModel @ViewModelInject constructor(
+@HiltViewModel
+open class PasswordSetViewModel @Inject constructor(
     private val getActionInfoUseCase: GetActionInfoUseCase,
     setPasswordUseCase: SetPasswordUseCase
 ) : BasePasswordViewModel(setPasswordUseCase) {

@@ -28,7 +28,7 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
     }
 
     override fun observeLiveData() {
-        viewModel.resultAction.observe(viewLifecycleOwner, {
+        viewModel.resultAction.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
@@ -44,7 +44,7 @@ class PasswordSetFragment : BaseFragment<FragmentPasswordFormBinding>(R.layout.f
             }
         })
 
-        viewModel.resultSetPassword.observe(viewLifecycleOwner, {
+        viewModel.resultSetPassword.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()

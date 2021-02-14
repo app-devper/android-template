@@ -1,5 +1,6 @@
 package com.devper.template.core.thread
 
+import com.devper.template.domain.core.thread.Dispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

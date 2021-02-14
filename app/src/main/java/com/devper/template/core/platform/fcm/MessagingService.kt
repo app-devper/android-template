@@ -10,7 +10,6 @@ import org.json.JSONException
 @SuppressLint("LogNotTimber")
 class MessagingService : FirebaseMessagingService() {
 
-
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "Refreshed token: $token")

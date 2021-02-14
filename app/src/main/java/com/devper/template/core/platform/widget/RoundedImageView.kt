@@ -17,7 +17,7 @@ class RoundedImageView : AppCompatImageView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    @SuppressLint("DrawAllocation")
+    @SuppressLint("DrawAllocation", "LogNotTimber")
     override fun onDraw(canvas: Canvas) {
 
         try {
@@ -53,7 +53,6 @@ class RoundedImageView : AppCompatImageView {
         } catch (e: Exception) {
             Log.e(TAG, "onDraw Exception", e)
         }
-
     }
 
     private fun getRoundedCroppedBitmap(bitmap: Bitmap, radius: Int): Bitmap {

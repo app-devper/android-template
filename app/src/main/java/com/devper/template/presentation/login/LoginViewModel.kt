@@ -1,13 +1,11 @@
 package com.devper.template.presentation.login
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devper.template.AppConfig.EXTRA_FLOW
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.AppConfig.FLOW_SET_PASSWORD
-import com.devper.template.AppConfig.FLOW_SET_PIN
 import com.devper.template.R
 import com.devper.template.core.platform.SingleLiveEvent
 import com.devper.template.core.smartlogin.LoginType
@@ -15,12 +13,14 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.auth.LoginParam
 import com.devper.template.domain.usecase.auth.LoginUseCase
 import com.devper.template.domain.usecase.user.ClearUserUseCase
-import com.devper.template.domain.usecase.user.GetProfileUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val clearUserUseCase: ClearUserUseCase
 ) : BaseViewModel() {

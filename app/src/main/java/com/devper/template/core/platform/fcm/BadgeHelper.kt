@@ -1,23 +1,18 @@
 package com.devper.template.core.platform.fcm
 
 import android.content.Context
-import android.content.SharedPreferences
 import me.leolin.shortcutbadger.ShortcutBadger
 
-class BadgeHelper(private val mContext: Context) {
+class BadgeHelper(private val context: Context) {
 
-    private var sharedPreferences: SharedPreferences
+    private var sharedPreferences = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE)
 
     var badgeCount: Int
         get() = sharedPreferences.getInt(BADGE_COUNT_KEY, 0)
         set(badgeCount) {
             storeBadgeCount(badgeCount)
-            ShortcutBadger.applyCount(mContext, badgeCount)
+            ShortcutBadger.applyCount(context, badgeCount)
         }
-
-    init {
-        sharedPreferences = mContext.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE)
-    }
 
     private fun storeBadgeCount(badgeCount: Int) {
         val editor = sharedPreferences.edit()
@@ -28,7 +23,6 @@ class BadgeHelper(private val mContext: Context) {
     }
 
     companion object {
-        private const val TAG = "BadgeHelper"
         private const val PREFERENCES_FILE = "BadgeCountFile"
         private const val BADGE_COUNT_KEY = "BadgeCount"
     }

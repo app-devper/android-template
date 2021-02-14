@@ -42,23 +42,28 @@ class LoginPinFragment : BaseFragment<FragmentLoginPinBinding>(R.layout.fragment
     }
 
     override fun observeLiveData() {
-        viewModel.username.observe(viewLifecycleOwner, {
-           authenticate()
+        viewModel.username.observe(this, {
+            authenticate()
         })
-        viewModel.resultLoginPin.observe(viewLifecycleOwner, {
+        viewModel.resultLoginPin.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    activity?.finish()
+                    mainViewModel.initLogin()
                 }
                 is ResultState.Error -> {
                     hideDialog()
                     binding.pinCodeRoundView.clearPin()
                     toError(it.throwable.toError())
                 }
+            }
+        })
+        mainViewModel.loginLiveData.observe(this, {
+            if (it) {
+                viewModel.nextToHome()
             }
         })
     }

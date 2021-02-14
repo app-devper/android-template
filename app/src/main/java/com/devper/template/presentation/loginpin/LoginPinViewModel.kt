@@ -1,6 +1,5 @@
 package com.devper.template.presentation.loginpin
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devper.template.R
@@ -11,11 +10,14 @@ import com.devper.template.domain.model.auth.LoginPinParam
 import com.devper.template.domain.usecase.auth.LoginPinUseCase
 import com.devper.template.domain.usecase.preference.GetUserIdUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginPinViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LoginPinViewModel @Inject constructor(
     private val loginPinUseCase: LoginPinUseCase,
     private val getUserIdUseCase: GetUserIdUseCase
 ) : BaseViewModel() {

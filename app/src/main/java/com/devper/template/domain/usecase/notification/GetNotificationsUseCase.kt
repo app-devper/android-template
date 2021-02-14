@@ -1,12 +1,9 @@
 package com.devper.template.domain.usecase.notification
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.PagingSource
-import com.devper.template.core.thread.Dispatcher
+import androidx.paging.*
+import com.devper.template.domain.core.thread.Dispatcher
 import com.devper.template.domain.model.notification.Notification
-import com.devper.template.data.remote.notification.NotificationRepository
+import com.devper.template.domain.repository.NotificationRepository
 import com.devper.template.domain.usecase.PagingUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,13 +18,17 @@ class GetNotificationsUseCase @Inject constructor(
     ) : PagingSource<Int, Notification>() {
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Notification> {
             return try {
-                val data = repository.getNotifications(params.key ?: 1)
-                val users = data.results
-                val nextKey = if (params.key == data.totalPages) null else params.key?.plus(1)
-                LoadResult.Page(users, null, nextKey)
+                repository.getNotifications(params.key ?: 1).run {
+                    val nextKey = if (params.key == totalPages) null else params.key?.plus(1)
+                    LoadResult.Page(results, null, nextKey)
+                }
             } catch (e: Exception) {
                 LoadResult.Error(e)
             }
+        }
+
+        override fun getRefreshKey(state: PagingState<Int, Notification>): Int {
+            return 1
         }
     }
 
@@ -36,5 +37,4 @@ class GetNotificationsUseCase @Inject constructor(
             NotificationPagingSource(repo)
         }.flow
     }
-
 }

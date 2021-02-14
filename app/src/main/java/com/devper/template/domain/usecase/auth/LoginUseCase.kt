@@ -3,12 +3,12 @@ package com.devper.template.domain.usecase.auth
 import com.devper.template.AppConfig.LOGIN_ERROR
 import com.devper.template.AppConfig.USER_INVALID_ERROR
 import com.devper.template.core.exception.AppException
-import com.devper.template.data.preference.PreferenceStorage
-import com.devper.template.data.remote.auth.AuthRepository
-import com.devper.template.data.session.AppSessionProvider
+import com.devper.template.domain.provider.PreferenceProvider
+import com.devper.template.domain.repository.AuthRepository
 import com.devper.template.domain.core.ResultState
-import com.devper.template.core.thread.Dispatcher
+import com.devper.template.domain.core.thread.Dispatcher
 import com.devper.template.domain.model.auth.LoginParam
+import com.devper.template.domain.provider.AppSessionProvider
 import com.devper.template.domain.usecase.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,7 +18,7 @@ class LoginUseCase @Inject constructor(
     dispatcher: Dispatcher,
     private val repo: AuthRepository,
     private val session: AppSessionProvider,
-    private val pref: PreferenceStorage
+    private val pref: PreferenceProvider
 ) : FlowUseCase<LoginParam, Unit>(dispatcher.io()) {
     override fun execute(params: LoginParam): Flow<ResultState<Unit>> {
         return flow {
@@ -32,8 +32,10 @@ class LoginUseCase @Inject constructor(
                 }
             }
             emit(ResultState.Loading())
-            session.accessToken = repo.login(params)
-            pref.userId = params.username
+            repo.login(params).also {
+                session.accessToken = it
+                pref.userId = params.username
+            }
             emit(ResultState.Success(Unit))
         }
     }

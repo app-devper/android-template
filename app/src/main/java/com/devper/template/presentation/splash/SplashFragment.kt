@@ -18,7 +18,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     }
 
     override fun observeLiveData() {
-        viewModel.resultLiveData.observe(viewLifecycleOwner, {
+        viewModel.resultLiveData.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                 }

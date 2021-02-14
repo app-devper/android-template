@@ -2,7 +2,6 @@ package com.devper.template.domain.core
 
 import com.devper.template.AppConfig
 import com.devper.template.core.exception.AppException
-import com.devper.template.data.remote.InternetException
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
@@ -31,9 +30,6 @@ object ErrorMapper {
                 } catch (e: Exception) {
                     AppException(code, message ?: e.message ?: "")
                 }
-            }
-            is InternetException -> {
-                AppException(AppConfig.NO_INTERNET_ERROR, throwable.message ?: "")
             }
             is SocketTimeoutException -> {
                 AppException(AppConfig.TIME_OUT_ERROR, throwable.message ?: "")

@@ -37,12 +37,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".presentation.login.LoginActivity"
-            android:launchMode="singleTop">
-        </activity>
-
-        <service android:name=".core.platform.fcm.MessagingService">
+        <service android:name=".core.platform.fcm.MessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

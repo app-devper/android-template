@@ -2,7 +2,6 @@ package com.devper.template.presentation.otpchannel
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentOtpChannelBinding
@@ -26,7 +25,7 @@ class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.frag
     }
 
     override fun observeLiveData() {
-        viewModel.results.observe(viewLifecycleOwner, Observer {
+        viewModel.results.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
@@ -36,15 +35,13 @@ class OtpChannelFragment : BaseFragment<FragmentOtpChannelBinding>(R.layout.frag
                     viewModel.setOtpChannel(it.data)
                 }
                 is ResultState.Error -> {
-                    hideLoading()
-                    toError(it.throwable.toError())
+                    val throwable = it.throwable.toError()
+                    showMessage(throwable.resultCode, throwable.getDesc()) {
+                        viewModel.popBackStack()
+                    }
                 }
             }
         })
-    }
-
-    override fun onDismissError(code: String) {
-        viewModel.popBackStack()
     }
 
 }

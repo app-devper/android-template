@@ -1,7 +1,6 @@
 package com.devper.template.presentation.userdetail
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,10 +13,13 @@ import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.model.user.User
 import com.devper.template.domain.usecase.user.GetUserUseCase
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class UserDetailViewModel @ViewModelInject constructor(
+@HiltViewModel
+class UserDetailViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase
 ) : BaseViewModel() {
 

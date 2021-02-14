@@ -1,6 +1,8 @@
 package com.devper.template.data.remote
 
-import com.devper.template.data.session.AppSessionProvider
+import com.devper.template.AppConfig.NO_INTERNET_ERROR
+import com.devper.template.core.exception.AppException
+import com.devper.template.domain.provider.AppSessionProvider
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
@@ -9,14 +11,14 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class HttpInterceptor @Inject constructor (
+class HttpInterceptor @Inject constructor(
     private val session: AppSessionProvider,
     private val networkInfoHelper: NetworkInfoHelper
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!networkInfoHelper.isNetWorkAvailable) {
-            throw InternetException("No internet connection")
+            throw AppException(NO_INTERNET_ERROR, "No internet connection")
         } else {
             val originalRequest = chain.request()
             val newRequest = originalRequest.newBuilder().run {

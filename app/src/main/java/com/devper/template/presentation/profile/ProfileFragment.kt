@@ -22,6 +22,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private lateinit var picker: ImagePickerConfig
 
     override fun setupView() {
+        binding.viewModel = viewModel
         picker = ImagePickerConfig(requireActivity(), object : PickerCallback {
             override fun onSuccess(imagePath: Uri?) {
                 loadProfile(imagePath.toString())
@@ -41,13 +42,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     override fun onArguments(it: Bundle?) {
+        if(!mainViewModel.isLogin()){
+            viewModel.onNavigate(R.id.action_to_login_pin, null)
+        }
     }
 
     override fun observeLiveData() {
-        mainViewModel.profileLiveData.observe(viewLifecycleOwner, {
+        mainViewModel.profileLiveData.observe(this, {
             when (it) {
+                is ResultState.Loading -> {
+                    showLoading()
+                }
                 is ResultState.Success -> {
                     binding.user = it.data
+                    hideLoading()
+                }
+                is ResultState.Error -> {
+
                 }
             }
         })

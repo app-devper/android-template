@@ -1,6 +1,6 @@
 package com.devper.template.data.remote.device
 
-import com.devper.template.data.device.AppInfoProvider
+import com.devper.template.domain.provider.AppInfoProvider
 
 class RegisterMapper {
 

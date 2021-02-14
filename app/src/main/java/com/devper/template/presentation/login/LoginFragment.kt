@@ -47,43 +47,40 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     override fun observeLiveData() {
-        viewModel.resultsLogin.observe(viewLifecycleOwner, {
+        viewModel.resultsLogin.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
                 }
                 is ResultState.Success -> {
                     hideDialog()
-                    activity?.finish()
+                    mainViewModel.initLogin()
                 }
                 is ResultState.Error -> {
                     hideDialog()
-                    toError(it.throwable.toError())
+                    val throwable = it.throwable.toError()
+                    showMessage(throwable.resultCode, throwable.getDesc()) {
+
+                    }
                 }
             }
         })
 
-        viewModel.login.observe(viewLifecycleOwner, {
+        viewModel.login.observe(this, {
             if (it != LoginType.Custom) {
                 smartLogin = SmartLoginFactory.build(it).apply {
                     login(config)
                 }
             }
         })
+
+        mainViewModel.loginLiveData.observe(this, {
+            if (it) {
+                viewModel.nextToHome()
+            }
+        })
     }
 
-    override fun onDismissError(code: String) {
-        if (code == "CM-401-114") {
-            viewModel.nextToSetPassword()
-        }
-    }
-
-    override fun isShowCancel(code: String): Boolean {
-        if (code == "CM-401-114") {
-            return true
-        }
-        return super.isShowCancel(code)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -98,7 +95,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     override fun onLoginFailure(e: SmartLoginException) {
         hideLoading()
-        showMessage(message = e.message ?: "")
     }
 
     override fun onAuthenticated() {

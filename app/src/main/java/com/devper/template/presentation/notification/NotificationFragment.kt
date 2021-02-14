@@ -7,6 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.devper.template.R
 import com.devper.template.databinding.FragmentNotificationBinding
+import com.devper.template.domain.core.toError
 import com.devper.template.domain.model.notification.Notification
 import com.devper.template.presentation.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +31,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
                 } else {
                     hideLoading()
                 }
+                if (loadState.refresh is LoadState.Error) {
+                    toError((loadState.refresh as LoadState.Error).error.toError())
+                }
             }
+
         }
     }
 
@@ -49,6 +54,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
     }
 
     override fun onArguments(it: Bundle?) {
-        setAdapter(viewModel.getNotifications())
+        if (mainViewModel.isLogin()) {
+            setAdapter(viewModel.getNotifications())
+        } else {
+            viewModel.onNavigate(R.id.action_to_login_pin, null)
+        }
     }
 }

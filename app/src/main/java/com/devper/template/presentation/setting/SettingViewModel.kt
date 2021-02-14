@@ -8,8 +8,12 @@ import com.devper.template.AppConfig.FLOW_SET_BIO
 import com.devper.template.AppConfig.FLOW_UPDATE_PROFILE
 import com.devper.template.R
 import com.devper.template.presentation.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SettingViewModel : BaseViewModel() {
+@HiltViewModel
+class SettingViewModel @Inject constructor(
+) : BaseViewModel() {
 
     fun nextToChangePassword() {
         val bundle = bundleOf(
@@ -25,7 +29,7 @@ class SettingViewModel : BaseViewModel() {
         onNavigate(R.id.setting_to_change_pin, bundle)
     }
 
-    fun nextToLogin() {
+    fun nextToLogout() {
         onNavigate(R.id.action_to_login, null)
     }
 

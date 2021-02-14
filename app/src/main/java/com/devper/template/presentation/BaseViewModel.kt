@@ -9,8 +9,8 @@ open class BaseViewModel : ViewModel() {
 
     private val _flow = MutableLiveData<String>()
 
-    var flow: String?
-        get() = _flow.value
+    var flow: String
+        get() = _flow.value ?: ""
         set(value) {
             _flow.value = value
         }
@@ -22,4 +22,8 @@ open class BaseViewModel : ViewModel() {
     var isLoading = MutableLiveData(View.VISIBLE)
 
     var popBackStack: () -> Unit = {}
+
+    fun navigate(id: Int, bundle: Bundle? = null) {
+        onNavigate(id, bundle)
+    }
 }

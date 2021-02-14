@@ -10,13 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.devper.template.AppConfig.EXTRA_FLOW
-import com.devper.template.AppConfig.SESSION_EXPIRED_ERROR
 import com.devper.template.R
 import com.devper.template.core.exception.AppException
-import com.devper.template.core.platform.EventObserver
 
 abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int) : Fragment() {
 
+    private var dialog: BaseDialogFragment? = null
     lateinit var binding: Binding
     abstract val viewModel: BaseViewModel
     protected val mainViewModel: MainViewModel by activityViewModels()
@@ -41,23 +40,13 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
             }
         }
         setupView()
-        observe()
         observeLiveData()
         getArgument()
     }
 
     private fun getArgument() {
-        viewModel.flow = arguments?.getString(EXTRA_FLOW)
+        viewModel.flow = arguments?.getString(EXTRA_FLOW) ?: ""
         onArguments(arguments)
-    }
-
-    private fun observe() {
-        mainViewModel.errorLiveData.observe(viewLifecycleOwner, EventObserver {
-            showMessage(code = it.first, message = it.second)
-        })
-        mainViewModel.codeLiveData.observe(viewLifecycleOwner, EventObserver {
-            handleError(it)
-        })
     }
 
     abstract fun setupView()
@@ -68,8 +57,8 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
 
     private fun handleError(code: String) {
         when (code) {
-            SESSION_EXPIRED_ERROR -> {
-                viewModel.onNavigate(R.id.action_to_login, null)
+            "CM-401-107" -> {
+                viewModel.onNavigate(R.id.action_to_login_pin, null)
             }
             else -> {
                 onDismissError(code)
@@ -124,7 +113,7 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
                 viewModel.onNavigate(R.id.action_to_suspend_account, null)
             }
             else -> {
-                mainViewModel.error(throwable.resultCode, throwable.getDesc())
+                showMessage(throwable.resultCode, throwable.getDesc()) {}
             }
         }
     }
@@ -137,20 +126,25 @@ abstract class BaseFragment<Binding : ViewDataBinding>(private val layoutId: Int
         }
     }
 
-    fun showMessage(code: String = "", message: String = "") {
-        val fragment = BaseDialogFragment.Builder().run {
+    fun showMessage(code: String = "", message: String = "", cancel: Boolean = false, confirm: (code: String) -> Unit) {
+        dialog?.let {
+            if (it.isVisible) {
+                return
+            }
+        }
+        dialog = BaseDialogFragment.Builder().run {
             withTitle(getString(R.string.error_title))
             withoutCancel()
             withConfirmAction {
-                mainViewModel.codeLiveData.setEventValue(code)
+                confirm(code)
             }
-            if (isShowCancel(code)) {
+            if (cancel) {
                 withButtonCancelText(getString(R.string.cancel))
             }
             withDescription(if (code.isEmpty()) message else "$message [Code : $code]")
             build()
         }
-        fragment.show(childFragmentManager, "dialog")
+        dialog?.show(childFragmentManager, "dialog")
     }
 
 }

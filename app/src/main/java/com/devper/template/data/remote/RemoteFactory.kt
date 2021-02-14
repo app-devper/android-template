@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import com.devper.template.BuildConfig
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient

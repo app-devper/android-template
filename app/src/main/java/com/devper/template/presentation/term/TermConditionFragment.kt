@@ -19,7 +19,7 @@ class TermConditionFragment : BaseFragment<FragmentTermConditionBinding>(R.layou
     }
 
     override fun observeLiveData() {
-        viewModel.resultLiveData.observe(viewLifecycleOwner, {
+        viewModel.resultLiveData.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()

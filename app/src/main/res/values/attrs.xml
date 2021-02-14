@@ -24,4 +24,8 @@
         <attr name="require" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="DslSelect">
+        <attr name="value" format="string"/>
+    </declare-styleable>
+
 </resources>

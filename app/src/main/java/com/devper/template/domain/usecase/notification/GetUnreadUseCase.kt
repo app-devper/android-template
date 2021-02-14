@@ -1,8 +1,8 @@
 package com.devper.template.domain.usecase.notification
 
 import com.devper.template.domain.core.ResultState
-import com.devper.template.core.thread.Dispatcher
-import com.devper.template.data.remote.notification.NotificationRepository
+import com.devper.template.domain.core.thread.Dispatcher
+import com.devper.template.domain.repository.NotificationRepository
 import com.devper.template.domain.usecase.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

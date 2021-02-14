@@ -16,7 +16,9 @@ class PinCodeRoundView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : RelativeLayout(mContext, attrs, defStyleAttr) {
+
     private var mRoundViews: MutableList<ImageView> = mutableListOf()
+
     private var maxPin = 6
     var pin = ""
         private set
@@ -46,7 +48,6 @@ class PinCodeRoundView @JvmOverloads constructor(
             setPinLength(maxPin)
         }
     }
-
 
     private fun refresh(pinLength: Int) {
         currentLength = pinLength

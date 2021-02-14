@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/progress_dialog_bg"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="30dp"
-    android:paddingLeft="40dp"
-    android:paddingRight="40dp"
-    android:paddingTop="30dp">
+<layout>
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi"
-        style="@style/AVLoadingIndicatorView.Large"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:visibility="visible"
-        app:indicatorColor="@color/colorPrimary"
-        app:indicatorName="BallPulseIndicator"/>
-
-    <TextView
-        android:id="@+id/tv_message"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:text="Message"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
+        android:layout_gravity="center"
+        android:background="@drawable/progress_dialog_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="30dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="30dp">
 
-</LinearLayout>
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:visibility="visible"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="BallPulseIndicator" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="Message"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>

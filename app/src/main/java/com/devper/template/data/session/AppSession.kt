@@ -1,8 +1,6 @@
 package com.devper.template.data.session
 
-interface AppSessionProvider {
-    var accessToken: String?
-}
+import com.devper.template.domain.provider.AppSessionProvider
 
 data class AppSession constructor(
     override var accessToken: String? = null

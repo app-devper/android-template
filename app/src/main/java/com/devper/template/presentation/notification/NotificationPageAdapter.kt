@@ -10,11 +10,17 @@ class NotificationPageAdapter : PagingDataAdapter<Notification, NotificationView
     var onClick: (notification: Notification) -> Unit = {}
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        item?.let {
+            holder.bind(it)
+            holder.binding.root.setOnClickListener {
+                onClick(item)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        return NotificationViewHolder.create(parent, onClick)
+        return NotificationViewHolder.create(parent)
     }
 
 }

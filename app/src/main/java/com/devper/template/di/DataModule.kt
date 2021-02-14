@@ -1,23 +1,23 @@
 package com.devper.template.di
 
-import com.devper.template.data.remote.auth.AuthRepository
+import com.devper.template.domain.repository.AuthRepository
 import com.devper.template.data.remote.auth.AuthRepositoryImpl
-import com.devper.template.data.remote.device.DeviceRepository
+import com.devper.template.domain.repository.DeviceRepository
 import com.devper.template.data.remote.device.RegisterRepositoryImpl
-import com.devper.template.data.remote.notification.NotificationRepository
+import com.devper.template.domain.repository.NotificationRepository
 import com.devper.template.data.remote.notification.NotificationRepositoryImpl
-import com.devper.template.data.remote.otp.OtpRepository
+import com.devper.template.domain.repository.OtpRepository
 import com.devper.template.data.remote.otp.OtpRepositoryImpl
-import com.devper.template.data.remote.termcondition.TermConditionRepository
+import com.devper.template.domain.repository.TermConditionRepository
 import com.devper.template.data.remote.termcondition.TermConditionRepositoryImpl
-import com.devper.template.data.remote.user.UserRepository
+import com.devper.template.domain.repository.UserRepository
 import com.devper.template.data.remote.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.components.ViewModelComponent
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(ViewModelComponent::class)
 @Module
 abstract class DataModule {
 

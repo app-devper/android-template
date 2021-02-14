@@ -1,7 +1,6 @@
 package com.devper.template.presentation
 
 import android.content.Intent
-import android.os.CountDownTimer
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.widget.Toast
@@ -20,11 +19,11 @@ import com.devper.template.core.extension.toVisible
 import com.devper.template.core.platform.fcm.BadgeHelper
 import com.devper.template.core.platform.fcm.MessagingHandler
 import com.devper.template.core.platform.session.CountDownSession
+import com.devper.template.core.platform.session.CountDownTimeOut
 import com.devper.template.core.platform.widget.ProgressHudDialog
 import com.devper.template.databinding.ActivityHomeBinding
 import com.devper.template.domain.core.ResultState
 import com.devper.template.domain.core.toError
-import com.devper.template.presentation.login.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -43,6 +42,10 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private var isWaitForSecondBackClick = false
     private var currentId: Int = 0
     private val mainViewModel: MainViewModel by viewModels()
+
+    private val timOut: CountDownTimeOut by lazy {
+        CountDownTimeOut(300000L)
+    }
 
     private val progress: ProgressHudDialog by lazy {
         ProgressHudDialog.init(this, "Loading...", false)
@@ -87,11 +90,10 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 mainViewModel.setMessage(it)
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        mainViewModel.getLogin()
+        timOut.onFinish = {
+            sessionExpired()
+        }
     }
 
     override fun observeLiveData() {
@@ -103,13 +105,12 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
         })
 
-        mainViewModel.isLoginData.observe(this, {
-            if (mainViewModel.isLogin()) {
+        mainViewModel.loginLiveData.observe(this, {
+            if (it) {
                 mainViewModel.getProfile()
                 mainViewModel.subscription()
                 mainViewModel.getUnread()
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
+                mainViewModel.havePin()
             }
         })
 
@@ -121,7 +122,9 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 else -> showBadge(binding.bottomNavigation, R.id.notification_dest, it)
             }
         })
+
     }
+
 
     private fun isHome(id: Int): Boolean {
         return id in listOf(
@@ -140,9 +143,10 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             R.id.setting_dest,
             R.id.notification_dest,
             R.id.pin_max_attempt_dest,
-            R.id.verify_pin_dest,
             R.id.suspend_account_dest,
-            R.id.set_pin_dest,
+            R.id.pin_form_dest,
+            R.id.change_pin_form_dest,
+            R.id.pin_verify_dest,
         )
     }
 
@@ -158,9 +162,11 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun canBack(id: Int): Boolean {
         return id !in listOf(
             R.id.pin_max_attempt_dest,
-            R.id.verify_pin_dest,
             R.id.suspend_account_dest,
-            R.id.set_pin_dest,
+            R.id.pin_form_dest,
+            R.id.change_pin_form_dest,
+            R.id.pin_verify_dest,
+            R.id.login_pin_dest,
         )
     }
 
@@ -205,11 +211,11 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     fun clearLogin() {
         mainViewModel.clearUser()
         countDownSession.clear()
-        timer?.cancel()
+        timOut.clear()
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        handlerTimeOut()
+        timOut.handlerTimeOut(isLogin())
         return super.dispatchTouchEvent(ev)
     }
 
@@ -217,21 +223,8 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         return mainViewModel.isLogin()
     }
 
-    private fun handlerTimeOut() {
-        timer?.cancel()
-        if (isLogin()) {
-            timer = object : CountDownTimer(300000L, 1000L) {
-                override fun onFinish() {
-                    sessionExpired()
-                }
-
-                override fun onTick(millisUntilFinished: Long) {}
-            }.start()
-        }
-    }
-
-    fun sessionExpired() {
-        mainViewModel.error(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out))
+    private fun sessionExpired() {
+        toError(AppException(SESSION_EXPIRED_ERROR, getString(R.string.error_idle_time_out)))
         clearLogin()
     }
 
@@ -285,10 +278,6 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun removeBadge(bottomNavigationView: BottomNavigationView, id: Int) {
         bottomNavigationView.removeBadge(id)
-    }
-
-    companion object {
-        private var timer: CountDownTimer? = null
     }
 
 }

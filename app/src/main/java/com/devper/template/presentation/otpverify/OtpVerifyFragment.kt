@@ -2,7 +2,6 @@ package com.devper.template.presentation.otpverify
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.AppConfig.EXTRA_PARAM
 import com.devper.template.R
 import com.devper.template.databinding.FragmentOtpVerifyBinding
@@ -36,7 +35,7 @@ class OtpVerifyFragment : BaseFragment<FragmentOtpVerifyBinding>(R.layout.fragme
     }
 
     override fun observeLiveData() {
-        viewModel.resultVerifyUser.observe(viewLifecycleOwner, Observer {
+        viewModel.resultVerifyUser.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
@@ -46,12 +45,15 @@ class OtpVerifyFragment : BaseFragment<FragmentOtpVerifyBinding>(R.layout.fragme
                     viewModel.setVerifyUser(it.data)
                 }
                 is ResultState.Error -> {
-                    toError(it.throwable.toError())
+                    val throwable = it.throwable.toError()
+                    showMessage(throwable.resultCode, throwable.getDesc()) {
+                        viewModel.popBackStack()
+                    }
                 }
             }
         })
 
-        viewModel.resultVerifyCode.observe(viewLifecycleOwner, Observer {
+        viewModel.resultVerifyCode.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showDialog()
@@ -63,7 +65,14 @@ class OtpVerifyFragment : BaseFragment<FragmentOtpVerifyBinding>(R.layout.fragme
                 is ResultState.Error -> {
                     hideDialog()
                     viewModel.clearCode()
-                    toError(it.throwable.toError())
+                    val throwable = it.throwable.toError()
+                    showMessage(throwable.resultCode, throwable.getDesc()) { code ->
+                        when (code) {
+                            "CM-401-108" -> {
+                                viewModel.retry()
+                            }
+                        }
+                    }
                 }
             }
         })

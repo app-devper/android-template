@@ -7,8 +7,8 @@ import android.telephony.TelephonyManager
 import java.io.UnsupportedEncodingException
 import java.util.*
 
-class DeviceUuidFactory @SuppressLint("MissingPermission", "HardwareIds")
-constructor(context: Context) {
+@SuppressLint("MissingPermission", "HardwareIds")
+class DeviceUuidFactory constructor(context: Context) {
 
     val deviceUuid: UUID?
         get() = uuid

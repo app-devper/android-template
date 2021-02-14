@@ -4,43 +4,38 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import com.devper.template.R
+import com.devper.template.databinding.ViewKeyboardBinding
 
 class KeyboardView @JvmOverloads constructor(
-    private val mContext: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(mContext, attrs, defStyleAttr), View.OnClickListener {
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
+) : BaseViewGroup(context, attrs, defStyleAttr, defStyleRes), View.OnClickListener {
+
+    private lateinit var binding: ViewKeyboardBinding
+
+    override fun bindView() {
+        binding = ViewKeyboardBinding.inflate(LayoutInflater.from(context), this, false).also {
+            addView(it.root)
+        }
+    }
 
     var onClick: (item: KeyboardButtonEnum) -> Unit = {}
 
     var onOther: () -> Unit = {}
 
-    private var mButtons: MutableList<KeyboardButtonView> = mutableListOf()
-
-    private fun initializeView(attrs: AttributeSet?, defStyleAttr: Int) {
-        val inflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.view_keyboard, this) as KeyboardView
-        initKeyboardButtons(view)
-    }
-
-    private fun initKeyboardButtons(view: KeyboardView) {
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_0) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_1) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_2) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_3) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_4) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_5) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_6) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_7) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_8) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_9) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_10) as KeyboardButtonView)
-        mButtons.add(view.findViewById<View>(R.id.pin_code_button_clear) as KeyboardButtonView)
-        for (button in mButtons) {
-            button.setOnClickListener(this)
-        }
+    private fun initKeyboardButtons() {
+        binding.pinCodeButton0.setOnClickListener(this)
+        binding.pinCodeButton1.setOnClickListener(this)
+        binding.pinCodeButton2.setOnClickListener(this)
+        binding.pinCodeButton3.setOnClickListener(this)
+        binding.pinCodeButton4.setOnClickListener(this)
+        binding.pinCodeButton5.setOnClickListener(this)
+        binding.pinCodeButton6.setOnClickListener(this)
+        binding.pinCodeButton7.setOnClickListener(this)
+        binding.pinCodeButton8.setOnClickListener(this)
+        binding.pinCodeButton9.setOnClickListener(this)
+        binding.pinCodeButton10.setOnClickListener(this)
+        binding.pinCodeButtonClear.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -84,7 +79,7 @@ class KeyboardView @JvmOverloads constructor(
         }
     }
 
-    init {
-        initializeView(attrs, defStyleAttr)
+    override fun setupView() {
+        initKeyboardButtons()
     }
 }

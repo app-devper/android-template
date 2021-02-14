@@ -2,7 +2,6 @@ package com.devper.template.presentation.userdetail
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.devper.template.AppConfig
 import com.devper.template.R
 import com.devper.template.databinding.FragmentUserDetailBinding
@@ -21,7 +20,7 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(R.layout.frag
     }
 
     override fun observeLiveData() {
-        viewModel.userResult.observe(viewLifecycleOwner, Observer {
+        viewModel.userResult.observe(this, {
             when (it) {
                 is ResultState.Loading -> {
                     showLoading()
