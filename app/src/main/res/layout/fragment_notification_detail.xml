@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.devper.template.presentation.notificationdetail.NotificationDetailViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Card.Top"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingBottom="16dp">
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            style="@style/Text.Grey.Sub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@{viewModel.notification.displayCreatedDate}"
+                            tools:text="12:30น. 12 มิ.ย. 2562" />
+
+                        <TextView
+                            android:id="@+id/tvTitle"
+                            style="@style/Text.Black.Sub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@{viewModel.notification.title}"
+                            android:textSize="16sp"
+                            tools:text="แจ้งเลยกำหนดชำระเงินกู้" />
+
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@color/colorGreyLighter" />
+
+                        <TextView
+                            android:id="@+id/tvBody"
+                            style="@style/Text.GreyDarker.Sub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@{viewModel.notification.body}"
+                            android:layout_marginEnd="16dp"
+                            tools:text="ขอแจ้งให้ทราบว่าเลยกำหนดชำระเงินกู้แล้วเมื่อวันที่ 5 ก.ค. 2562 ยอดเงินกู้ที่จะต้องชำระ 6,383.23 บาท กรุณาชำระบิลผ่านพร้อมเพย์ฟรี ขออภัยหากท่านชำระแล้ว" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnAction"
+                            style="@style/Button.Secondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            tools:text="ดาวน์โหลด"
+                            tools:visibility="visible" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/layoutLoading"
+            layout="@layout/include_progress_loading"
+            app:viewModel="@{viewModel}"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

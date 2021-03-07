@@ -3,6 +3,7 @@ package com.devper.template.data.remote
 import com.devper.template.data.remote.auth.*
 import com.devper.template.data.remote.device.RegisterData
 import com.devper.template.data.remote.device.RegisterRequest
+import com.devper.template.data.remote.notification.NotificationData
 import com.devper.template.data.remote.notification.NotificationsData
 import com.devper.template.data.remote.notification.SubscriptionRequest
 import com.devper.template.data.remote.notification.UnreadData
@@ -43,6 +44,7 @@ interface ApiService {
     @GET("api/auth/keep-alive")
     suspend fun keepAlive(): LoginData
 
+
     @GET("api/user/{id}")
     suspend fun getUserId(@Path("id") id: String): UserData
 
@@ -58,8 +60,10 @@ interface ApiService {
     @PUT("api/user/{id}")
     suspend fun updateUser(@Path("id") id: String, @Body request: UserRequest): UserData
 
+
     @POST("api/device")
     suspend fun registerDevice(@Body request: RegisterRequest): RegisterData
+
 
     @GET("api/otp/channel")
     suspend fun getOtpChannel(): OtpChannelData
@@ -76,14 +80,19 @@ interface ApiService {
     @GET("api/otp/code/{refCode}")
     suspend fun getCode(@Path("refCode") refCode: String): String
 
+
     @POST("api/notification/subscription")
     suspend fun subscription(@Body request: SubscriptionRequest)
 
     @GET("api/notification")
     suspend fun getNotifications(@Query("page") page: Int): NotificationsData
 
+    @GET("api/notification/{id}")
+    suspend fun getNotification(@Path("id") id: String): NotificationData
+
     @GET("api/notification/unread")
     suspend fun getUnread(): UnreadData
+
 
     @GET("api/term-condition")
     suspend fun getTermCondition(): TermConditionData

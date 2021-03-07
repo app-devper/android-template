@@ -14,8 +14,12 @@ class NotificationMapper {
 
     private fun toDomain(it: List<NotificationData>): List<Notification> {
         return it.map {
-            Notification(it.id, it.receiver, it.title, it.body, it.status, it.action, it.createdDate)
+            toDomain(it)
         }
+    }
+
+    fun toDomain(it: NotificationData): Notification {
+        return Notification(it.id, it.receiver, it.title, it.body, it.status, it.action, it.createdDate)
     }
 
 }

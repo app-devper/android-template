@@ -2,7 +2,7 @@ package com.devper.template.domain.model.user
 
 import android.os.Parcelable
 import android.view.View
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
@@ -17,6 +17,7 @@ data class User(
     val status: String?,
     val pin: String? = null,
 ) : Parcelable {
+
     val fullName: String
         get() = "$firstName $lastName"
 

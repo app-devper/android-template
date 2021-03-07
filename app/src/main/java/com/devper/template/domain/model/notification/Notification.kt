@@ -7,7 +7,7 @@ data class Notification(
     val receiver: String,
     val title: String,
     val body: String,
-    val status: String,
+    var status: String,
     val action: String,
     val createdDate: String,
 ) {

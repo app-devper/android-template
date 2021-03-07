@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -20,6 +21,7 @@ import com.devper.template.core.platform.fcm.BadgeHelper
 import com.devper.template.core.platform.fcm.MessagingHandler
 import com.devper.template.core.platform.session.CountDownSession
 import com.devper.template.core.platform.session.CountDownTimeOut
+import com.devper.template.core.platform.widget.ProgressDialog
 import com.devper.template.core.platform.widget.ProgressHudDialog
 import com.devper.template.databinding.ActivityHomeBinding
 import com.devper.template.domain.core.ResultState
@@ -47,8 +49,8 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         CountDownTimeOut(300000L)
     }
 
-    private val progress: ProgressHudDialog by lazy {
-        ProgressHudDialog.init(this, "Loading...", false)
+    private val progress: ProgressDialog by lazy {
+        ProgressDialog(this)
     }
 
     override fun onStart() {
@@ -124,7 +126,6 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         })
 
     }
-
 
     private fun isHome(id: Int): Boolean {
         return id in listOf(
@@ -255,19 +256,11 @@ class MainActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     fun showLoading() {
-        progress.let {
-            if (!it.isShowing) {
-                it.show()
-            }
-        }
+        progress.showLoading()
     }
 
     fun hideLoading() {
-        progress.let {
-            if (it.isShowing) {
-                it.dismiss()
-            }
-        }
+        progress.dismissLoading()
     }
 
     private fun showBadge(bottomNavigationView: BottomNavigationView, id: Int, value: Int) {

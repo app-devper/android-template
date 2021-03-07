@@ -28,8 +28,8 @@ class HttpInterceptor @Inject constructor(
                         addHeader("Authorization", "Bearer $it")
                     }
                 }
-                addHeader("x-app-language", "th")
-                addHeader("x-transaction-id", genTransactionId())
+                addHeader("X-app-language", "th")
+                addHeader("X-transaction-id", genTransactionId())
             }
             val tag = originalRequest.tag(Invocation::class.java)
             val annotation = tag?.method()?.getAnnotation(Timeout::class.java)

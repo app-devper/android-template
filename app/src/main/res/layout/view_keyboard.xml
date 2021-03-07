@@ -3,6 +3,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -110,7 +111,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:lp_keyboard_button_image="@drawable/pin_ic_fingerprint" />
+                app:lp_keyboard_button_image="@drawable/pin_ic_fingerprint"
+                tools:lp_keyboard_button_text="" />
 
             <com.devper.template.core.platform.widget.KeyboardButtonView
                 android:id="@+id/pin_code_button_0"
@@ -124,7 +126,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:lp_keyboard_button_image="@drawable/ic_backspace" />
+                app:lp_keyboard_button_image="@drawable/ic_backspace"
+                tools:lp_keyboard_button_text="" />
 
         </LinearLayout>
 

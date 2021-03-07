@@ -5,12 +5,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-abstract class UseCase<in P, R>(private val coroutineDispatcher: CoroutineDispatcher) {
+abstract class UseCase<in P, R>(private val dispatcher: CoroutineDispatcher) {
 
-    suspend operator fun invoke(parameters: P): ResultState<R> {
+    suspend operator fun invoke(params: P): ResultState<R> {
         return try {
-            withContext(coroutineDispatcher) {
-                execute(parameters).let {
+            withContext(dispatcher) {
+                execute(params).let {
                     ResultState.Success(it)
                 }
             }

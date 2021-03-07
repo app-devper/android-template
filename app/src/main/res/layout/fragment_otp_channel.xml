@@ -92,6 +92,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <include
+            tools:visibility="gone"
             android:id="@+id/layoutLoading"
             layout="@layout/include_progress_loading"
             app:viewModel="@{viewModel}" />

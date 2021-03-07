@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                style="@style/Text.Grey.Sub"
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="12 มิ.ย. 2562  12:30น." />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgNoti"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
@@ -46,6 +47,7 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
+                style="@style/Text.Black.Sub"
                 android:id="@+id/tvTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -54,7 +56,6 @@
                 android:layout_marginEnd="14dp"
                 android:text="@{item.title}"
                 android:singleLine="true"
-                android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toStartOf="@+id/imgForward"
                 app:layout_constraintStart_toEndOf="@+id/imgNoti"
                 app:layout_constraintTop_toBottomOf="@+id/tvDate"
@@ -72,13 +73,13 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
+                style="@style/Text.Black.Sub"
                 android:id="@+id/tvBody"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="14dp"
                 android:singleLine="true"
-                android:textColor="@color/colorBlack"
                 android:text="@{item.body}"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/imgForward"

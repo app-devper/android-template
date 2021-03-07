@@ -152,7 +152,8 @@
         <include
             android:id="@+id/layoutLoading"
             layout="@layout/include_progress_loading"
-            app:viewModel="@{viewModel}" />
+            app:viewModel="@{viewModel}"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

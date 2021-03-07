@@ -1,8 +1,11 @@
 package com.devper.template.presentation.notification
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.devper.template.AppConfig
+import com.devper.template.R
 import com.devper.template.domain.model.notification.Notification
 import com.devper.template.domain.usecase.notification.GetNotificationsUseCase
 import com.devper.template.presentation.BaseViewModel
@@ -28,6 +31,13 @@ class NotificationViewModel @Inject constructor(
             .cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult
+    }
+
+    fun nextToDetail(id: String) {
+        val bundle = bundleOf(
+            AppConfig.EXTRA_PARAM to id
+        )
+        onNavigate(R.id.notification_to_notification_detail, bundle)
     }
 
 }

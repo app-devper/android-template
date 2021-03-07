@@ -13,7 +13,7 @@ class GetUsersUseCase @Inject constructor(
     private val repo: UserRepository
 ) : PagingUseCase<Int, PagingData<User>>(dispatcher.io()) {
 
-     inner class UserPagingSource(
+    class UserPagingSource(
         private val repository: UserRepository
     ) : PagingSource<Int, User>() {
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
@@ -27,7 +27,7 @@ class GetUsersUseCase @Inject constructor(
             }
         }
 
-         override fun getRefreshKey(state: PagingState<Int, User>): Int? {
+         override fun getRefreshKey(state: PagingState<Int, User>): Int {
            return 1
          }
      }

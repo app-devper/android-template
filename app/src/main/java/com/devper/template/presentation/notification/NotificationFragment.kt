@@ -21,9 +21,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
 
     override fun setupView() {
         binding.viewModel = viewModel
+
         viewModel.adapter.apply {
             onClick = {
-                mainViewModel.getUnread()
+                viewModel.nextToDetail(it.id)
             }
             addLoadStateListener { loadState ->
                 if (loadState.refresh is LoadState.Loading) {
@@ -37,6 +38,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
             }
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.getUnread()
     }
 
     override fun observeLiveData() {
@@ -60,4 +66,5 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
             viewModel.onNavigate(R.id.action_to_login_pin, null)
         }
     }
+
 }

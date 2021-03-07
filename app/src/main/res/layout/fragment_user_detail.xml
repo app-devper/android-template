@@ -57,6 +57,7 @@
 
         <include
             android:id="@+id/layoutLoading"
+            tools:visibility="gone"
             layout="@layout/include_progress_loading"
             app:viewModel="@{viewModel}" />
 
